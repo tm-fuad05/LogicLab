@@ -4,7 +4,7 @@ export interface LogicItem {
   category: string;
   categorySlug: string;
   description: string;
-  codeSnippet?: string;
+  codeSnippet: string;
 }
 export interface Category {
   slug: string;
