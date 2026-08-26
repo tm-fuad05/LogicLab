@@ -249,9 +249,7 @@ export default function LandingPage() {
 
             <h1 className="text-3xl sm:text-6xl font-extrabold tracking-tight text-txt-main max-w-4xl leading-[1.12] mb-5">
               Visual Interaction Playground <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan via-cyan-400 to-cyan dark:from-cyan dark:via-cyan-300 dark:to-cyan">
-                for React & Web Developers
-              </span>
+              <span className="text-cyan">for React & Web Developers</span>
             </h1>
 
             {/* Subtitle */}
