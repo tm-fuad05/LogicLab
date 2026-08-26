@@ -22,12 +22,12 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
     >
       {/* Sleek Tech Flask / Logic Circuit Hybrid Badge */}
       <div
-        className={`${iconSizes[size]} bg-[#121212] text-white flex items-center justify-center relative border border-[#222222] shadow-xs transition-transform group-hover:scale-105`}
+        className={`${iconSizes[size]} bg-[#121212] dark:bg-card text-white flex items-center justify-center relative border border-dark-line dark:border-cyan shadow-xs transition-transform group-hover:scale-105`}
       >
         {/* Glow Dot */}
-        <span className="absolute top-1 right-1 w-1.5 h-1.5 bg-[#00d8ff] rounded-none animate-pulse"></span>
+        <span className="absolute top-1 right-1 w-1.5 h-1.5 bg-cyan rounded-none animate-pulse"></span>
         <svg
-          className="w-4 h-4 text-white"
+          className="w-4 h-4 text-white dark:text-cyan"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -40,21 +40,21 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
           <path
             d="M8.5 14h7"
             strokeDasharray="1 2"
-            stroke="#00d8ff"
+            stroke="var(--color-cyan)"
             strokeWidth="2"
           />
         </svg>
       </div>
 
       {/* Styled LogicLab Typography */}
-      <div className="flex items-baseline">
+      <div className="flex items-baseline font-poppins">
         <span
-          className={`font-poppins font-bold tracking-tight text-[#121212] ${textSizes[size]}`}
+          className={`font-semibold tracking-tight text-txt-main ${textSizes[size]}`}
         >
           Logic
         </span>
         <span
-          className={`font-poppins font-bold tracking-tight text-[#00d8ff] ${textSizes[size]}`}
+          className={`font-semibold tracking-tight text-cyan ${textSizes[size]}`}
         >
           Lab
         </span>

@@ -27,12 +27,14 @@ export default function CategoryOverview() {
   };
 
   return (
-    <div className="space-y-8">
-      <div className="border-b border-[#e5e7eb] pb-6 space-y-2">
-        <span className="text-xs  text-[#666666] uppercase tracking-wider">
+    <div className="space-y-8 font-poppins">
+      <div className="border-b border-line pb-6 space-y-2">
+        <span className="text-xs text-txt-secondary uppercase tracking-wider">
           Category Overview
         </span>
-        <h1 className="text-2xl font-bold text-[#121212]">{category.title}</h1>
+        <h1 className="text-2xl font-semibold text-txt-main">
+          {category.title}
+        </h1>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

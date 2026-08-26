@@ -30,7 +30,9 @@ export function LiveSearchFilterView() {
             <h5 className="text-xs font-semibold text-[#121212]">
               {item.title}
             </h5>
-            <p className="text-xs  text-[#222222] font-bold">{item.price}</p>
+            <p className="text-xs  text-[#222222] font-semibold">
+              {item.price}
+            </p>
           </div>
         ))}
       </div>

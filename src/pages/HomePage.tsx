@@ -13,13 +13,13 @@ export default function HomePage() {
   };
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-10 font-poppins">
       {/* Hero Section */}
-      <div className="border-b border-[#e5e7eb] pb-8 space-y-3">
-        <h1 className="text-3xl font-bold tracking-tight text-[#121212]">
+      <div className="border-b border-line pb-8 space-y-3">
+        <h1 className="text-3xl font-semibold tracking-tight text-txt-main">
           React & JS Logics
         </h1>
-        <p className="text-[#666666] text-sm max-w-2xl leading-relaxed">
+        <p className="text-txt-secondary text-sm max-w-2xl leading-relaxed">
           A visual playground showcasing 38 core Web & React UI interaction
           mechanics. Scaffolds are rendered as stateless UI layouts with an
           empty logic code block for developer hooks.
@@ -34,21 +34,21 @@ export default function HomePage() {
           );
           return (
             <div key={cat.slug} className="space-y-4">
-              <div className="flex items-center justify-between border-b border-[#e5e7eb] pb-2">
+              <div className="flex items-center justify-between border-b border-line pb-2">
                 <Link
                   to={`/category/${cat.slug}`}
                   className="group flex items-center gap-2"
                 >
-                  <h2 className="text-xl font-bold text-[#121212] group-hover:underline">
+                  <h2 className="text-xl font-semibold text-txt-main group-hover:underline">
                     {cat.title}
                   </h2>
-                  <span className="text-xs  text-[#666666]">
+                  <span className="text-xs text-txt-secondary">
                     ({categoryItems.length})
                   </span>
                 </Link>
                 <Link
                   to={`/category/${cat.slug}`}
-                  className="text-xs  text-[#666666] hover:text-[#121212]"
+                  className="text-xs text-txt-secondary hover:text-txt-main dark:hover:text-cyan"
                 >
                   View Category →
                 </Link>

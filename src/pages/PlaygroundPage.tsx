@@ -22,17 +22,17 @@ export default function PlaygroundPage() {
   const ViewComponent =
     PLAYGROUND_REGISTRY[item.id] ||
     (() => (
-      <div className="text-xs  text-[#666666] text-center py-10">
+      <div className="text-xs text-txt-secondary text-center py-10">
         Visual Scaffold under construction for {item.title}
       </div>
     ));
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 font-poppins">
       {/* Description header */}
       <div className="mb-6 space-y-1">
-        <h1 className="text-2xl font-bold text-[#121212]">{item.title}</h1>
-        <p className="text-sm text-[#666666]">{item.description}</p>
+        <h1 className="text-2xl font-semibold text-txt-main">{item.title}</h1>
+        <p className="text-sm text-txt-secondary">{item.description}</p>
       </div>
 
       {/* Top UI Scaffold Preview Container */}

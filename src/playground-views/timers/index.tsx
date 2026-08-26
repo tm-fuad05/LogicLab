@@ -43,7 +43,9 @@ export function CountdownClockView() {
           key={item.label}
           className="p-4 border border-[#e5e7eb] bg-[#fafafa]"
         >
-          <div className="text-2xl  font-bold text-[#121212]">{item.val}</div>
+          <div className="text-2xl  font-semibold text-[#121212]">
+            {item.val}
+          </div>
           <div className="text-[10px]  text-[#666666] uppercase mt-1">
             {item.label}
           </div>
@@ -104,7 +106,7 @@ export function InactivityWarningView() {
 export function StopwatchView() {
   return (
     <div className="w-full text-center space-y-6 py-4">
-      <div className="text-4xl  font-bold text-[#121212]">
+      <div className="text-4xl  font-semibold text-[#121212]">
         00:00:00.<span className="text-xl text-[#666666]">00</span>
       </div>
       <div className="flex justify-center gap-3">

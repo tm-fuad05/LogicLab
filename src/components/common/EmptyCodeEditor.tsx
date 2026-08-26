@@ -8,18 +8,18 @@ export default function EmptyCodeEditor({
   title,
 }: EmptyCodeEditorProps) {
   return (
-    <section className="mt-10 border border-[#e5e7eb] bg-white rounded-none">
-      <div className="flex items-center justify-between px-5 py-3 border-b border-[#e5e7eb] bg-[#fafafa]">
+    <section className="mt-10 border border-line bg-card rounded-none font-poppins">
+      <div className="flex items-center justify-between px-5 py-3 border-b border-line bg-sidebar">
         <div className="flex items-center gap-2">
-          <span className="w-2 h-2 bg-[#222222]"></span>
-          <h3 className="text-xs  font-semibold uppercase tracking-wider text-[#222222]">
+          <span className="w-2 h-2 bg-dark-line dark:bg-cyan"></span>
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-txt-main">
             Logic Implementation Notes: {title}
           </h3>
         </div>
-        <span className="text-xs  text-[#666666]">{logicId}.tsx</span>
+        <span className="text-xs text-txt-secondary">{logicId}.tsx</span>
       </div>
-      <div className="p-6 bg-[#fafafa]  text-sm min-h-[220px]">
-        <pre className="text-[#222222] whitespace-pre-wrap outline-none">
+      <div className="p-6 bg-code text-sm min-h-[220px]">
+        <pre className="text-txt-main dark:text-txt-secondary whitespace-pre-wrap outline-none">
           <code>
             {`// Logic block is currently empty.
 // Write and connect your React Hooks (useState, useEffect, useRef) & pure JS logic here.`}

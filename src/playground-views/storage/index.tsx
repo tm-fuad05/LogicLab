@@ -26,7 +26,7 @@ export function ShoppingCartView() {
           <span>Developer Keyboard</span>
           <span>$129.00</span>
         </div>
-        <div className="border-t border-[#e5e7eb] pt-2 flex justify-between font-bold text-[#121212]">
+        <div className="border-t border-[#e5e7eb] pt-2 flex justify-between font-semibold text-[#121212]">
           <span>Total</span>
           <span>$129.00</span>
         </div>
