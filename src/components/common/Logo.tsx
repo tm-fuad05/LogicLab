@@ -1,9 +1,14 @@
+import { useEffect, useRef } from "react";
+import { useTheme } from "../../context/ThemeContext";
+
 interface LogoProps {
   className?: string;
   size?: "sm" | "md" | "lg";
 }
 
 export default function Logo({ className = "", size = "md" }: LogoProps) {
+  const { theme } = useTheme();
+
   const iconSizes = {
     sm: "w-6 h-6",
     md: "w-7 h-7",
@@ -18,45 +23,26 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
 
   return (
     <div
-      className={`flex items-center gap-1.5 group cursor-pointer ${className}`}
+      className={`flex items-center gap-2 group cursor-pointer ${className}`}
     >
-      {/* Sleek Tech Flask / Logic Circuit Hybrid Badge */}
-      <div
-        className={`${iconSizes[size]} bg-[#121212] dark:bg-card text-white flex items-center justify-center relative border border-dark-line dark:border-cyan shadow-xs transition-transform group-hover:scale-105`}
-      >
-        {/* Glow Dot */}
-        <span className="absolute top-1 right-1 w-1.5 h-1.5 bg-cyan rounded-none animate-pulse"></span>
-        <svg
-          className="w-4 h-4 text-white dark:text-cyan"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="square"
-          strokeLinejoin="miter"
-        >
-          {/* Flask shape with logic nodes inside */}
-          <path d="M9 3h6M10 3v5L4.5 17.5A2 2 0 0 0 6.3 21h11.4a2 2 0 0 0 1.8-3.5L14 8V3" />
-          <path
-            d="M8.5 14h7"
-            strokeDasharray="1 2"
-            stroke="var(--color-cyan)"
-            strokeWidth="2"
-          />
-        </svg>
-      </div>
+      {/* Tech Flask / Logic Circuit Hybrid Badge */}
+      <img
+        src={`${theme == "dark" ? " /logiclab-black.png" : "/logiclab-white.png"} `}
+        alt="LogicLab"
+        className={`${iconSizes[size]}`}
+      />
 
       {/* Styled LogicLab Typography */}
       <div className="flex items-baseline font-poppins">
         <span
-          className={`font-semibold tracking-tight text-txt-main ${textSizes[size]}`}
+          className={`font-semibold tracking-tight text-[#19222C] dark:text-white ${textSizes[size]}`}
         >
           Logic
         </span>
         <span
           className={`font-semibold tracking-tight text-cyan ${textSizes[size]}`}
         >
-          Lab
+          Lab<span className="text-txt-main">.</span>
         </span>
       </div>
     </div>
