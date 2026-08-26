@@ -34,17 +34,17 @@ export default function HomePage() {
           );
           return (
             <div key={cat.slug} className="space-y-4">
-              <div className="flex items-center justify-between border-b border-line pb-2">
+              <div className="flex flex-col md:flex-row items-start md:items-center gap-3 md:gap-0 justify-between border-b border-line pb-2">
                 <Link
                   to={`/category/${cat.slug}`}
                   className="group flex items-center gap-2"
                 >
-                  <h2 className="text-xl font-semibold text-txt-main group-hover:underline">
-                    {cat.title}
+                  <h2 className="text-lg md:text-xl font-semibold text-txt-main group-hover:underline">
+                    {cat.title}{" "}
+                    <span className="text-txt-secondary text-md md:text-lg">
+                      ({categoryItems.length})
+                    </span>
                   </h2>
-                  <span className="text-xs text-txt-secondary">
-                    ({categoryItems.length})
-                  </span>
                 </Link>
                 <Link
                   to={`/category/${cat.slug}`}
