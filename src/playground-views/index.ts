@@ -16,6 +16,7 @@ export const PLAYGROUND_REGISTRY: Record<string, React.ComponentType> = {
   'dropdown-popover': Visibility.DropdownView,
   'sidebar-drawer': Visibility.SidebarDrawerView,
   'tooltip-positioning': Visibility.TooltipView,
+  'keyboard-nav-esc': Visibility.KeyboardNavEscView,
 
   // Timers
   'otp-resend-timer': Timers.OtpTimerView,

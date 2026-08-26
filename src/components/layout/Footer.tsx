@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
     <footer className="border-t border-line bg-main py-5 px-4 sm:px-8 mt-auto transition-colors font-poppins">
-      <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-txt-secondary">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-txt-secondary">
         <div>
           <span>Developed by </span>
           <a

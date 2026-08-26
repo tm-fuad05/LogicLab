@@ -17,8 +17,8 @@ export const CATEGORIES: Category[] = [
     slug: "visibility",
     title: "UI Visibility, Navigation & Dialog Mechanics",
     description:
-      "Modals, tabs, accordions, popovers, off-canvas drawers & positioning logic.",
-    itemCount: 6,
+      "Modals, tabs, accordions, popovers, off-canvas drawers & keyboard dismissal.",
+    itemCount: 7,
   },
   {
     slug: "timers",
@@ -124,6 +124,15 @@ export const LOGIC_ITEMS: LogicItem[] = [
     categorySlug: "visibility",
     description:
       "Centered trigger badge/button with floating directional tooltip cards (Top, Bottom, Left, Right).",
+    codeSnippet: ``,
+  },
+  {
+    id: "keyboard-nav-esc",
+    title: "Keyboard Navigation & Esc Key Dismiss",
+    category: "UI Visibility, Navigation & Dialog Mechanics",
+    categorySlug: "visibility",
+    description:
+      "Interactive modal & popover dismissible via Esc key pressing and navigable with Arrow Up / Down keys.",
     codeSnippet: ``,
   },
   // Category 2: Timers

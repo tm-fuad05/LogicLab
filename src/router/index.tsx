@@ -1,5 +1,6 @@
-import { createBrowserRouter } from 'react-router';
+import { createBrowserRouter, Navigate } from 'react-router';
 import RootLayout, { rootLoader } from '../layouts/RootLayout';
+import LandingPage from '../pages/LandingPage';
 import HomePage, { homeLoader } from '../pages/HomePage';
 import CategoryOverview, { categoryLoader } from '../pages/CategoryOverview';
 import PlaygroundPage, { playgroundLoader } from '../pages/PlaygroundPage';
@@ -7,11 +8,14 @@ import PlaygroundPage, { playgroundLoader } from '../pages/PlaygroundPage';
 export const router = createBrowserRouter([
   {
     path: '/',
+    element: <LandingPage />,
+  },
+  {
     element: <RootLayout />,
     loader: rootLoader,
     children: [
       {
-        index: true,
+        path: 'home',
         element: <HomePage />,
         loader: homeLoader,
       },
@@ -26,5 +30,9 @@ export const router = createBrowserRouter([
         loader: playgroundLoader,
       },
     ],
+  },
+  {
+    path: '*',
+    element: <Navigate to="/" replace />,
   },
 ]);

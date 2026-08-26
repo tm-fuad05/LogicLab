@@ -79,7 +79,10 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
         </div>
 
         {/* Categorized Navigation Links */}
-        <nav className="p-4 space-y-6 flex-1 overflow-y-auto">
+        <nav
+          data-lenis-prevent
+          className="p-4 space-y-6 flex-1 overflow-y-auto"
+        >
           {filteredCategories.map((cat) => (
             <div key={cat.slug} className="space-y-2">
               <NavLink

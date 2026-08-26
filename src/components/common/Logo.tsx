@@ -22,7 +22,7 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
 
   return (
     <div
-      className={`flex items-center gap-2 group cursor-pointer ${className}`}
+      className={`flex items-center gap-0.5 group cursor-pointer ${className}`}
     >
       {/* Tech Flask / Logic Circuit Hybrid Badge */}
       <img
