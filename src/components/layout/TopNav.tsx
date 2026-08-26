@@ -17,7 +17,7 @@ export default function TopNav({ onToggleSidebar }: TopNavProps) {
 
       <div className="flex items-center gap-4">
         <a
-          href="https://github.com"
+          href="https://github.com/tm-fuad05/LogicLab"
           target="_blank"
           rel="noreferrer"
           className="text-xs px-3 py-1.5 border border-[#e5e7eb] text-[#121212] hover:border-[#222222] transition-colors"
