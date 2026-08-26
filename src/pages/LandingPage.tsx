@@ -65,7 +65,7 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-main text-txt-main font-poppins flex flex-col selection:bg-cyan/20 overflow-x-hidden">
       {/* UNIQUE INTERACTIVE NAVBAR */}
-      <header className="h-16 border-b border-line bg-main/90 backdrop-blur-md sticky top-0 z-50 flex items-center justify-between px-3 sm:px-8">
+      <header className="sticky top-0 h-16 border-b border-line bg-main/90 backdrop-blur-md sticky top-0 z-50 flex items-center justify-between px-3 sm:px-8">
         {/* Left: Brand Logo & Interactive Dropdown Menu */}
         <div className="flex items-center gap-3 sm:gap-6">
           <Link to="/" className="flex items-center gap-2">
