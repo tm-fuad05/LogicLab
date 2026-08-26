@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Sidebar from "./Sidebar";
 import TopNav from "./TopNav";
+import Footer from "./Footer";
 
 interface ShellProps {
   children: React.ReactNode;
@@ -17,6 +18,7 @@ export default function Shell({ children }: ShellProps) {
         <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-6xl w-full mx-auto">
           {children}
         </main>
+        <Footer />
       </div>
     </div>
   );
