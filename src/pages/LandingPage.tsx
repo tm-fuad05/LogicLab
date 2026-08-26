@@ -325,7 +325,7 @@ export default function LandingPage() {
         <section className="py-10 sm:py-16 px-4 sm:px-8 lg:px-12 max-w-6xl mx-auto space-y-6 sm:space-y-8">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-line pb-4">
             <div>
-              <h2 className="text-lg sm:text-xl font-bold text-txt-main">
+              <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-txt-main">
                 Interaction Categories
               </h2>
               <p className="text-xs text-txt-secondary mt-0.5">
