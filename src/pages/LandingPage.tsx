@@ -234,7 +234,7 @@ export default function LandingPage() {
 
       {/* Main Hero View */}
       <main className="flex-1">
-        <section className="relative overflow-hidden border-b border-line h-[calc(100vh-4rem)] min-h-[500px] flex flex-col justify-center items-center py-6 sm:py-10 px-4 sm:px-8 lg:px-12 bg-main text-center">
+        <section className="relative overflow-hidden border-b border-line h-[calc(100vh-4rem)] min-h-screen flex flex-col justify-center items-center py-6 sm:py-10 px-4 sm:px-8 lg:px-12 bg-main text-center">
           {/* Subtle Ambient Background Grid & Soft Glow */}
           <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] dark:bg-[radial-gradient(#27272a_1px,transparent_1px)] [background-size:24px_24px] sm:[background-size:28px_28px] opacity-60 pointer-events-none" />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 sm:w-96 h-48 sm:h-64 bg-cyan/10 blur-[80px] sm:blur-[100px] rounded-full pointer-events-none" />
@@ -245,19 +245,19 @@ export default function LandingPage() {
           <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 w-3.5 h-3.5 sm:w-4 sm:h-4 border-b border-l border-txt-main/20 pointer-events-none" />
           <div className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 w-3.5 h-3.5 sm:w-4 sm:h-4 border-b border-r border-txt-main/20 pointer-events-none" />
 
-          <div className="relative z-10 max-w-4xl mx-auto text-center flex flex-col items-center py-4 sm:py-8">
+          <div className="relative z-10 max-w-4xl mx-auto text-center flex flex-col items-center py-4 sm:py-20">
             {/* Version Pill Badge */}
             <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1 sm:py-1.5 bg-sidebar border border-line text-[11px] sm:text-xs font-mono text-txt-secondary mb-4 sm:mb-6 hover:border-dark-line dark:hover:border-cyan transition-colors">
               <span className="w-2 h-2 rounded-full bg-cyan animate-pulse shadow-[0_0_8px_#02befb]" />
               <span className="font-semibold text-txt-main">LogicLab v1.0</span>
               <span className="text-txt-muted">•</span>
-              <span className="hidden lg:block">Interactive Dev Notebook</span>
+              <span className="hidden lg:block">React & JS Logic Lab</span>
             </div>
 
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-txt-main max-w-4xl leading-[1.15] mb-4 sm:mb-5">
-              Visual Interaction Playground <br className="hidden sm:block" />
+              Visual Interactive Dev Notebook{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan via-cyan-400 to-cyan dark:from-cyan dark:via-cyan-300 dark:to-cyan">
-                for React & Web Developers
+                & Showcase for React & JS
               </span>
             </h1>
 
