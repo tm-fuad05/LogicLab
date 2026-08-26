@@ -33,7 +33,9 @@ export default function LandingPage() {
     };
 
     document.addEventListener("mousedown", handleOutSideClick);
-    return () => document.removeEventListener("mousedown", handleOutSideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutSideClick);
+    };
   }, []);
 
   // Ctrl + K keyboard shortcut listener for Quick Command Palette
@@ -76,7 +78,7 @@ export default function LandingPage() {
               className="flex items-center gap-1.5 text-xs font-medium text-txt-secondary hover:text-txt-main py-1 px-2.5 border border-line bg-sidebar hover:border-dark-line dark:hover:border-cyan transition-colors cursor-pointer"
             >
               <Layers className="w-3.5 h-3.5 text-cyan" />
-              <span>38 Mechanics</span>
+              <span>Categories</span>
               <ChevronDown
                 className={`w-3 h-3 transition-transform ${mechanicsDropdownOpen ? "rotate-180" : ""}`}
               />
@@ -169,7 +171,7 @@ export default function LandingPage() {
               <input
                 type="text"
                 autoFocus
-                placeholder="Search any of the 38 mechanics..."
+                placeholder="Search any of the 39 mechanics..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full bg-transparent text-sm text-txt-main placeholder-txt-muted outline-none"
@@ -225,7 +227,7 @@ export default function LandingPage() {
 
       {/* Main Hero View */}
       <main className="flex-1">
-        <section className="relative overflow-hidden border-b border-line py-20 px-6 sm:px-12 bg-main">
+        <section className="relative overflow-hidden border-b border-line h-[calc(100vh-4rem)] min-h-[500px] flex flex-col justify-center items-center py-6 px-6 sm:px-12 bg-main text-center">
           {/* Subtle Ambient Background Grid & Soft Glow */}
           <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] dark:bg-[radial-gradient(#27272a_1px,transparent_1px)] [background-size:28px_28px] opacity-60 pointer-events-none" />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-64 bg-cyan/10 blur-[100px] rounded-full pointer-events-none" />
@@ -238,32 +240,32 @@ export default function LandingPage() {
 
           <div className="relative z-10 max-w-4xl mx-auto text-center flex flex-col items-center">
             {/* Version Pill Badge */}
-            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 bg-sidebar border border-line text-xs font-mono text-txt-secondary mb-8 hover:border-dark-line dark:hover:border-cyan transition-colors">
+            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 bg-sidebar border border-line text-xs font-mono text-txt-secondary mb-6 hover:border-dark-line dark:hover:border-cyan transition-colors">
               <span className="w-2 h-2 rounded-full bg-cyan animate-pulse shadow-[0_0_8px_#02befb]" />
-              <span className="font-semibold text-txt-main">LogicLab v2.0</span>
+              <span className="font-semibold text-txt-main">LogicLab v1.0</span>
               <span className="text-txt-muted">•</span>
               <span>Interactive Dev Notebook</span>
             </div>
 
-            <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-txt-main max-w-4xl leading-[1.15] mb-6">
-              Master Web Interactivity with{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-cyan-500 to-cyan-600 dark:from-cyan dark:via-cyan-300 dark:to-cyan">
-                38 React Logic Scaffolds
+            <h1 className="text-3xl sm:text-6xl font-extrabold tracking-tight text-txt-main max-w-4xl leading-[1.12] mb-5">
+              Visual Interaction Playground <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan via-cyan-400 to-cyan dark:from-cyan dark:via-cyan-300 dark:to-cyan">
+                for React & Web Developers
               </span>
             </h1>
 
             {/* Subtitle */}
-            <p className="text-base sm:text-lg text-txt-secondary max-w-2xl leading-relaxed mb-10">
+            <p className="text-sm sm:text-base text-txt-secondary max-w-2xl leading-relaxed mb-8">
               Stateless presentational UI layouts paired with clean hook
               implementation notebook blocks. Designed for developers to
               inspect, learn, and implement real-world web interactivity.
             </p>
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-md mb-12">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-md mb-8">
               <Link
                 to="/home"
-                className="w-full sm:w-auto px-8 py-3.5 bg-txt-main text-main font-semibold text-sm flex items-center justify-center gap-2 hover:opacity-90 transition-all shadow-md group border border-txt-main cursor-pointer"
+                className="w-full sm:w-auto px-8 py-3 bg-txt-main text-main font-semibold text-xs uppercase tracking-wider flex items-center justify-center gap-2 hover:opacity-90 transition-all shadow-md group border border-txt-main cursor-pointer"
               >
                 <span>Explore Logics</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -271,12 +273,12 @@ export default function LandingPage() {
             </div>
 
             {/* Summary Highlights */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 pt-8 border-t border-line w-full max-w-xl text-left font-mono text-xs text-txt-secondary">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 pt-6 border-t border-line w-full max-w-xl text-left font-mono text-xs text-txt-secondary">
               <div className="flex items-center gap-2.5">
                 <Code2 className="w-4 h-4 text-txt-main flex-shrink-0" />
                 <div>
                   <div className="font-semibold text-txt-main">
-                    38 Scaffolds
+                    {LOGIC_ITEMS.length} Scaffolds
                   </div>
                   <div className="text-[11px] text-txt-muted">Stateless UI</div>
                 </div>
