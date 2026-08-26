@@ -14,7 +14,7 @@ export default function TopNav({ onToggleSidebar }: TopNavProps) {
       {/* Mobile Menu Toggle Button & Logo */}
       <div className="flex items-center gap-3">
         <Link to="/" className="lg:hidden flex items-center">
-          <Logo size="md" />
+          <Logo size="lg" />
         </Link>
       </div>
 
