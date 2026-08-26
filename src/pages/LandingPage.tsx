@@ -92,7 +92,10 @@ export default function LandingPage() {
                   <span>Interaction Categories</span>
                   <span>8 Categories</span>
                 </div>
-                <div className="space-y-1 max-h-64 sm:max-h-80 overflow-y-auto">
+                <div
+                  data-lenis-prevent
+                  className="space-y-1 max-h-64 sm:max-h-80 overflow-y-auto"
+                >
                   {CATEGORIES.map((cat) => (
                     <Link
                       key={cat.slug}
@@ -185,7 +188,10 @@ export default function LandingPage() {
               </button>
             </div>
 
-            <div className="max-h-72 sm:max-h-96 overflow-y-auto p-2 space-y-1">
+            <div
+              data-lenis-prevent
+              className="max-h-72 sm:max-h-96 overflow-y-auto p-2 space-y-1"
+            >
               {filteredItems.length === 0 ? (
                 <div className="p-6 text-center text-xs text-txt-muted font-mono">
                   No mechanics found for "{searchQuery}".
