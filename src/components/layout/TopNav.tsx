@@ -10,7 +10,7 @@ export default function TopNav({ onToggleSidebar }: TopNavProps) {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <header className="h-14 border-b border-line bg-main sticky top-0 z-30 flex items-center justify-between px-3 sm:px-8 transition-colors">
+    <header className="h-17 border-b border-line bg-main sticky top-0 z-30 flex items-center justify-between px-3 sm:px-8 transition-colors">
       {/* Mobile Menu Toggle Button & Logo */}
       <div className="flex items-center gap-3">
         <Link to="/" className="lg:hidden flex items-center">
