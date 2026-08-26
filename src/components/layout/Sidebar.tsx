@@ -56,15 +56,13 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
 
             {/* Close button for mobile drawer */}
             {onClose && (
-              <div>
-                <button
-                  onClick={onClose}
-                  className="lg:hidden text-txt-secondary hover:text-txt-main border border-line p-1"
-                  aria-label="Close menu"
-                >
-                  ✕
-                </button>
-              </div>
+              <button
+                onClick={onClose}
+                className="h-fit lg:hidden text-txt-secondary border border-line px-2.25 py-1"
+                aria-label="Close menu"
+              >
+                ✕
+              </button>
             )}
           </div>
 
