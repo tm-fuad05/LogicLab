@@ -41,7 +41,11 @@ export default function PlaygroundPage() {
       </PlaygroundFrame>
 
       {/* Bottom Blank Code Editor Block */}
-      <EmptyCodeEditor logicId={item.id} title={item.title} />
+      <EmptyCodeEditor
+        logicId={item.id}
+        title={item.title}
+        codeSnippet={item.codeSnippet}
+      />
     </div>
   );
 }

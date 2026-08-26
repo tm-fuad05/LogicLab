@@ -1,11 +1,13 @@
 interface EmptyCodeEditorProps {
   logicId: string;
   title: string;
+  codeSnippet: string;
 }
 
 export default function EmptyCodeEditor({
   logicId,
   title,
+  codeSnippet,
 }: EmptyCodeEditorProps) {
   return (
     <section className="mt-10 border border-line bg-card rounded-none font-poppins">
@@ -18,12 +20,9 @@ export default function EmptyCodeEditor({
         </div>
         <span className="text-xs text-txt-secondary">{logicId}.tsx</span>
       </div>
-      <div className="p-6 bg-code text-sm min-h-[220px]">
-        <pre className="text-txt-main dark:text-txt-secondary whitespace-pre-wrap outline-none">
-          <code>
-            {`// Logic block is currently empty.
-// Write and connect your React Hooks (useState, useEffect, useRef) & pure JS logic here.`}
-          </code>
+      <div className="bg-code text-sm min-h-[220px]">
+        <pre className="text-gray-700 dark:text-txt-secondary whitespace-pre-wrap outline-none">
+          <code>{codeSnippet}</code>
         </pre>
       </div>
     </section>
