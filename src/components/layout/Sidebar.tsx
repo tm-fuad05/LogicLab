@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { NavLink, useLocation } from "react-router";
 import { CATEGORIES, LOGIC_ITEMS } from "../../data/logicItems";
+import Logo from "../common/Logo";
 
 interface SidebarProps {
   isOpen?: boolean;
@@ -43,35 +44,27 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
       >
         {/* Brand Header */}
         <div className="sticky top-0">
-          <div className="p-5 border-b border-[#e5e7eb] bg-white flex items-center justify-between">
-            <div>
-              <NavLink to="/" className="flex items-center gap-2.5">
-                <svg className="w-5 h-5 text-[#00d8ff] animate-[spin_10s_linear_infinite]" viewBox="-11.5 -10.23174 23 20.46348" fill="currentColor">
-                  <circle cx="0" cy="0" r="2.05" fill="currentColor"/>
-                  <g stroke="currentColor" strokeWidth="1" fill="none">
-                    <ellipse rx="11" ry="4.2"/>
-                    <ellipse rx="11" ry="4.2" transform="rotate(60)"/>
-                    <ellipse rx="11" ry="4.2" transform="rotate(120)"/>
-                  </g>
-                </svg>
-                <span className="font-bold text-sm text-[#121212] tracking-wider uppercase">
-                  React UI Engine
-                </span>
+          <div className="p-5 border-b border-[#e5e7eb] bg-white flex justify-between">
+            <div className="space-y-2">
+              <NavLink to="/">
+                <Logo size="lg" />
               </NavLink>
-              <p className="text-xs text-[#666666] mt-1">
+              <p className="text-xs text-[#666666] mt-1.5">
                 Dev Notebook & Scaffolds
               </p>
             </div>
-            
+
             {/* Close button for mobile drawer */}
             {onClose && (
-              <button
-                onClick={onClose}
-                className="lg:hidden p-1.5 text-[#666666] hover:text-[#121212] border border-[#e5e7eb]"
-                aria-label="Close menu"
-              >
-                ✕
-              </button>
+              <div>
+                <button
+                  onClick={onClose}
+                  className="lg:hidden text-[#666666] hover:text-[#121212] border border-[#e5e7eb]"
+                  aria-label="Close menu"
+                >
+                  ✕
+                </button>
+              </div>
             )}
           </div>
 

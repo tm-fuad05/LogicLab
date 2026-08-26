@@ -17,7 +17,7 @@ export default function HomePage() {
       {/* Hero Section */}
       <div className="border-b border-[#e5e7eb] pb-8 space-y-3">
         <h1 className="text-3xl font-bold tracking-tight text-[#121212]">
-          React UI Logic Engine & Dev Notebook
+          React & JS Logics
         </h1>
         <p className="text-[#666666] text-sm max-w-2xl leading-relaxed">
           A visual playground showcasing 38 core Web & React UI interaction
@@ -39,7 +39,7 @@ export default function HomePage() {
                   to={`/category/${cat.slug}`}
                   className="group flex items-center gap-2"
                 >
-                  <h2 className="text-base font-bold text-[#121212] group-hover:underline">
+                  <h2 className="text-xl font-bold text-[#121212] group-hover:underline">
                     {cat.title}
                   </h2>
                   <span className="text-xs  text-[#666666]">
@@ -53,7 +53,6 @@ export default function HomePage() {
                   View Category →
                 </Link>
               </div>
-              <p className="text-xs text-[#666666] mb-4">{cat.description}</p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {categoryItems.map((item) => (

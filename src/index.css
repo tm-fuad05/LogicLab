@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 @import "tailwindcss";
 
 @layer base {
@@ -14,6 +14,8 @@
     --text-primary: #121212;
     --text-secondary: #666666;
     --text-muted: #999999;
+
+    --font-poppins: "Poppins", sans-serif;
   }
 
   * {
@@ -21,14 +23,25 @@
   }
 }
 
+@theme {
+  --font-poppins: var(--font-poppins);
+  --color-bg-main: var(--bg-main);
+  --color-bg-sidebar: var(--bg-sidebar);
+  --color-bg-card: var(--bg-card);
+  --color-bg-code: var(--bg-code);
+
+  --color-border-custom: var(--border-color);
+  --color-border-dark: var(--border-dark);
+
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+}
+
 body {
   background-color: var(--bg-main);
   color: var(--text-primary);
-  font-family:
-    "Inter",
-    -apple-system,
-    BlinkMacSystemFont,
-    sans-serif;
+  font-family: var(--font-poppins);
   min-height: 100vh;
   overflow-x: hidden;
 }

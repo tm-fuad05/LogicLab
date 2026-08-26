@@ -33,7 +33,6 @@ export default function CategoryOverview() {
           Category Overview
         </span>
         <h1 className="text-2xl font-bold text-[#121212]">{category.title}</h1>
-        <p className="text-sm text-[#666666]">{category.description}</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
