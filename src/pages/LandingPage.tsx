@@ -248,7 +248,7 @@ export default function LandingPage() {
               <span className="hidden lg:block">Interactive Dev Notebook</span>
             </div>
 
-            <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-txt-main max-w-4xl leading-[1.15] mb-4 sm:mb-5">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-txt-main max-w-4xl leading-[1.15] mb-4 sm:mb-5">
               Visual Interaction Playground <br className="hidden sm:block" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan via-cyan-400 to-cyan dark:from-cyan dark:via-cyan-300 dark:to-cyan">
                 for React & Web Developers
