@@ -45,14 +45,9 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
         {/* Brand Header */}
         <div className="sticky top-0">
           <div className="p-5 border-b border-line bg-card flex justify-between">
-            <div className="space-y-2">
-              <NavLink to="/">
-                <Logo size="lg" />
-              </NavLink>
-              <p className="text-xs text-txt-secondary mt-1.5">
-                Dev Notebook & Scaffolds
-              </p>
-            </div>
+            <NavLink to="/">
+              <Logo size="lg" />
+            </NavLink>
 
             {/* Close button for mobile drawer */}
             {onClose && (
