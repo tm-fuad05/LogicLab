@@ -274,7 +274,7 @@ export default function LandingPage() {
                 to="/home"
                 className="w-full sm:w-auto px-6 sm:px-8 py-3 bg-txt-main text-main font-semibold text-xs uppercase tracking-wider flex items-center justify-center gap-2 hover:opacity-90 transition-all shadow-md group border border-txt-main cursor-pointer"
               >
-                <span>Explore</span>
+                <span>Explore Logic</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>

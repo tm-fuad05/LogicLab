@@ -44,7 +44,8 @@ export default function PlaygroundPage() {
       <EmptyCodeEditor
         logicId={item.id}
         title={item.title}
-        codeSnippet={item.codeSnippet}
+        codeSnippetJS={item.codeSnippetJS}
+        codeSnippetTS={item.codeSnippetTS}
       />
     </div>
   );
