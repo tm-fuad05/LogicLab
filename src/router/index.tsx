@@ -1,13 +1,13 @@
-import { createBrowserRouter, Navigate } from 'react-router';
-import RootLayout, { rootLoader } from '../layouts/RootLayout';
-import LandingPage from '../pages/LandingPage';
-import HomePage, { homeLoader } from '../pages/HomePage';
-import CategoryOverview, { categoryLoader } from '../pages/CategoryOverview';
-import PlaygroundPage, { playgroundLoader } from '../pages/PlaygroundPage';
+import { createBrowserRouter, Navigate } from "react-router";
+import RootLayout, { rootLoader } from "../layouts/RootLayout";
+import LandingPage from "../pages/LandingPage";
+import HomePage, { homeLoader } from "../pages/HomePage";
+import CategoryOverview, { categoryLoader } from "../pages/CategoryOverview";
+import PlaygroundPage, { playgroundLoader } from "../pages/PlaygroundPage";
 
 export const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <LandingPage />,
   },
   {
@@ -15,24 +15,24 @@ export const router = createBrowserRouter([
     loader: rootLoader,
     children: [
       {
-        path: 'home',
+        path: "home",
         element: <HomePage />,
         loader: homeLoader,
       },
       {
-        path: 'category/:categoryId',
+        path: "category/:categoryId",
         element: <CategoryOverview />,
         loader: categoryLoader,
       },
       {
-        path: 'playground/:logicId',
+        path: "playground/:logicId",
         element: <PlaygroundPage />,
         loader: playgroundLoader,
       },
     ],
   },
   {
-    path: '*',
+    path: "*",
     element: <Navigate to="/" replace />,
   },
 ]);

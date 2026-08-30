@@ -28,7 +28,7 @@ export function ModalView() {
 
           {/* Modal Box */}
           <div
-            className={`max-w-md border border-line bg-card shadow-sm p-6 fixed z-[101] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ${
+            className={`w-11/12 md:max-w-lg border border-line bg-card shadow-sm p-6 fixed z-[101] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ${
               openModal
                 ? "opacity-100 scale-100 pointer-events-auto"
                 : "opacity-0 scale-90 pointer-events-none"
