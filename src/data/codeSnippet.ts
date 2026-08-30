@@ -6,7 +6,7 @@ export interface CodeSnippet {
 export const CODE_SNIPPETS: Record<string, CodeSnippet> = {
   // Category 1: Visibility
   "modal-dialog": {
-    js: `import { useState } from "react";
+    js: `import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 
 /**
@@ -14,13 +14,27 @@ import { createPortal } from "react-dom";
  * Modal / Dialog Engine - Key Logics Used:
  * 1. React Portals (createPortal): Modal dialog is rendered outside parent container hierarchy 
  *    directly under document.body to avoid z-index stacking issues.
- * 2. Overlay Backdrop: Absolute fixed overlay covering entire viewport (fixed inset-0) with backdrop blur.
- * 3. CSS Transitions: Uses opacity & scale properties with Tailwind classes to animate open/close without Framer Motion.
- * 4. Screen Centering: Fixed positioning with top-1/2, left-1/2 and -translate-x-1/2 -translate-y-1/2.
+ * 2. Body Scroll Lock: Uses useEffect to toggle document.body.style.overflow = "hidden" when openModal is active.
+ * 3. Overlay Backdrop: Absolute fixed overlay covering entire viewport (fixed inset-0) with backdrop blur.
+ * 4. CSS Transitions: Uses opacity & scale properties with Tailwind classes to animate open/close without Framer Motion.
+ * 5. Screen Centering: Fixed positioning with top-1/2, left-1/2 and -translate-x-1/2 -translate-y-1/2.
  * ----------------------------------------------------
  */
 export function ModalView() {
   const [openModal, setOpenModal] = useState(false);
+
+  // Disable background scrolling when modal is active
+  useEffect(() => {
+    if (openModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [openModal]);
 
   return (
     <div className="w-full relative py-8 flex flex-col items-center justify-center min-h-[250px] font-poppins">
@@ -87,7 +101,7 @@ export function ModalView() {
     </div>
   );
 }`,
-    ts: `import { useState } from "react";
+    ts: `import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 
 /**
@@ -95,13 +109,27 @@ import { createPortal } from "react-dom";
  * Modal / Dialog Engine - Key Logics Used:
  * 1. React Portals (createPortal): Modal dialog is rendered outside parent container hierarchy 
  *    directly under document.body to avoid z-index stacking issues.
- * 2. Overlay Backdrop: Absolute fixed overlay covering entire viewport (fixed inset-0) with backdrop blur.
- * 3. CSS Transitions: Uses opacity & scale properties with Tailwind classes to animate open/close without Framer Motion.
- * 4. Screen Centering: Fixed positioning with top-1/2, left-1/2 and -translate-x-1/2 -translate-y-1/2.
+ * 2. Body Scroll Lock: Uses useEffect to toggle document.body.style.overflow = "hidden" when openModal is active.
+ * 3. Overlay Backdrop: Absolute fixed overlay covering entire viewport (fixed inset-0) with backdrop blur.
+ * 4. CSS Transitions: Uses opacity & scale properties with Tailwind classes to animate open/close without Framer Motion.
+ * 5. Screen Centering: Fixed positioning with top-1/2, left-1/2 and -translate-x-1/2 -translate-y-1/2.
  * ----------------------------------------------------
  */
 export function ModalView() {
   const [openModal, setOpenModal] = useState<boolean>(false);
+
+  // Disable background scrolling when modal is active
+  useEffect(() => {
+    if (openModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [openModal]);
 
   return (
     <div className="w-full relative py-8 flex flex-col items-center justify-center min-h-[250px] font-poppins">

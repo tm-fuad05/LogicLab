@@ -5,6 +5,22 @@ import { createPortal } from "react-dom";
 export function ModalView() {
   const [openModal, setOpenModal] = useState(false);
 
+  // Disable background scrolling when modal is active
+  useEffect(() => {
+    if (openModal) {
+      document.body.style.overflow = "hidden";
+      document.body.setAttribute("data-lenis-prevent", "true");
+    } else {
+      document.body.style.overflow = "unset";
+      document.body.removeAttribute("data-lenis-prevent");
+    }
+
+    return () => {
+      document.body.style.overflow = "unset";
+      document.body.removeAttribute("data-lenis-prevent");
+    };
+  }, [openModal]);
+
   return (
     <div className="w-full relative py-8 flex flex-col items-center justify-center min-h-[250px] font-poppins">
       <button
