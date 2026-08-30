@@ -213,6 +213,26 @@ export default function EmptyCodeEditor({ logicId, title }) {
 
 ---
 
+### 3. Code Snippet & Logic Commenting Standard (`src/data/codeSnippet.ts`)
+
+Every code snippet added to `CODE_SNIPPETS` (both JavaScript and TypeScript versions) **MUST** include structured, top-level block comments (`/** ... */`) explicitly highlighting the core technical logic used:
+
+- **Key Points Summary**: A clear bulleted list of 3–5 core mechanics (e.g., React Portals, Hooks used, DOM APIs, CSS animation strategy, Event Listeners).
+- **Inline Step Comments**: In-line numbered comments for critical blocks (e.g., Backdrop overlay opacity transition, centered fixed transform positioning, window event cleanup).
+
+```typescript
+/**
+ * ----------------------------------------------------
+ * [Logic Name] - Key Logics Used:
+ * 1. [Core Mechanism 1]: Explanation of why and how it's used.
+ * 2. [Core Mechanism 2]: Explanation of hooks/APIs used.
+ * 3. [Core Mechanism 3]: Animation or performance optimizations.
+ * ----------------------------------------------------
+ */
+```
+
+---
+
 ## 📋 Complete UI Scaffolding Specs (30+ Modules, PDF Verified)
 
 Each module UI is rendered purely as layout structure without attached business logic [cite: 1]:

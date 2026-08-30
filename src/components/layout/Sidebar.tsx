@@ -38,7 +38,7 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
       )}
 
       <aside
-        className={`w-72 border-r border-line bg-sidebar flex flex-col fixed lg:sticky top-0 h-screen z-50 transition-transform duration-300 font-poppins ${
+        className={`w-72 border-r border-line bg-sidebar flex flex-col fixed lg:sticky top-0 h-screen z-40 transition-transform duration-300 font-poppins ${
           isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         }`}
       >

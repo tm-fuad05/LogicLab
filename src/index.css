@@ -71,7 +71,7 @@ body {
 
 code,
 pre {
-  font-family: "JetBrains Mono", monospace;
+  font-family: "Geist Mono", monospace;
 }
 
 /* Custom Scrollbar */
@@ -90,4 +90,27 @@ pre {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--text-muted);
+}
+
+/* Scoped Code Block Scrollbar (Strictly Dark in Light & Dark modes) */
+.code-editor-scroll::-webkit-scrollbar,
+.code-editor-scroll *::-webkit-scrollbar {
+  height: 6px !important;
+  width: 6px !important;
+}
+
+.code-editor-scroll::-webkit-scrollbar-track,
+.code-editor-scroll *::-webkit-scrollbar-track {
+  background: #09090b !important;
+}
+
+.code-editor-scroll::-webkit-scrollbar-thumb,
+.code-editor-scroll *::-webkit-scrollbar-thumb {
+  background: #3f3f46 !important;
+  border-radius: 0px !important;
+}
+
+.code-editor-scroll::-webkit-scrollbar-thumb:hover,
+.code-editor-scroll *::-webkit-scrollbar-thumb:hover {
+  background: #52525b !important;
 }

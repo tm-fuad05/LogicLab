@@ -4,8 +4,6 @@ export interface LogicItem {
   category: string;
   categorySlug: string;
   description: string;
-  codeSnippetJS: string;
-  codeSnippetTS: string;
 }
 export interface Category {
   slug: string;
@@ -80,8 +78,6 @@ export const LOGIC_ITEMS: LogicItem[] = [
     categorySlug: "visibility",
     description:
       'Trigger button, Backdrop overlay, Dialog container with header, body, and close "✕" icon.',
-    codeSnippetJS: ``,
-    codeSnippetTS: ``,
   },
   {
     id: "tab-switch",
@@ -90,8 +86,6 @@ export const LOGIC_ITEMS: LogicItem[] = [
     categorySlug: "visibility",
     description:
       "Horizontal tab bar with active underline/border and sample tab content panels.",
-    codeSnippetJS: ``,
-    codeSnippetTS: ``,
   },
   {
     id: "accordion-mechanics",
@@ -100,8 +94,6 @@ export const LOGIC_ITEMS: LogicItem[] = [
     categorySlug: "visibility",
     description:
       "3 vertically stacked accordion items with title headers, chevron indicators, and content containers.",
-    codeSnippetJS: ``,
-    codeSnippetTS: ``,
   },
   {
     id: "dropdown-popover",
@@ -110,8 +102,6 @@ export const LOGIC_ITEMS: LogicItem[] = [
     categorySlug: "visibility",
     description:
       "Menu trigger button with a floating absolute-positioned list menu with sample menu links.",
-    codeSnippetJS: ``,
-    codeSnippetTS: ``,
   },
   {
     id: "sidebar-drawer",
@@ -120,8 +110,6 @@ export const LOGIC_ITEMS: LogicItem[] = [
     categorySlug: "visibility",
     description:
       "Sliding off-canvas side drawer panel with a close button and backdrop layer.",
-    codeSnippetJS: ``,
-    codeSnippetTS: ``,
   },
   {
     id: "tooltip-positioning",
@@ -130,8 +118,6 @@ export const LOGIC_ITEMS: LogicItem[] = [
     categorySlug: "visibility",
     description:
       "Centered trigger badge/button with floating directional tooltip cards (Top, Bottom, Left, Right).",
-    codeSnippetJS: ``,
-    codeSnippetTS: ``,
   },
   {
     id: "keyboard-nav-esc",
@@ -140,8 +126,6 @@ export const LOGIC_ITEMS: LogicItem[] = [
     categorySlug: "visibility",
     description:
       "Interactive modal & popover dismissible via Esc key pressing and navigable with Arrow Up / Down keys.",
-    codeSnippetJS: ``,
-    codeSnippetTS: ``,
   },
   // Category 2: Timers
   {
@@ -151,8 +135,6 @@ export const LOGIC_ITEMS: LogicItem[] = [
     categorySlug: "timers",
     description:
       '6-digit sharp input boxes, "Resend Code" disabled-state button, countdown label (00:59).',
-    codeSnippetJS: ``,
-    codeSnippetTS: ``,
   },
   {
     id: "countdown-clock",
@@ -161,8 +143,6 @@ export const LOGIC_ITEMS: LogicItem[] = [
     categorySlug: "timers",
     description:
       "4 sharp metric cards displaying DAYS, HOURS, MINUTES, SECONDS.",
-    codeSnippetJS: ``,
-    codeSnippetTS: ``,
   },
   {
     id: "auto-carousel",
@@ -171,8 +151,6 @@ export const LOGIC_ITEMS: LogicItem[] = [
     categorySlug: "timers",
     description:
       "Slide viewport frame with previous/next indicator arrows and numbered dot indicators.",
-    codeSnippetJS: ``,
-    codeSnippetTS: ``,
   },
   {
     id: "inactivity-warning",
@@ -181,8 +159,6 @@ export const LOGIC_ITEMS: LogicItem[] = [
     categorySlug: "timers",
     description:
       'Inactive session alert banner and countdown modal dialog with "Stay Logged In" and "Logout Now" buttons.',
-    codeSnippetJS: ``,
-    codeSnippetTS: ``,
   },
   {
     id: "stopwatch-engine",
@@ -191,8 +167,6 @@ export const LOGIC_ITEMS: LogicItem[] = [
     categorySlug: "timers",
     description:
       "Large digital clock display (00:00:00.00) and Start, Pause, Reset action controls.",
-    codeSnippetJS: ``,
-    codeSnippetTS: ``,
   },
   // Category 3: Forms
   {
@@ -202,8 +176,6 @@ export const LOGIC_ITEMS: LogicItem[] = [
     categorySlug: "forms",
     description:
       "Form with Name, Email, Password inputs, inline validation error text blocks, and disabled submit button.",
-    codeSnippetJS: ``,
-    codeSnippetTS: ``,
   },
   {
     id: "multistep-form",
@@ -212,8 +184,6 @@ export const LOGIC_ITEMS: LogicItem[] = [
     categorySlug: "forms",
     description:
       "Step 1-2-3 progress step indicator bar with Next, Previous, and Submit action triggers.",
-    codeSnippetJS: ``,
-    codeSnippetTS: ``,
   },
   {
     id: "dynamic-fields",
@@ -222,8 +192,6 @@ export const LOGIC_ITEMS: LogicItem[] = [
     categorySlug: "forms",
     description:
       'List of dynamic input rows with "+ Add Row" and "- Remove" sharp icons.',
-    codeSnippetJS: ``,
-    codeSnippetTS: ``,
   },
   {
     id: "password-strength",
@@ -232,8 +200,6 @@ export const LOGIC_ITEMS: LogicItem[] = [
     categorySlug: "forms",
     description:
       "Password input with Show/Hide eye toggle, 4-tier segmented strength bar, and checklist criteria.",
-    codeSnippetJS: ``,
-    codeSnippetTS: ``,
   },
   {
     id: "unsaved-changes",
@@ -242,8 +208,6 @@ export const LOGIC_ITEMS: LogicItem[] = [
     categorySlug: "forms",
     description:
       "Dirty state banner, input text area, and browser exit simulation toggle.",
-    codeSnippetJS: ``,
-    codeSnippetTS: ``,
   },
   // Category 4: Data Processing
   {
@@ -253,8 +217,6 @@ export const LOGIC_ITEMS: LogicItem[] = [
     categorySlug: "data-processing",
     description:
       "Search input, Category dropdown, Price range slider, and a grid/list of dummy product cards.",
-    codeSnippetJS: ``,
-    codeSnippetTS: ``,
   },
   {
     id: "multicolumn-sorting",
@@ -263,8 +225,6 @@ export const LOGIC_ITEMS: LogicItem[] = [
     categorySlug: "data-processing",
     description:
       "Data table with sortable column headers (Title, Price, Date, Rating) with directional sort indicators (▲▼).",
-    codeSnippetJS: ``,
-    codeSnippetTS: ``,
   },
   {
     id: "pagination-logic",
@@ -273,8 +233,6 @@ export const LOGIC_ITEMS: LogicItem[] = [
     categorySlug: "data-processing",
     description:
       'Paginated table layout with Previous, Page numbers (1, 2, 3... 10), Next, and "Items per page" selector.',
-    codeSnippetJS: ``,
-    codeSnippetTS: ``,
   },
   {
     id: "bulk-selection",
@@ -283,8 +241,6 @@ export const LOGIC_ITEMS: LogicItem[] = [
     categorySlug: "data-processing",
     description:
       'Table with master "Select All" checkbox in <th>, row-level checkboxes, and batch action toolbar.',
-    codeSnippetJS: ``,
-    codeSnippetTS: ``,
   },
   {
     id: "keyword-highlighting",
@@ -293,8 +249,6 @@ export const LOGIC_ITEMS: LogicItem[] = [
     categorySlug: "data-processing",
     description:
       'Search input and article text blocks containing styled highlighted text marks (<mark class="bg-[#222] text-white">).',
-    codeSnippetJS: ``,
-    codeSnippetTS: ``,
   },
   // Category 5: Scroll & DOM
   {
@@ -304,8 +258,6 @@ export const LOGIC_ITEMS: LogicItem[] = [
     categorySlug: "scroll-dom",
     description:
       "Fixed top reading progress bar and a long sample article layout.",
-    codeSnippetJS: ``,
-    codeSnippetTS: ``,
   },
   {
     id: "scroll-to-top-sticky",
@@ -314,8 +266,6 @@ export const LOGIC_ITEMS: LogicItem[] = [
     categorySlug: "scroll-dom",
     description:
       'Floating sharp "↑ Top" bottom-right button and a sticky navigation bar with active scroll state.',
-    codeSnippetJS: ``,
-    codeSnippetTS: ``,
   },
   {
     id: "scroll-spy",
@@ -324,8 +274,6 @@ export const LOGIC_ITEMS: LogicItem[] = [
     categorySlug: "scroll-dom",
     description:
       "Fixed sidebar link list that highlights corresponding sections in a multi-section document.",
-    codeSnippetJS: ``,
-    codeSnippetTS: ``,
   },
   {
     id: "infinite-scroll",
@@ -334,8 +282,6 @@ export const LOGIC_ITEMS: LogicItem[] = [
     categorySlug: "scroll-dom",
     description:
       "Continuous card feed container with a bottom loading skeleton / spinner UI placeholder.",
-    codeSnippetJS: ``,
-    codeSnippetTS: ``,
   },
   // Category 6: Async & UI Feedback
   {
@@ -345,8 +291,6 @@ export const LOGIC_ITEMS: LogicItem[] = [
     categorySlug: "async-feedback",
     description:
       "View switcher displaying 3 distinct UI states: Skeleton Loader, Error State with Retry, and Loaded Data State.",
-    codeSnippetJS: ``,
-    codeSnippetTS: ``,
   },
   {
     id: "debounced-search",
@@ -355,8 +299,6 @@ export const LOGIC_ITEMS: LogicItem[] = [
     categorySlug: "async-feedback",
     description:
       'Search box with live search indicator ("Typing...", "Waiting 300ms...", "API Triggered") and result list.',
-    codeSnippetJS: ``,
-    codeSnippetTS: ``,
   },
   {
     id: "optimistic-ui",
@@ -365,8 +307,6 @@ export const LOGIC_ITEMS: LogicItem[] = [
     categorySlug: "async-feedback",
     description:
       "Like/Bookmark button and Upvote counters with immediate active states.",
-    codeSnippetJS: ``,
-    codeSnippetTS: ``,
   },
   {
     id: "copy-clipboard",
@@ -375,8 +315,6 @@ export const LOGIC_ITEMS: LogicItem[] = [
     categorySlug: "async-feedback",
     description:
       'Code/Coupon field with a copy trigger button showing transition to "Copied!" feedback text.',
-    codeSnippetJS: ``,
-    codeSnippetTS: ``,
   },
   {
     id: "polling-engine",
@@ -385,8 +323,6 @@ export const LOGIC_ITEMS: LogicItem[] = [
     categorySlug: "async-feedback",
     description:
       'Live feed ticker with "Last updated: 2s ago" indicator and manual refresh icon.',
-    codeSnippetJS: ``,
-    codeSnippetTS: ``,
   },
   // Category 7: Storage & State
   {
@@ -396,8 +332,6 @@ export const LOGIC_ITEMS: LogicItem[] = [
     categorySlug: "storage",
     description:
       "Product item cards with Add to Cart, quantity (+ / -) controls, item list drawer, and Subtotal summary box.",
-    codeSnippetJS: ``,
-    codeSnippetTS: ``,
   },
   {
     id: "theme-switcher",
@@ -406,8 +340,6 @@ export const LOGIC_ITEMS: LogicItem[] = [
     categorySlug: "storage",
     description:
       "Sharp toggle switch / radio selector between Light (#ffffff / #222222) and Inverted Dark mode.",
-    codeSnippetJS: ``,
-    codeSnippetTS: ``,
   },
   {
     id: "crosstab-sync",
@@ -416,8 +348,6 @@ export const LOGIC_ITEMS: LogicItem[] = [
     categorySlug: "storage",
     description:
       "Multi-window state visualizer illustrating shared broadcast state across browser tabs.",
-    codeSnippetJS: ``,
-    codeSnippetTS: ``,
   },
   {
     id: "recent-searches",
@@ -426,8 +356,6 @@ export const LOGIC_ITEMS: LogicItem[] = [
     categorySlug: "storage",
     description:
       'Search bar with recent search badge tags, "Clear All" link, and individual remove "✕" icons.',
-    codeSnippetJS: ``,
-    codeSnippetTS: ``,
   },
   // Category 8: Advanced Interactivity
   {
@@ -437,8 +365,6 @@ export const LOGIC_ITEMS: LogicItem[] = [
     categorySlug: "advanced",
     description:
       "Reorderable list cards with drag grip icons (:::) and drop target placeholders.",
-    codeSnippetJS: ``,
-    codeSnippetTS: ``,
   },
   {
     id: "image-magnifier",
@@ -447,8 +373,6 @@ export const LOGIC_ITEMS: LogicItem[] = [
     categorySlug: "advanced",
     description:
       "Dual view with image container, square zoom lens overlay, and side zoomed-in preview box.",
-    codeSnippetJS: ``,
-    codeSnippetTS: ``,
   },
   {
     id: "double-range-slider",
@@ -457,8 +381,6 @@ export const LOGIC_ITEMS: LogicItem[] = [
     categorySlug: "advanced",
     description:
       "Dual-thumb range track with Min / Max value badges ($10 - $500).",
-    codeSnippetJS: ``,
-    codeSnippetTS: ``,
   },
   {
     id: "custom-media-player",
@@ -467,7 +389,5 @@ export const LOGIC_ITEMS: LogicItem[] = [
     categorySlug: "advanced",
     description:
       "Custom video/audio frame with sharp Play/Pause button, timeline scrubber bar, timestamp (01:23 / 04:56), and volume slider.",
-    codeSnippetJS: ``,
-    codeSnippetTS: ``,
   },
 ];

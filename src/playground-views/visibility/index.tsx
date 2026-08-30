@@ -1,35 +1,73 @@
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 
 // Category 1: Visibility
 export function ModalView() {
+  const [openModal, setOpenModal] = useState(false);
+
   return (
     <div className="w-full relative py-8 flex flex-col items-center justify-center min-h-[250px] font-poppins">
-      <button className="px-5 py-2.5 bg-dark-line dark:bg-cyan text-white dark:text-main text-xs font-medium hover:opacity-90 transition-opacity">
+      <button
+        onClick={() => setOpenModal(true)}
+        className="px-5 py-2.5 bg-dark-line dark:bg-cyan text-white dark:text-main text-xs font-medium hover:opacity-90 transition-opacity cursor-pointer"
+      >
         Open Dialog Window
       </button>
 
-      <div className="mt-6 w-full max-w-md border border-line bg-card shadow-sm p-6 relative">
-        <div className="flex items-center justify-between border-b border-line pb-3 mb-4">
-          <h4 className="text-sm font-semibold text-txt-main">
-            Modal Header Title
-          </h4>
-          <span className="text-xs text-txt-secondary cursor-pointer hover:text-txt-main">
-            ✕
-          </span>
-        </div>
-        <p className="text-xs text-txt-secondary leading-relaxed mb-6">
-          This is a stateless presentational layout scaffold for a modal dialog
-          window with backdrop layer overlay.
-        </p>
-        <div className="flex justify-end gap-2">
-          <button className="px-3 py-1.5 border border-line text-xs text-txt-secondary">
-            Cancel
-          </button>
-          <button className="px-3 py-1.5 bg-dark-line dark:bg-cyan text-white dark:text-main text-xs">
-            Confirm Action
-          </button>
-        </div>
-      </div>
+      {/* Modal Box */}
+      {createPortal(
+        <>
+          {/* Backdrop Overlay */}
+          <div
+            onClick={() => setOpenModal(false)}
+            className={`fixed inset-0 z-[100] bg-black/50 backdrop-blur-xs transition-opacity duration-300 ${
+              openModal
+                ? "opacity-100 pointer-events-auto"
+                : "opacity-0 pointer-events-none"
+            }`}
+          />
+
+          {/* Modal Box (Directly Centered with Fixed Position) */}
+          <div
+            className={`max-w-md border border-line bg-card shadow-sm p-6 fixed z-[101] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ${
+              openModal
+                ? "opacity-100 scale-100 pointer-events-auto"
+                : "opacity-0 scale-90 pointer-events-none"
+            }`}
+          >
+            <div className="flex items-center justify-between border-b border-line pb-3 mb-4">
+              <h4 className="text-sm font-semibold text-txt-main">
+                Modal Header Title
+              </h4>
+              <button
+                onClick={() => setOpenModal(false)}
+                className="text-xs text-txt-secondary cursor-pointer hover:text-txt-main"
+              >
+                ✕
+              </button>
+            </div>
+            <p className="text-xs text-txt-secondary leading-relaxed mb-6">
+              This is a stateless presentational layout scaffold for a modal
+              dialog window with backdrop layer overlay.
+            </p>
+            <div className="flex justify-end gap-2">
+              <button
+                onClick={() => setOpenModal(false)}
+                className="px-3 py-1.5 border border-line text-xs text-txt-secondary cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => setOpenModal(false)}
+                className="px-3 py-1.5 bg-dark-line dark:bg-cyan text-white dark:text-main text-xs cursor-pointer"
+              >
+                Confirm Action
+              </button>
+            </div>
+          </div>
+        </>,
+        document.body,
+      )}
     </div>
   );
 }
@@ -194,7 +232,9 @@ export function KeyboardNavEscView() {
       <div className="p-4 border border-line bg-sidebar flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-cyan animate-pulse" />
-          <span className="font-semibold text-txt-main">Keyboard Listener State:</span>
+          <span className="font-semibold text-txt-main">
+            Keyboard Listener State:
+          </span>
           <span className="font-mono bg-card px-2 py-0.5 border border-line text-txt-main">
             {lastKeyPressed}
           </span>
@@ -209,11 +249,19 @@ export function KeyboardNavEscView() {
         {/* Left Box: Modal with Esc Key Close */}
         <div className="p-5 border border-line bg-card space-y-3">
           <div className="flex items-center justify-between border-b border-line pb-2">
-            <span className="font-semibold text-txt-main">1. Esc Key Dismiss Scaffold</span>
-            <span className="text-[10px] font-mono text-cyan">ESC LISTENER</span>
+            <span className="font-semibold text-txt-main">
+              1. Esc Key Dismiss Scaffold
+            </span>
+            <span className="text-[10px] font-mono text-cyan">
+              ESC LISTENER
+            </span>
           </div>
           <p className="text-txt-secondary text-[11px] leading-relaxed">
-            Click button to open modal overlay, then press <kbd className="px-1 py-0.5 bg-sidebar border border-line font-mono text-txt-main">ESC</kbd> anywhere to dismiss.
+            Click button to open modal overlay, then press{" "}
+            <kbd className="px-1 py-0.5 bg-sidebar border border-line font-mono text-txt-main">
+              ESC
+            </kbd>{" "}
+            anywhere to dismiss.
           </p>
           <button
             onClick={() => setModalOpen(true)}
@@ -225,11 +273,17 @@ export function KeyboardNavEscView() {
           {modalOpen && (
             <div className="p-4 border border-cyan bg-sidebar space-y-2 mt-2">
               <div className="flex justify-between items-center border-b border-line pb-1">
-                <span className="font-bold text-txt-main">Active Dialog Window</span>
-                <span className="text-[10px] font-mono text-cyan bg-cyan/10 px-1.5 py-0.5">PRESS ESC</span>
+                <span className="font-bold text-txt-main">
+                  Active Dialog Window
+                </span>
+                <span className="text-[10px] font-mono text-cyan bg-cyan/10 px-1.5 py-0.5">
+                  PRESS ESC
+                </span>
               </div>
               <p className="text-txt-secondary text-[11px]">
-                Modal is active. Press the <strong className="text-txt-main">ESC key</strong> on your keyboard to test event dismissal.
+                Modal is active. Press the{" "}
+                <strong className="text-txt-main">ESC key</strong> on your
+                keyboard to test event dismissal.
               </p>
               <button
                 onClick={() => setModalOpen(false)}
@@ -244,11 +298,21 @@ export function KeyboardNavEscView() {
         {/* Right Box: Arrow Key List Navigation */}
         <div className="p-5 border border-line bg-card space-y-3">
           <div className="flex items-center justify-between border-b border-line pb-2">
-            <span className="font-semibold text-txt-main">2. Arrow Key Focus Navigation</span>
+            <span className="font-semibold text-txt-main">
+              2. Arrow Key Focus Navigation
+            </span>
             <span className="text-[10px] font-mono text-cyan">↑ / ↓ KEYS</span>
           </div>
           <p className="text-txt-secondary text-[11px] leading-relaxed">
-            Use <kbd className="px-1 py-0.5 bg-sidebar border border-line font-mono text-txt-main">↑</kbd> and <kbd className="px-1 py-0.5 bg-sidebar border border-line font-mono text-txt-main">↓</kbd> arrow keys to shift focus highlight across list items.
+            Use{" "}
+            <kbd className="px-1 py-0.5 bg-sidebar border border-line font-mono text-txt-main">
+              ↑
+            </kbd>{" "}
+            and{" "}
+            <kbd className="px-1 py-0.5 bg-sidebar border border-line font-mono text-txt-main">
+              ↓
+            </kbd>{" "}
+            arrow keys to shift focus highlight across list items.
           </p>
 
           <div className="space-y-1">
@@ -264,7 +328,9 @@ export function KeyboardNavEscView() {
               >
                 <span>Option Item 0{num}</span>
                 {activeItem === num && (
-                  <span className="text-[10px] font-mono text-cyan">Active Focus</span>
+                  <span className="text-[10px] font-mono text-cyan">
+                    Active Focus
+                  </span>
                 )}
               </div>
             ))}
