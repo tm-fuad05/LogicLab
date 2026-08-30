@@ -14,7 +14,6 @@ export function ModalView() {
         Open Dialog Window
       </button>
 
-      {/* Modal Box */}
       {createPortal(
         <>
           {/* Backdrop Overlay */}
@@ -27,7 +26,7 @@ export function ModalView() {
             }`}
           />
 
-          {/* Modal Box (Directly Centered with Fixed Position) */}
+          {/* Modal Box */}
           <div
             className={`max-w-md border border-line bg-card shadow-sm p-6 fixed z-[101] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ${
               openModal

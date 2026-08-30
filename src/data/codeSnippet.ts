@@ -23,50 +23,66 @@ export function ModalView() {
   const [openModal, setOpenModal] = useState(false);
 
   return (
-    <div className="flex items-center justify-center p-4">
+    <div className="w-full relative py-8 flex flex-col items-center justify-center min-h-[250px] font-poppins">
       <button
         onClick={() => setOpenModal(true)}
-        className="px-5 py-2.5 bg-cyan text-main text-xs font-medium cursor-pointer"
+        className="px-5 py-2.5 bg-dark-line dark:bg-cyan text-white dark:text-main text-xs font-medium hover:opacity-90 transition-opacity cursor-pointer"
       >
         Open Dialog Window
       </button>
 
       {createPortal(
         <>
-          {/* 1. Backdrop Overlay with Smooth Opacity Transition */}
+          {/* Backdrop Overlay */}
           <div
             onClick={() => setOpenModal(false)}
             className={\`fixed inset-0 z-[100] bg-black/50 backdrop-blur-xs transition-opacity duration-300 \${
-              openModal ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+              openModal
+                ? "opacity-100 pointer-events-auto"
+                : "opacity-0 pointer-events-none"
             }\`}
           />
 
-          {/* 2. Modal Window centered with fixed transform positioning & scale transition */}
+          {/* Modal Box */}
           <div
-            className={\`max-w-md w-full border border-line bg-card shadow-sm p-6 fixed z-[101] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 \${
+            className={\`max-w-md border border-line bg-card shadow-sm p-6 fixed z-[101] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 \${
               openModal
                 ? "opacity-100 scale-100 pointer-events-auto"
                 : "opacity-0 scale-90 pointer-events-none"
             }\`}
           >
             <div className="flex items-center justify-between border-b border-line pb-3 mb-4">
-              <h4 className="text-sm font-semibold text-txt-main">Modal Title</h4>
-              <button onClick={() => setOpenModal(false)} className="text-xs text-txt-secondary">✕</button>
+              <h4 className="text-sm font-semibold text-txt-main">
+                Modal Header Title
+              </h4>
+              <button
+                onClick={() => setOpenModal(false)}
+                className="text-xs text-txt-secondary cursor-pointer hover:text-txt-main"
+              >
+                ✕
+              </button>
             </div>
-            <p className="text-xs text-txt-secondary mb-6">
-              This is a stateless presentational layout scaffold for a modal dialog window.
+            <p className="text-xs text-txt-secondary leading-relaxed mb-6">
+              This is a stateless presentational layout scaffold for a modal
+              dialog window with backdrop layer overlay.
             </p>
             <div className="flex justify-end gap-2">
-              <button onClick={() => setOpenModal(false)} className="px-3 py-1.5 border border-line text-xs">
+              <button
+                onClick={() => setOpenModal(false)}
+                className="px-3 py-1.5 border border-line text-xs text-txt-secondary cursor-pointer"
+              >
                 Cancel
               </button>
-              <button onClick={() => setOpenModal(false)} className="px-3 py-1.5 bg-cyan text-main text-xs">
+              <button
+                onClick={() => setOpenModal(false)}
+                className="px-3 py-1.5 bg-dark-line dark:bg-cyan text-white dark:text-main text-xs cursor-pointer"
+              >
                 Confirm Action
               </button>
             </div>
           </div>
         </>,
-        document.body
+        document.body,
       )}
     </div>
   );
@@ -88,50 +104,66 @@ export function ModalView() {
   const [openModal, setOpenModal] = useState<boolean>(false);
 
   return (
-    <div className="flex items-center justify-center p-4">
+    <div className="w-full relative py-8 flex flex-col items-center justify-center min-h-[250px] font-poppins">
       <button
         onClick={() => setOpenModal(true)}
-        className="px-5 py-2.5 bg-cyan text-main text-xs font-medium cursor-pointer"
+        className="px-5 py-2.5 bg-dark-line dark:bg-cyan text-white dark:text-main text-xs font-medium hover:opacity-90 transition-opacity cursor-pointer"
       >
         Open Dialog Window
       </button>
 
       {createPortal(
         <>
-          {/* 1. Backdrop Overlay with Smooth Opacity Transition */}
+          {/* Backdrop Overlay */}
           <div
             onClick={() => setOpenModal(false)}
             className={\`fixed inset-0 z-[100] bg-black/50 backdrop-blur-xs transition-opacity duration-300 \${
-              openModal ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+              openModal
+                ? "opacity-100 pointer-events-auto"
+                : "opacity-0 pointer-events-none"
             }\`}
           />
 
-          {/* 2. Modal Window centered with fixed transform positioning & scale transition */}
+          {/* Modal Box */}
           <div
-            className={\`max-w-md w-full border border-line bg-card shadow-sm p-6 fixed z-[101] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 \${
+            className={\`max-w-md border border-line bg-card shadow-sm p-6 fixed z-[101] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 \${
               openModal
                 ? "opacity-100 scale-100 pointer-events-auto"
                 : "opacity-0 scale-90 pointer-events-none"
             }\`}
           >
             <div className="flex items-center justify-between border-b border-line pb-3 mb-4">
-              <h4 className="text-sm font-semibold text-txt-main">Modal Title</h4>
-              <button onClick={() => setOpenModal(false)} className="text-xs text-txt-secondary">✕</button>
+              <h4 className="text-sm font-semibold text-txt-main">
+                Modal Header Title
+              </h4>
+              <button
+                onClick={() => setOpenModal(false)}
+                className="text-xs text-txt-secondary cursor-pointer hover:text-txt-main"
+              >
+                ✕
+              </button>
             </div>
-            <p className="text-xs text-txt-secondary mb-6">
-              This is a stateless presentational layout scaffold for a modal dialog window.
+            <p className="text-xs text-txt-secondary leading-relaxed mb-6">
+              This is a stateless presentational layout scaffold for a modal
+              dialog window with backdrop layer overlay.
             </p>
             <div className="flex justify-end gap-2">
-              <button onClick={() => setOpenModal(false)} className="px-3 py-1.5 border border-line text-xs">
+              <button
+                onClick={() => setOpenModal(false)}
+                className="px-3 py-1.5 border border-line text-xs text-txt-secondary cursor-pointer"
+              >
                 Cancel
               </button>
-              <button onClick={() => setOpenModal(false)} className="px-3 py-1.5 bg-cyan text-main text-xs">
+              <button
+                onClick={() => setOpenModal(false)}
+                className="px-3 py-1.5 bg-dark-line dark:bg-cyan text-white dark:text-main text-xs cursor-pointer"
+              >
                 Confirm Action
               </button>
             </div>
           </div>
         </>,
-        document.body
+        document.body,
       )}
     </div>
   );
