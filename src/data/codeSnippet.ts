@@ -197,7 +197,150 @@ export function ModalView() {
   );
 }`,
   },
-  "tab-switch": { js: ``, ts: `` },
+  "tab-switch": {
+    js: `import { useState } from "react";
+
+/**
+ * ----------------------------------------------------
+ * Tab Switching Mechanics - Key Logics Used:
+ * 1. Single Source of Truth (Data Model): Tab items stored in an array of objects outside the component to avoid unnecessary allocations.
+ * 2. Active Tab State: useState tracking the unique active tab identifier ('overview').
+ * 3. Array.prototype.find: Efficiently retrieves the active tab object in O(N) rather than re-mapping the entire array.
+ * 4. Conditional Class Switching: Applies active border and text highlight classes based on strict equality (activeTab === tab.tabName).
+ * 5. Dynamic Content Rendering: Only the description of the currently selected tab is rendered inside the content box.
+ * ----------------------------------------------------
+ */
+
+const tabs = [
+  {
+    tabName: "overview",
+    label: "Tab 1: Overview",
+    description:
+      "Welcome to the project overview. Here you can monitor live UI mechanics, state interactions, and active component scaffolds in real-time.",
+  },
+  {
+    tabName: "analytics",
+    label: "Tab 2: Analytics",
+    description:
+      "Analytics dashboard metrics indicate stable 60fps rendering, zero unintended re-renders, and optimal hook execution performance.",
+  },
+  {
+    tabName: "settings",
+    label: "Tab 3: Settings",
+    description:
+      "Manage global workspace settings, keyboard shortcut bindings, theme preferences, and developer preview behaviors.",
+  },
+];
+
+export function TabSwitchView() {
+  const [activeTab, setActiveTab] = useState("overview");
+
+  // Find active tab content
+  const activeTabContent = tabs.find((tab) => tab.tabName === activeTab);
+  const activeTabClass =
+    "border-b-2 border-dark-line dark:border-cyan text-txt-main bg-sidebar";
+  const inActiveClass = "text-txt-secondary hover:text-txt-main";
+
+  return (
+    <div className="w-full space-y-4 font-poppins">
+      <div className="flex border-b border-line">
+        {/* Show all tabs using map */}
+        {tabs.map((tab) => (
+          <button
+            key={tab.tabName}
+            onClick={() => setActiveTab(tab.tabName)}
+            className={\`px-4 py-2 text-xs font-medium \${
+              activeTab === tab.tabName ? activeTabClass : inActiveClass
+            }\`}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+      <div className="p-6 border border-line bg-card min-h-[120px]">
+        {/* Show the active tab content */}
+        <p className="text-xs text-txt-secondary leading-relaxed">
+          {activeTabContent?.description}
+        </p>
+      </div>
+    </div>
+  );
+}`,
+    ts: `import { useState } from "react";
+
+/**
+ * ----------------------------------------------------
+ * Tab Switching Mechanics - Key Logics Used:
+ * 1. Single Source of Truth (Data Model): Tab items typed with 'Tab' interface and declared outside component to prevent re-creation on render.
+ * 2. Active Tab State: useState<string> tracking the unique active tab identifier ('overview').
+ * 3. Array.prototype.find: Efficiently retrieves the active tab object without full-array re-mapping.
+ * 4. Conditional Class Switching: Applies active border and text highlight classes based on strict equality (activeTab === tab.tabName).
+ * 5. Dynamic Content Rendering: Only the active tab description is rendered cleanly inside the preview box.
+ * ----------------------------------------------------
+ */
+
+interface Tab {
+  tabName: string;
+  label: string;
+  description: string;
+}
+
+const tabs: Tab[] = [
+  {
+    tabName: "overview",
+    label: "Tab 1: Overview",
+    description:
+      "Welcome to the project overview. Here you can monitor live UI mechanics, state interactions, and active component scaffolds in real-time.",
+  },
+  {
+    tabName: "analytics",
+    label: "Tab 2: Analytics",
+    description:
+      "Analytics dashboard metrics indicate stable 60fps rendering, zero unintended re-renders, and optimal hook execution performance.",
+  },
+  {
+    tabName: "settings",
+    label: "Tab 3: Settings",
+    description:
+      "Manage global workspace settings, keyboard shortcut bindings, theme preferences, and developer preview behaviors.",
+  },
+];
+
+export function TabSwitchView() {
+  const [activeTab, setActiveTab] = useState<string>("overview");
+
+  // Find active tab content
+  const activeTabContent = tabs.find((tab) => tab.tabName === activeTab);
+  const activeTabClass =
+    "border-b-2 border-dark-line dark:border-cyan text-txt-main bg-sidebar";
+  const inActiveClass = "text-txt-secondary hover:text-txt-main";
+
+  return (
+    <div className="w-full space-y-4 font-poppins">
+      <div className="flex border-b border-line">
+        {/* Show all tabs using map */}
+        {tabs.map((tab) => (
+          <button
+            key={tab.tabName}
+            onClick={() => setActiveTab(tab.tabName)}
+            className={\`px-4 py-2 text-xs font-medium \${
+              activeTab === tab.tabName ? activeTabClass : inActiveClass
+            }\`}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+      <div className="p-6 border border-line bg-card min-h-[120px]">
+        {/* Show the active tab content */}
+        <p className="text-xs text-txt-secondary leading-relaxed">
+          {activeTabContent?.description}
+        </p>
+      </div>
+    </div>
+  );
+}`,
+  },
   "accordion-mechanics": { js: ``, ts: `` },
   "dropdown-popover": { js: ``, ts: `` },
   "sidebar-drawer": { js: ``, ts: `` },

@@ -88,23 +88,59 @@ export function ModalView() {
 }
 
 export function TabSwitchView() {
+  interface Tab {
+    tabName: string;
+    label: string;
+    description: string;
+  }
+
+  const tabs: Tab[] = [
+    {
+      tabName: "overview",
+      label: "Tab 1: Overview",
+      description:
+        "Welcome to the project overview. Here you can monitor live UI mechanics, state interactions, and active component scaffolds in real-time.",
+    },
+    {
+      tabName: "analytics",
+      label: "Tab 2: Analytics",
+      description:
+        "Analytics dashboard metrics indicate stable 60fps rendering, zero unintended re-renders, and optimal hook execution performance.",
+    },
+    {
+      tabName: "settings",
+      label: "Tab 3: Settings",
+      description:
+        "Manage global workspace settings, keyboard shortcut bindings, theme preferences, and developer preview behaviors.",
+    },
+  ];
+
+  const [activeTab, setActiveTab] = useState("overview");
+
+  // Find active tab content
+  const activeTabContent = tabs?.find((tab) => tab.tabName === activeTab);
+  const activeTabClass =
+    "border-b-2 border-dark-line dark:border-cyan text-txt-main bg-sidebar";
+  const inActiveClass = "text-txt-secondary hover:text-txt-main";
+
   return (
     <div className="w-full space-y-4 font-poppins">
       <div className="flex border-b border-line">
-        <button className="px-4 py-2 text-xs font-medium border-b-2 border-dark-line dark:border-cyan text-txt-main bg-sidebar">
-          Tab 1: Overview
-        </button>
-        <button className="px-4 py-2 text-xs font-medium text-txt-secondary hover:text-txt-main">
-          Tab 2: Analytics
-        </button>
-        <button className="px-4 py-2 text-xs font-medium text-txt-secondary hover:text-txt-main">
-          Tab 3: Settings
-        </button>
+        {/* Show all tabs using map */}
+        {tabs?.map((tab) => (
+          <button
+            key={tab.tabName}
+            onClick={() => setActiveTab(tab.tabName)}
+            className={`px-4 py-2 text-xs font-medium ${activeTab === tab.tabName ? activeTabClass : inActiveClass}`}
+          >
+            {tab.label}
+          </button>
+        ))}
       </div>
       <div className="p-6 border border-line bg-card min-h-[120px]">
-        <p className="text-xs text-txt-secondary">
-          Displaying tab content panel preview. Tab switching logic will be
-          defined by user hooks.
+        {/* Show the active tab content */}
+        <p className="text-xs text-txt-secondary leading-relaxed">
+          {activeTabContent?.description}
         </p>
       </div>
     </div>
