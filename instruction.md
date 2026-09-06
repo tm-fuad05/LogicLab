@@ -297,7 +297,7 @@ Each module UI is rendered purely as layout structure without attached business 
 35. `DragDropReorderView.jsx`: Vertical list items with draggable grab handles (`:::`) and drop zone placeholders [cite: 1].
 36. `ImageMagnifierView.jsx`: Product image preview box with square lens overlay and side zoom preview window [cite: 1].
 37. `DoubleRangeSliderView.jsx`: Dual-thumb price range slider track with Min and Max value displays [cite: 1].
-38. `CustomAudioVideoView.jsx`: Media player viewport with custom sharp play/pause, scrub bar, time display, and volume slider [cite: 1].
+39. `CustomAudioVideoView.jsx`: Media player viewport with custom sharp play/pause, scrub bar, time display, and volume slider [cite: 1].
 
 ---
 
@@ -306,5 +306,5 @@ Each module UI is rendered purely as layout structure without attached business 
 1. **Initialize Project**: Create the React structure using Vite + Tailwind CSS.
 2. **Apply Global Reset**: Ensure all elements strictly use `border-radius: 0px` (zero roundness) and pure `#ffffff` / `#fafafa` / `#222222` color palette inspired by Neon docs.
 3. **Configure Router**: Set up `createBrowserRouter` with `RootLayout`, `HomePage`, `CategoryOverview`, and `PlaygroundPage`.
-4. **Scaffold Views**: Generate all 38 presentational UI views in `src/playground-views/` as pure, un-interactive visual layouts.
+4. **Scaffold Views**: Generate all 39 presentational UI views in `src/playground-views/` as pure, un-interactive visual layouts.
 5. **Render Playground**: In `PlaygroundPage.jsx`, render the selected UI view in the upper container, and place the blank `EmptyCodeEditor` directly underneath.

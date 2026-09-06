@@ -550,6 +550,7 @@ export function DropdownView() {
     };
 
     document.addEventListener("mousedown", handleClick);
+    // Cleanup function
     return () => {
       document.removeEventListener("mousedown", handleClick);
     };
@@ -623,6 +624,7 @@ export function DropdownView() {
     };
 
     document.addEventListener("mousedown", handleClick);
+    // Cleanup function
     return () => {
       document.removeEventListener("mousedown", handleClick);
     };
@@ -669,7 +671,180 @@ export function DropdownView() {
   );
 }`,
   },
-  "sidebar-drawer": { js: ``, ts: `` },
+  "sidebar-drawer": {
+    js: `import { useState, useEffect, useRef } from "react";
+
+/**
+ * ----------------------------------------------------
+ * Sidebar Drawer (Off-Canvas) - Key Logics Used:
+ * 1. Outside Click Detection: Uses sideBarRef and buttonRef with document mousedown listener to close drawer when clicking outside.
+ * 2. Button Exclusion Check: Checks !buttonRef.current.contains(e.target) to prevent outside-click from triggering when clicking the toggle button.
+ * 3. Functional State Updater: Uses setIsOpen((prev) => !prev) to ensure accurate toggling without stale closure issues.
+ * 4. CSS Slide Transition: Uses Tailwind translate-x-0 (open) and translate-x-100 (closed) with duration-300 for smooth sliding animation.
+ * 5. Event Cleanup: Removes the mousedown event listener in the useEffect cleanup return.
+ * ----------------------------------------------------
+ */
+
+export function SidebarDrawerView() {
+  const buttonRef = useRef(null);
+  const sideBarRef = useRef(null);
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (
+        sideBarRef.current &&
+        !sideBarRef.current.contains(e.target) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(e.target)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    /*
+      --------------------------------------------------------------
+      If you want to handle with buttonRef (without inline onClick):
+      --------------------------------------------------------------
+      if (buttonRef.current && buttonRef.current.contains(e.target))
+         setIsOpen((prev) => !prev); // 👈 prev always gets the latest value, no dependency value needed.
+    */
+
+    document.addEventListener("mousedown", handleOutsideClick);
+    // Cleanup function
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
+
+  return (
+    <div className="w-full border border-line bg-sidebar min-h-[220px] p-6 relative overflow-hidden flex items-center justify-between font-poppins">
+      <button
+        ref={buttonRef}
+        onClick={() => setIsOpen((prev) => !prev)}
+        className="px-4 py-2 bg-dark-line dark:bg-cyan text-white dark:text-main text-xs cursor-pointer"
+      >
+        Open Off-Canvas Drawer
+      </button>
+      <div
+        ref={sideBarRef}
+        className={\`w-64 border-l border-line bg-card h-full p-4 flex flex-col justify-between shadow-sm transition-all duration-300 \${
+          isOpen ? "translate-x-0 pointer-events-auto" : "translate-x-100 pointer-events-none"
+        }\`}
+      >
+        <div>
+          <div className="flex items-center justify-between pb-3 border-b border-line mb-3">
+            <span className="text-xs font-semibold text-txt-main">
+              Off-Canvas Menu
+            </span>
+            <span
+              onClick={() => setIsOpen(false)}
+              className="text-xs text-txt-secondary cursor-pointer"
+            >
+              ✕
+            </span>
+          </div>
+          <p className="text-xs text-txt-secondary">
+            Drawer contents scaffold sliding from left/right.
+          </p>
+        </div>
+        <button
+          onClick={() => setIsOpen(false)}
+          className="w-full py-1.5 border border-line text-xs text-txt-secondary cursor-pointer"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  );
+}`,
+    ts: `import { useState, useEffect, useRef } from "react";
+
+/**
+ * ----------------------------------------------------
+ * Sidebar Drawer (Off-Canvas) - Key Logics Used:
+ * 1. Outside Click Detection: Uses sideBarRef and buttonRef with document mousedown listener to close drawer when clicking outside.
+ * 2. Button Exclusion Check: Checks !buttonRef.current.contains(e.target as Node) to prevent outside-click from triggering when clicking the toggle button.
+ * 3. Functional State Updater: Uses setIsOpen((prev) => !prev) to ensure accurate toggling without stale closure issues.
+ * 4. CSS Slide Transition: Uses Tailwind translate-x-0 (open) and translate-x-100 (closed) with duration-300 for smooth sliding animation.
+ * 5. Event Cleanup: Removes the mousedown event listener in the useEffect cleanup return.
+ * ----------------------------------------------------
+ */
+
+export function SidebarDrawerView() {
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
+  const sideBarRef = useRef<HTMLDivElement | null>(null);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent) => {
+      if (
+        sideBarRef.current &&
+        !sideBarRef.current.contains(e.target as Node) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(e.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    /*
+      --------------------------------------------------------------
+      If you want to handle with buttonRef (without inline onClick):
+      --------------------------------------------------------------
+      if (buttonRef.current && buttonRef.current.contains(e.target as Node))
+         setIsOpen((prev) => !prev); // 👈 prev always gets the latest value, no dependency value needed.
+    */
+
+    document.addEventListener("mousedown", handleOutsideClick);
+    // Cleanup function
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
+
+  return (
+    <div className="w-full border border-line bg-sidebar min-h-[220px] p-6 relative overflow-hidden flex items-center justify-between font-poppins">
+      <button
+        ref={buttonRef}
+        onClick={() => setIsOpen((prev) => !prev)}
+        className="px-4 py-2 bg-dark-line dark:bg-cyan text-white dark:text-main text-xs cursor-pointer"
+      >
+        Open Off-Canvas Drawer
+      </button>
+      <div
+        ref={sideBarRef}
+        className={\`w-64 border-l border-line bg-card h-full p-4 flex flex-col justify-between shadow-sm transition-all duration-300 \${
+          isOpen ? "translate-x-0 pointer-events-auto" : "translate-x-100 pointer-events-none"
+        }\`}
+      >
+        <div>
+          <div className="flex items-center justify-between pb-3 border-b border-line mb-3">
+            <span className="text-xs font-semibold text-txt-main">
+              Off-Canvas Menu
+            </span>
+            <span
+              onClick={() => setIsOpen(false)}
+              className="text-xs text-txt-secondary cursor-pointer"
+            >
+              ✕
+            </span>
+          </div>
+          <p className="text-xs text-txt-secondary">
+            Drawer contents scaffold sliding from left/right.
+          </p>
+        </div>
+        <button
+          onClick={() => setIsOpen(false)}
+          className="w-full py-1.5 border border-line text-xs text-txt-secondary cursor-pointer"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  );
+}`,
+  },
   "tooltip-positioning": { js: ``, ts: `` },
   "keyboard-nav-esc": { js: ``, ts: `` },
 

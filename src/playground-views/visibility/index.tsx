@@ -243,6 +243,7 @@ export function DropdownView() {
     };
 
     document.addEventListener("mousedown", handleClick);
+    //Cleanup function
     return () => {
       document.removeEventListener("mousedown", handleClick);
     };
@@ -286,24 +287,70 @@ export function DropdownView() {
 }
 
 export function SidebarDrawerView() {
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
+  const sideBarRef = useRef<HTMLDivElement | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent) => {
+      if (
+        sideBarRef.current &&
+        !sideBarRef.current.contains(e.target as Node) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(e.target as Node)
+      )
+        setIsOpen(false);
+    };
+
+    /*
+      --------------------------------------------------------------
+      If you want to handle with buttonRef (without inline onClick)
+      --------------------------------------------------------------
+      if (buttonRef.current && buttonRef.current.contains(e.target as Node))
+         setIsOpen((prev) => !prev); // 👈 prev always gets the latest value, no dependency value needed.
+      
+      */
+
+    document.addEventListener("mousedown", handleOutsideClick);
+    // Cleanup function
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
+
   return (
     <div className="w-full border border-line bg-sidebar min-h-[220px] p-6 relative overflow-hidden flex items-center justify-between font-poppins">
-      <button className="px-4 py-2 bg-dark-line dark:bg-cyan text-white dark:text-main text-xs">
+      <button
+        ref={buttonRef}
+        onClick={() => setIsOpen((prev) => !prev)}
+        className="px-4 py-2 bg-dark-line dark:bg-cyan text-white dark:text-main text-xs"
+      >
         Open Off-Canvas Drawer
       </button>
-      <div className="w-64 border-l border-line bg-card h-full p-4 flex flex-col justify-between shadow-sm">
+      <div
+        ref={sideBarRef}
+        className={`w-64 border-l border-line bg-card h-full p-4 flex flex-col justify-between shadow-sm transition-all duration-300 ${isOpen ? "translate-x-0 pointer-events-auto" : "translate-x-100 pointer-events-none"}`}
+      >
         <div>
           <div className="flex items-center justify-between pb-3 border-b border-line mb-3">
             <span className="text-xs font-semibold text-txt-main">
               Off-Canvas Menu
             </span>
-            <span className="text-xs text-txt-secondary">✕</span>
+            <span
+              onClick={() => setIsOpen(false)}
+              className="text-xs text-txt-secondary cursor-pointer"
+            >
+              ✕
+            </span>
           </div>
           <p className="text-xs text-txt-secondary">
             Drawer contents scaffold sliding from left/right.
           </p>
         </div>
-        <button className="w-full py-1.5 border border-line text-xs text-txt-secondary">
+        <button
+          onClick={() => setIsOpen(false)}
+          className="w-full py-1.5 border border-line text-xs text-txt-secondary cursor-pointer"
+        >
           Close
         </button>
       </div>
