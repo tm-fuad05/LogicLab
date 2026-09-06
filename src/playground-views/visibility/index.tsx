@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 
 // Category 1: Visibility
@@ -229,13 +229,37 @@ export function AccordionView() {
 }
 
 export function DropdownView() {
+  const dropDownRef = useRef<HTMLDivElement | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      if (
+        dropDownRef.current &&
+        !dropDownRef.current.contains(e.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClick);
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+    };
+  }, []);
+
   return (
     <div className="w-full flex justify-center py-6 font-poppins">
-      <div className="relative inline-block text-left">
-        <button className="px-4 py-2 border border-line bg-card text-xs font-medium text-txt-main flex items-center gap-2">
-          Options Menu <span className="text-[10px]">▼</span>
+      <div ref={dropDownRef} className="relative inline-block text-left">
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="px-4 py-2 border border-line bg-card text-xs font-medium text-txt-main flex items-center gap-2 cursor-pointer"
+        >
+          Options Menu <span className="text-[10px]">{isOpen ? "▲" : "▼"}</span>
         </button>
-        <div className="mt-2 w-48 border border-line bg-card shadow-sm p-1">
+        <div
+          className={`mt-2 w-48 border border-line bg-card shadow-sm p-1 transition-all duration-200 ${isOpen ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-5 pointer-events-none"}`}
+        >
           <a
             href="#"
             className="block px-3 py-2 text-xs text-txt-main hover:bg-sidebar"

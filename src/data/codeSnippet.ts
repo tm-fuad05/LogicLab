@@ -521,7 +521,154 @@ export function AccordionView() {
   );
 }`,
   },
-  "dropdown-popover": { js: ``, ts: `` },
+  "dropdown-popover": {
+    js: `import { useState, useEffect, useRef } from "react";
+
+/**
+ * ----------------------------------------------------
+ * Dropdown / Popover Menu - Key Logics Used:
+ * 1. Outside Click Detection: Uses useRef on the wrapper container and document.addEventListener("mousedown", handleClick) to detect outside clicks and close the menu.
+ * 2. Event Cleanup: Removes the mousedown listener in the useEffect cleanup function to prevent memory leaks.
+ * 3. Smooth CSS Animation: Applies Tailwind opacity-0/100, translate-y-5/0, and transition-all duration-200 for silky entrance/exit.
+ * 4. Pointer Events Safety: Uses pointer-events-none when closed to prevent accidental clicks on hidden dropdown items.
+ * 5. Dynamic Arrow Glyph: Conditionally displays up arrow (▲) when open and down arrow (▼) when closed.
+ * ----------------------------------------------------
+ */
+
+export function DropdownView() {
+  const dropDownRef = useRef(null);
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    const handleClick = (e) => {
+      if (
+        dropDownRef.current &&
+        !dropDownRef.current.contains(e.target)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClick);
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+    };
+  }, []);
+
+  return (
+    <div className="w-full flex justify-center py-6 font-poppins">
+      <div ref={dropDownRef} className="relative inline-block text-left">
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="px-4 py-2 border border-line bg-card text-xs font-medium text-txt-main flex items-center gap-2 cursor-pointer"
+        >
+          Options Menu <span className="text-[10px]">{isOpen ? "▲" : "▼"}</span>
+        </button>
+        <div
+          className={\`mt-2 w-48 border border-line bg-card shadow-sm p-1 transition-all duration-200 \${
+            isOpen
+              ? "opacity-100 translate-y-0 pointer-events-auto"
+              : "opacity-0 translate-y-5 pointer-events-none"
+          }\`}
+        >
+          <a
+            href="#"
+            className="block px-3 py-2 text-xs text-txt-main hover:bg-sidebar"
+          >
+            Account Settings
+          </a>
+          <a
+            href="#"
+            className="block px-3 py-2 text-xs text-txt-main hover:bg-sidebar"
+          >
+            API Credentials
+          </a>
+          <div className="my-1 border-t border-line"></div>
+          <a
+            href="#"
+            className="block px-3 py-2 text-xs text-red-500 hover:bg-sidebar"
+          >
+            Sign Out
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}`,
+    ts: `import { useState, useEffect, useRef } from "react";
+
+/**
+ * ----------------------------------------------------
+ * Dropdown / Popover Menu - Key Logics Used:
+ * 1. Outside Click Detection: Uses useRef<HTMLDivElement | null>(null) on the wrapper container and a mousedown listener to dismiss dropdown.
+ * 2. Event Cleanup: Removes the mousedown listener in the useEffect cleanup function to prevent memory leaks.
+ * 3. Smooth CSS Animation: Applies Tailwind opacity-0/100, translate-y-5/0, and transition-all duration-200 for silky entrance/exit.
+ * 4. Pointer Events Safety: Uses pointer-events-none when closed to prevent accidental clicks on hidden dropdown items.
+ * 5. Dynamic Arrow Glyph: Conditionally displays up arrow (▲) when open and down arrow (▼) when closed.
+ * ----------------------------------------------------
+ */
+
+export function DropdownView() {
+  const dropDownRef = useRef<HTMLDivElement | null>(null);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      if (
+        dropDownRef.current &&
+        !dropDownRef.current.contains(e.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClick);
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+    };
+  }, []);
+
+  return (
+    <div className="w-full flex justify-center py-6 font-poppins">
+      <div ref={dropDownRef} className="relative inline-block text-left">
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="px-4 py-2 border border-line bg-card text-xs font-medium text-txt-main flex items-center gap-2 cursor-pointer"
+        >
+          Options Menu <span className="text-[10px]">{isOpen ? "▲" : "▼"}</span>
+        </button>
+        <div
+          className={\`mt-2 w-48 border border-line bg-card shadow-sm p-1 transition-all duration-200 \${
+            isOpen
+              ? "opacity-100 translate-y-0 pointer-events-auto"
+              : "opacity-0 translate-y-5 pointer-events-none"
+          }\`}
+        >
+          <a
+            href="#"
+            className="block px-3 py-2 text-xs text-txt-main hover:bg-sidebar"
+          >
+            Account Settings
+          </a>
+          <a
+            href="#"
+            className="block px-3 py-2 text-xs text-txt-main hover:bg-sidebar"
+          >
+            API Credentials
+          </a>
+          <div className="my-1 border-t border-line"></div>
+          <a
+            href="#"
+            className="block px-3 py-2 text-xs text-red-500 hover:bg-sidebar"
+          >
+            Sign Out
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}`,
+  },
   "sidebar-drawer": { js: ``, ts: `` },
   "tooltip-positioning": { js: ``, ts: `` },
   "keyboard-nav-esc": { js: ``, ts: `` },
