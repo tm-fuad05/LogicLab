@@ -845,7 +845,171 @@ export function SidebarDrawerView() {
   );
 }`,
   },
-  "tooltip-positioning": { js: ``, ts: `` },
+  "tooltip-positioning": {
+    js: `import { useState } from "react";
+
+/**
+ * ----------------------------------------------------
+ * Tooltip Positioning Engine - Key Logics Used:
+ * 1. Data-Driven Scaffolding: Tooltip directions and content stored in an array of objects.
+ * 2. Hover State Tracking: Tracks 'isHover' (string | null) for the active hovered item.
+ * 3. Synthetic Event Listeners: Uses React's onMouseEnter to show tooltip and onMouseLeave to dismiss cleanly.
+ * 4. CSS Absolute Centering: Maps directional classes ('positionClasses') with translate-x/y-1/2 for precision alignment.
+ * 5. Event Protection: Applies pointer-events-none to tooltips to eliminate mouse flicker when entering the badge.
+ * ----------------------------------------------------
+ */
+
+export function TooltipView() {
+  const tooltips = [
+    {
+      id: "left",
+      label: "Left Tooltip",
+      position: "left",
+      tooltipText: "Tooltip on Left",
+    },
+    {
+      id: "top",
+      label: "Top Tooltip",
+      position: "top",
+      tooltipText: "Tooltip on Top",
+    },
+    {
+      id: "bottom",
+      label: "Bottom Tooltip",
+      position: "bottom",
+      tooltipText: "Tooltip on Bottom",
+    },
+    {
+      id: "right",
+      label: "Right Tooltip",
+      position: "right",
+      tooltipText: "Tooltip on Right",
+    },
+  ];
+
+  // Helper classes for static centered positioning based on direction
+  const positionClasses = {
+    top: "bottom-full left-1/2 -translate-x-1/2 mb-2",
+    bottom: "top-full left-1/2 -translate-x-1/2 mt-2",
+    left: "right-full top-1/2 -translate-y-1/2 mr-2",
+    right: "left-full top-1/2 -translate-y-1/2 ml-2",
+  };
+
+  const [isHover, setIsHover] = useState(null);
+
+  return (
+    <div className="w-full py-16 flex flex-col items-center justify-center gap-15 font-poppins">
+      {tooltips.map((item) => (
+        <div
+          key={item.id}
+          className="relative inline-flex items-center justify-center"
+        >
+          {/* Tooltip badge (Static layout) */}
+          <div
+            className={\`absolute \${positionClasses[item.position]} px-3 py-1 bg-dark-line dark:bg-cyan text-white dark:text-main text-[10px] whitespace-nowrap shadow-sm pointer-events-none transition-opacity duration-300 \${isHover === item.position ? "opacity-100" : "opacity-0"}\`}
+          >
+            {item.tooltipText}
+          </div>
+
+          {/* Trigger Button */}
+          <button
+            onMouseEnter={() => setIsHover(item.position)} // Shows tooltip for current hovered target
+            onMouseLeave={() => setIsHover(null)} // Dismisses tooltip when cursor leaves target
+            className="px-4 py-2 border border-line bg-card text-xs text-txt-main cursor-pointer hover:border-dark-line dark:hover:border-cyan transition-colors"
+          >
+            {item.label}
+          </button>
+        </div>
+      ))}
+    </div>
+  );
+}`,
+    ts: `import { useState } from "react";
+
+/**
+ * ----------------------------------------------------
+ * Tooltip Positioning Engine - Key Logics Used:
+ * 1. Strongly-Typed Contract: TooltipItem interface defining directional constraints ('top' | 'bottom' | 'left' | 'right').
+ * 2. Hover State Tracking: useState<string | null>(null) tracking active hovered direction.
+ * 3. Synthetic Event Listeners: Uses React's onMouseEnter to show tooltip and onMouseLeave to dismiss cleanly.
+ * 4. CSS Absolute Centering: Type-safe Record<TooltipItem["position"], string> mapping translate-x/y-1/2 coordinates.
+ * 5. Event Protection: Applies pointer-events-none to prevent accidental badge hover collision.
+ * ----------------------------------------------------
+ */
+
+export function TooltipView() {
+  interface TooltipItem {
+    id: string;
+    label: string;
+    position: "top" | "bottom" | "left" | "right";
+    tooltipText: string;
+  }
+
+  const tooltips: TooltipItem[] = [
+    {
+      id: "left",
+      label: "Left Tooltip",
+      position: "left",
+      tooltipText: "Tooltip on Left",
+    },
+    {
+      id: "top",
+      label: "Top Tooltip",
+      position: "top",
+      tooltipText: "Tooltip on Top",
+    },
+    {
+      id: "bottom",
+      label: "Bottom Tooltip",
+      position: "bottom",
+      tooltipText: "Tooltip on Bottom",
+    },
+    {
+      id: "right",
+      label: "Right Tooltip",
+      position: "right",
+      tooltipText: "Tooltip on Right",
+    },
+  ];
+
+  // Helper classes for static centered positioning based on direction
+  const positionClasses: Record<TooltipItem["position"], string> = {
+    top: "bottom-full left-1/2 -translate-x-1/2 mb-2",
+    bottom: "top-full left-1/2 -translate-x-1/2 mt-2",
+    left: "right-full top-1/2 -translate-y-1/2 mr-2",
+    right: "left-full top-1/2 -translate-y-1/2 ml-2",
+  };
+
+  const [isHover, setIsHover] = useState<string | null>(null);
+
+  return (
+    <div className="w-full py-16 flex flex-col items-center justify-center gap-15 font-poppins">
+      {tooltips.map((item) => (
+        <div
+          key={item.id}
+          className="relative inline-flex items-center justify-center"
+        >
+          {/* Tooltip badge (Static layout) */}
+          <div
+            className={\`absolute \${positionClasses[item.position]} px-3 py-1 bg-dark-line dark:bg-cyan text-white dark:text-main text-[10px] whitespace-nowrap shadow-sm pointer-events-none transition-opacity duration-300 \${isHover === item.position ? "opacity-100" : "opacity-0"}\`}
+          >
+            {item.tooltipText}
+          </div>
+
+          {/* Trigger Button */}
+          <button
+            onMouseEnter={() => setIsHover(item.position)} // Shows tooltip for current hovered target
+            onMouseLeave={() => setIsHover(null)} // Dismisses tooltip when cursor leaves target
+            className="px-4 py-2 border border-line bg-card text-xs text-txt-main cursor-pointer hover:border-dark-line dark:hover:border-cyan transition-colors"
+          >
+            {item.label}
+          </button>
+        </div>
+      ))}
+    </div>
+  );
+}`,
+  },
   "keyboard-nav-esc": { js: ``, ts: `` },
 
   // Category 2: Timers

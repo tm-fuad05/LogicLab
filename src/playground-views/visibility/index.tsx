@@ -359,25 +359,74 @@ export function SidebarDrawerView() {
 }
 
 export function TooltipView() {
-  return (
-    <div className="w-full py-12 flex flex-col items-center justify-center gap-6 font-poppins">
-      <div className="relative flex flex-col items-center">
-        <div className="mb-2 px-3 py-1 bg-dark-line dark:bg-cyan text-white dark:text-main text-[10px] whitespace-nowrap">
-          Tooltip Top Direction
-        </div>
-        <button className="px-4 py-2 border border-line bg-card text-xs text-txt-main">
-          Hover Me (Top Tooltip)
-        </button>
-      </div>
+  interface TooltipItem {
+    id: string;
+    label: string;
+    position: "top" | "bottom" | "left" | "right";
+    tooltipText: string;
+  }
 
-      <div className="relative flex flex-col items-center">
-        <button className="px-4 py-2 border border-line bg-card text-xs text-txt-main">
-          Hover Me (Bottom Tooltip)
-        </button>
-        <div className="mt-2 px-3 py-1 bg-dark-line dark:bg-cyan text-white dark:text-main text-[10px] whitespace-nowrap">
-          Tooltip Bottom Direction
+  const tooltips: TooltipItem[] = [
+    {
+      id: "left",
+      label: "Left Tooltip",
+      position: "left",
+      tooltipText: "Tooltip on Left",
+    },
+    {
+      id: "top",
+      label: "Top Tooltip",
+      position: "top",
+      tooltipText: "Tooltip on Top",
+    },
+    {
+      id: "bottom",
+      label: "Bottom Tooltip",
+      position: "bottom",
+      tooltipText: "Tooltip on Bottom",
+    },
+    {
+      id: "right",
+      label: "Right Tooltip",
+      position: "right",
+      tooltipText: "Tooltip on Right",
+    },
+  ];
+
+  // Helper classes for static centered positioning based on direction
+  const positionClasses: Record<TooltipItem["position"], string> = {
+    top: "bottom-full left-1/2 -translate-x-1/2 mb-2",
+    bottom: "top-full left-1/2 -translate-x-1/2 mt-2",
+    left: "right-full top-1/2 -translate-y-1/2 mr-2",
+    right: "left-full top-1/2 -translate-y-1/2 ml-2",
+  };
+
+  const [isHover, setIsHover] = useState<string | null>(null);
+
+  return (
+    <div className="w-full py-16 flex flex-col items-center justify-center gap-15 font-poppins">
+      {tooltips.map((item) => (
+        <div
+          key={item.id}
+          className="relative inline-flex items-center justify-center"
+        >
+          {/* Tooltip badge (Static layout) */}
+          <div
+            className={`absolute ${positionClasses[item.position]} px-3 py-1 bg-dark-line dark:bg-cyan text-white dark:text-main text-[10px] whitespace-nowrap shadow-sm pointer-events-none transition-opacity duration-300 ${isHover === item.position ? "opacity-100" : "opacity-0"}`}
+          >
+            {item.tooltipText}
+          </div>
+
+          {/* Trigger Button */}
+          <button
+            onMouseEnter={() => setIsHover(item.position)} // Shows tooltip for current hovered target
+            onMouseLeave={() => setIsHover(null)} // Dismisses tooltip when cursor leaves target
+            className="px-4 py-2 border border-line bg-card text-xs text-txt-main cursor-pointer hover:border-dark-line dark:hover:border-cyan transition-colors"
+          >
+            {item.label}
+          </button>
         </div>
-      </div>
+      ))}
     </div>
   );
 }
