@@ -203,40 +203,40 @@ export function ModalView() {
 /**
  * ----------------------------------------------------
  * Tab Switching Mechanics - Key Logics Used:
- * 1. Single Source of Truth (Data Model): Tab items stored in an array of objects outside the component to avoid unnecessary allocations.
+ * 1. Single Source of Truth (Data Model): Tab items stored in an array of objects with tabName, label, and description.
  * 2. Active Tab State: useState tracking the unique active tab identifier ('overview').
  * 3. Array.prototype.find: Efficiently retrieves the active tab object in O(N) rather than re-mapping the entire array.
- * 4. Conditional Class Switching: Applies active border and text highlight classes based on strict equality (activeTab === tab.tabName).
- * 5. Dynamic Content Rendering: Only the description of the currently selected tab is rendered inside the content box.
+ * 4. Conditional Class Switching: Applies active border and text highlight classes based on strict equality (activeTab === tab?.tabName).
+ * 5. Dynamic Content Rendering: Displays the description of the currently selected tab in the content box.
  * ----------------------------------------------------
  */
 
-const tabs = [
-  {
-    tabName: "overview",
-    label: "Tab 1: Overview",
-    description:
-      "Welcome to the project overview. Here you can monitor live UI mechanics, state interactions, and active component scaffolds in real-time.",
-  },
-  {
-    tabName: "analytics",
-    label: "Tab 2: Analytics",
-    description:
-      "Analytics dashboard metrics indicate stable 60fps rendering, zero unintended re-renders, and optimal hook execution performance.",
-  },
-  {
-    tabName: "settings",
-    label: "Tab 3: Settings",
-    description:
-      "Manage global workspace settings, keyboard shortcut bindings, theme preferences, and developer preview behaviors.",
-  },
-];
-
 export function TabSwitchView() {
+  const tabs = [
+    {
+      tabName: "overview",
+      label: "Tab 1: Overview",
+      description:
+        "Welcome to the project overview. Here you can monitor live UI mechanics, state interactions, and active component scaffolds in real-time.",
+    },
+    {
+      tabName: "analytics",
+      label: "Tab 2: Analytics",
+      description:
+        "Analytics dashboard metrics indicate stable 60fps rendering, zero unintended re-renders, and optimal hook execution performance.",
+    },
+    {
+      tabName: "settings",
+      label: "Tab 3: Settings",
+      description:
+        "Manage global workspace settings, keyboard shortcut bindings, theme preferences, and developer preview behaviors.",
+    },
+  ];
+
   const [activeTab, setActiveTab] = useState("overview");
 
   // Find active tab content
-  const activeTabContent = tabs.find((tab) => tab.tabName === activeTab);
+  const activeTabContent = tabs?.find((tab) => tab?.tabName === activeTab);
   const activeTabClass =
     "border-b-2 border-dark-line dark:border-cyan text-txt-main bg-sidebar";
   const inActiveClass = "text-txt-secondary hover:text-txt-main";
@@ -245,15 +245,15 @@ export function TabSwitchView() {
     <div className="w-full space-y-4 font-poppins">
       <div className="flex border-b border-line">
         {/* Show all tabs using map */}
-        {tabs.map((tab) => (
+        {tabs?.map((tab) => (
           <button
-            key={tab.tabName}
-            onClick={() => setActiveTab(tab.tabName)}
+            key={tab?.tabName}
+            onClick={() => setActiveTab(tab?.tabName)}
             className={\`px-4 py-2 text-xs font-medium \${
-              activeTab === tab.tabName ? activeTabClass : inActiveClass
+              activeTab === tab?.tabName ? activeTabClass : inActiveClass
             }\`}
           >
-            {tab.label}
+            {tab?.label}
           </button>
         ))}
       </div>
@@ -271,46 +271,46 @@ export function TabSwitchView() {
 /**
  * ----------------------------------------------------
  * Tab Switching Mechanics - Key Logics Used:
- * 1. Single Source of Truth (Data Model): Tab items typed with 'Tab' interface and declared outside component to prevent re-creation on render.
- * 2. Active Tab State: useState<string> tracking the unique active tab identifier ('overview').
+ * 1. Single Source of Truth (Data Model): Strongly-typed Tab interface contract defining tabName, label, and description.
+ * 2. Active Tab State: useState tracking the unique active tab identifier ('overview').
  * 3. Array.prototype.find: Efficiently retrieves the active tab object without full-array re-mapping.
- * 4. Conditional Class Switching: Applies active border and text highlight classes based on strict equality (activeTab === tab.tabName).
- * 5. Dynamic Content Rendering: Only the active tab description is rendered cleanly inside the preview box.
+ * 4. Conditional Class Switching: Applies active border and text highlight classes based on strict equality (activeTab === tab?.tabName).
+ * 5. Dynamic Content Rendering: Displays the description of the currently selected tab in the preview box.
  * ----------------------------------------------------
  */
 
-interface Tab {
-  tabName: string;
-  label: string;
-  description: string;
-}
-
-const tabs: Tab[] = [
-  {
-    tabName: "overview",
-    label: "Tab 1: Overview",
-    description:
-      "Welcome to the project overview. Here you can monitor live UI mechanics, state interactions, and active component scaffolds in real-time.",
-  },
-  {
-    tabName: "analytics",
-    label: "Tab 2: Analytics",
-    description:
-      "Analytics dashboard metrics indicate stable 60fps rendering, zero unintended re-renders, and optimal hook execution performance.",
-  },
-  {
-    tabName: "settings",
-    label: "Tab 3: Settings",
-    description:
-      "Manage global workspace settings, keyboard shortcut bindings, theme preferences, and developer preview behaviors.",
-  },
-];
-
 export function TabSwitchView() {
-  const [activeTab, setActiveTab] = useState<string>("overview");
+  interface Tab {
+    tabName: string;
+    label: string;
+    description: string;
+  }
+
+  const tabs: Tab[] = [
+    {
+      tabName: "overview",
+      label: "Tab 1: Overview",
+      description:
+        "Welcome to the project overview. Here you can monitor live UI mechanics, state interactions, and active component scaffolds in real-time.",
+    },
+    {
+      tabName: "analytics",
+      label: "Tab 2: Analytics",
+      description:
+        "Analytics dashboard metrics indicate stable 60fps rendering, zero unintended re-renders, and optimal hook execution performance.",
+    },
+    {
+      tabName: "settings",
+      label: "Tab 3: Settings",
+      description:
+        "Manage global workspace settings, keyboard shortcut bindings, theme preferences, and developer preview behaviors.",
+    },
+  ];
+
+  const [activeTab, setActiveTab] = useState("overview");
 
   // Find active tab content
-  const activeTabContent = tabs.find((tab) => tab.tabName === activeTab);
+  const activeTabContent = tabs?.find((tab) => tab?.tabName === activeTab);
   const activeTabClass =
     "border-b-2 border-dark-line dark:border-cyan text-txt-main bg-sidebar";
   const inActiveClass = "text-txt-secondary hover:text-txt-main";
@@ -319,15 +319,15 @@ export function TabSwitchView() {
     <div className="w-full space-y-4 font-poppins">
       <div className="flex border-b border-line">
         {/* Show all tabs using map */}
-        {tabs.map((tab) => (
+        {tabs?.map((tab) => (
           <button
-            key={tab.tabName}
-            onClick={() => setActiveTab(tab.tabName)}
+            key={tab?.tabName}
+            onClick={() => setActiveTab(tab?.tabName)}
             className={\`px-4 py-2 text-xs font-medium \${
-              activeTab === tab.tabName ? activeTabClass : inActiveClass
+              activeTab === tab?.tabName ? activeTabClass : inActiveClass
             }\`}
           >
-            {tab.label}
+            {tab?.label}
           </button>
         ))}
       </div>
@@ -341,7 +341,186 @@ export function TabSwitchView() {
   );
 }`,
   },
-  "accordion-mechanics": { js: ``, ts: `` },
+  "accordion-mechanics": {
+    js: `import { useState } from "react";
+
+/**
+ * ----------------------------------------------------
+ * Accordion Collapsible Mechanics - Key Logics Used:
+ * 1. Single Active State: Tracks 'isOpen' (number | null) for exclusive single-panel expansion.
+ * 2. Toggle Handler: Checks if clicked item is already open; if yes, collapses to null, else sets clicked ID.
+ * 3. CSS Grid Height Animation: Uses Tailwind 'grid-rows-[0fr]' to 'grid-rows-[1fr]' transition for silky-smooth height animation without height: auto glitches.
+ * 4. Dynamic Indicator Glyph: Rotates 180 degrees using transition-transform duration-300 and toggles (− / +).
+ * ----------------------------------------------------
+ */
+
+const accordionItems = [
+  {
+    id: 1,
+    title: "What is LogicLab and how does it work?",
+    content:
+      "LogicLab is an interactive developer notebook and UI showcase designed to help engineers learn, test, and master real-world React hooks and DOM interaction mechanics.",
+  },
+  {
+    id: 2,
+    title: "Are all UI scaffolds stateless by default?",
+    content:
+      "Yes, presentational components start completely unlinked. You can inspect the structure and implement pure React state, custom hooks, or event listeners directly.",
+  },
+  {
+    id: 3,
+    title: "Can I use multiple open accordion panels?",
+    content:
+      "You can configure accordion state to allow single-item exclusive expansion (accordion mode) or multi-item simultaneous expansion by storing an array of active IDs.",
+  },
+];
+
+export function AccordionView() {
+  const [isOpen, setIsOpen] = useState(null);
+
+  const handleOpen = (index) => {
+    setIsOpen((prev) => (prev === index ? null : index));
+  };
+
+  return (
+    <div className="w-full space-y-2 font-poppins">
+      {accordionItems?.map((item, idx) => {
+        const isExpanded = isOpen === idx;
+        return (
+          <div
+            key={item?.id}
+            className="border border-line bg-card overflow-hidden"
+          >
+            <div
+              onClick={() => handleOpen(idx)}
+              className="flex items-center justify-between px-5 py-3 bg-sidebar cursor-pointer select-none hover:bg-card transition-colors"
+            >
+              <span className="text-xs font-semibold text-txt-main">
+                {item?.title}
+              </span>
+              <span
+                className={\`text-xs text-txt-secondary font-mono transition-transform duration-300 \${
+                  isExpanded ? "rotate-180" : "rotate-0"
+                }\`}
+              >
+                {isExpanded ? "−" : "+"}
+              </span>
+            </div>
+
+            <div
+              className={\`grid transition-all duration-300 ease-in-out \${
+                isExpanded
+                  ? "grid-rows-[1fr] opacity-100 border-t border-line"
+                  : "grid-rows-[0fr] opacity-0"
+              }\`}
+            >
+              <div className="overflow-hidden">
+                <div className="p-5">
+                  <p className="text-xs text-txt-secondary leading-relaxed">
+                    {item?.content}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}`,
+    ts: `import { useState } from "react";
+
+/**
+ * ----------------------------------------------------
+ * Accordion Collapsible Mechanics - Key Logics Used:
+ * 1. Single Active State: Tracks 'isOpen' (number | null) by array index for exclusive single-panel expansion.
+ * 2. Toggle Handler: Checks if clicked item index is already open; if yes, collapses to null, else sets clicked index.
+ * 3. CSS Grid Height Animation: Uses Tailwind 'grid-rows-[0fr]' to 'grid-rows-[1fr]' transition for silky-smooth height animation without height: auto glitches.
+ * 4. Dynamic Indicator Glyph: Rotates 180 degrees using transition-transform duration-300 and toggles (− / +).
+ * ----------------------------------------------------
+ */
+
+interface AccordionItem {
+  id: number;
+  title: string;
+  content: string;
+}
+
+const accordionItems: AccordionItem[] = [
+  {
+    id: 1,
+    title: "What is LogicLab and how does it work?",
+    content:
+      "LogicLab is an interactive developer notebook and UI showcase designed to help engineers learn, test, and master real-world React hooks and DOM interaction mechanics.",
+  },
+  {
+    id: 2,
+    title: "Are all UI scaffolds stateless by default?",
+    content:
+      "Yes, presentational components start completely unlinked. You can inspect the structure and implement pure React state, custom hooks, or event listeners directly.",
+  },
+  {
+    id: 3,
+    title: "Can I use multiple open accordion panels?",
+    content:
+      "You can configure accordion state to allow single-item exclusive expansion (accordion mode) or multi-item simultaneous expansion by storing an array of active IDs.",
+  },
+];
+
+export function AccordionView() {
+  const [isOpen, setIsOpen] = useState<null | number>(null);
+
+  const handleOpen = (index: number) => {
+    setIsOpen((prev) => (prev === index ? null : index));
+  };
+
+  return (
+    <div className="w-full space-y-2 font-poppins">
+      {accordionItems?.map((item, idx) => {
+        const isExpanded = isOpen === idx;
+        return (
+          <div
+            key={item?.id}
+            className="border border-line bg-card overflow-hidden"
+          >
+            <div
+              onClick={() => handleOpen(idx)}
+              className="flex items-center justify-between px-5 py-3 bg-sidebar cursor-pointer select-none hover:bg-card transition-colors"
+            >
+              <span className="text-xs font-semibold text-txt-main">
+                {item?.title}
+              </span>
+              <span
+                className={\`text-xs text-txt-secondary font-mono transition-transform duration-300 \${
+                  isExpanded ? "rotate-180" : "rotate-0"
+                }\`}
+              >
+                {isExpanded ? "−" : "+"}
+              </span>
+            </div>
+
+            <div
+              className={\`grid transition-all duration-300 ease-in-out \${
+                isExpanded
+                  ? "grid-rows-[1fr] opacity-100 border-t border-line"
+                  : "grid-rows-[0fr] opacity-0"
+              }\`}
+            >
+              <div className="overflow-hidden">
+                <div className="p-5">
+                  <p className="text-xs text-txt-secondary leading-relaxed">
+                    {item?.content}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}`,
+  },
   "dropdown-popover": { js: ``, ts: `` },
   "sidebar-drawer": { js: ``, ts: `` },
   "tooltip-positioning": { js: ``, ts: `` },

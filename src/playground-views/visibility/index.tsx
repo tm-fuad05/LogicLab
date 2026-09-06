@@ -118,7 +118,7 @@ export function TabSwitchView() {
   const [activeTab, setActiveTab] = useState("overview");
 
   // Find active tab content
-  const activeTabContent = tabs?.find((tab) => tab.tabName === activeTab);
+  const activeTabContent = tabs?.find((tab) => tab?.tabName === activeTab);
   const activeTabClass =
     "border-b-2 border-dark-line dark:border-cyan text-txt-main bg-sidebar";
   const inActiveClass = "text-txt-secondary hover:text-txt-main";
@@ -129,11 +129,11 @@ export function TabSwitchView() {
         {/* Show all tabs using map */}
         {tabs?.map((tab) => (
           <button
-            key={tab.tabName}
-            onClick={() => setActiveTab(tab.tabName)}
-            className={`px-4 py-2 text-xs font-medium ${activeTab === tab.tabName ? activeTabClass : inActiveClass}`}
+            key={tab?.tabName}
+            onClick={() => setActiveTab(tab?.tabName)}
+            className={`px-4 py-2 text-xs font-medium ${activeTab === tab?.tabName ? activeTabClass : inActiveClass}`}
           >
-            {tab.label}
+            {tab?.label}
           </button>
         ))}
       </div>
@@ -148,28 +148,82 @@ export function TabSwitchView() {
 }
 
 export function AccordionView() {
+  interface AccordionItem {
+    id: number;
+    title: string;
+    content: string;
+  }
+
+  const accordionItems: AccordionItem[] = [
+    {
+      id: 1,
+      title: "What is LogicLab and how does it work?",
+      content:
+        "LogicLab is an interactive developer notebook and UI showcase designed to help engineers learn, test, and master real-world React hooks and DOM interaction mechanics.",
+    },
+    {
+      id: 2,
+      title: "Are all UI scaffolds stateless by default?",
+      content:
+        "Yes, presentational components start completely unlinked. You can inspect the structure and implement pure React state, custom hooks, or event listeners directly.",
+    },
+    {
+      id: 3,
+      title: "Can I use multiple open accordion panels?",
+      content:
+        "You can configure accordion state to allow single-item exclusive expansion (accordion mode) or multi-item simultaneous expansion by storing an array of active IDs.",
+    },
+  ];
+
+  const [isOpen, setIsOpen] = useState<null | number>(null);
+
+  const handleOpen = (index: number) => {
+    setIsOpen((prev) => (prev === index ? null : index));
+  };
+
   return (
     <div className="w-full space-y-2 font-poppins">
-      {[1, 2, 3].map((num) => (
-        <div key={num} className="border border-line bg-card">
-          <div className="flex items-center justify-between px-5 py-3 bg-sidebar cursor-pointer">
-            <span className="text-xs font-semibold text-txt-main">
-              Accordion Section {num} Title
-            </span>
-            <span className="text-xs text-txt-secondary">
-              {num === 1 ? "−" : "+"}
-            </span>
-          </div>
-          {num === 1 && (
-            <div className="p-5 border-t border-line">
-              <p className="text-xs text-txt-secondary">
-                Expanded panel body text scaffold for section {num}. Logic
-                editor below is ready for toggle state logic.
-              </p>
+      {accordionItems?.map((item, idx) => {
+        const isExpanded = isOpen === idx;
+        return (
+          <div
+            key={item?.id}
+            className="border border-line bg-card overflow-hidden"
+          >
+            <div
+              onClick={() => handleOpen(idx)}
+              className="flex items-center justify-between px-5 py-3 bg-sidebar cursor-pointer select-none hover:bg-card transition-colors"
+            >
+              <span className="text-xs font-semibold text-txt-main">
+                {item?.title}
+              </span>
+              <span
+                className={`text-xs text-txt-secondary font-mono transition-transform duration-300 ${
+                  isExpanded ? "rotate-180" : "rotate-0"
+                }`}
+              >
+                {isExpanded ? "−" : "+"}
+              </span>
             </div>
-          )}
-        </div>
-      ))}
+
+            <div
+              className={`grid transition-all duration-300 ease-in-out ${
+                isExpanded
+                  ? "grid-rows-[1fr] opacity-100 border-t border-line"
+                  : "grid-rows-[0fr] opacity-0"
+              }`}
+            >
+              <div className="overflow-hidden">
+                <div className="p-5">
+                  <p className="text-xs text-txt-secondary leading-relaxed">
+                    {item?.content}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }
