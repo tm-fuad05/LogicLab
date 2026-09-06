@@ -432,23 +432,20 @@ export function TooltipView() {
 }
 
 export function KeyboardNavEscView() {
-  const [activeItem, setActiveItem] = useState(1);
   const [modalOpen, setModalOpen] = useState(false);
-  const [lastKeyPressed, setLastKeyPressed] = useState("None");
+  const [lastKeyPress, setLastKeyPress] = useState("None");
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      setLastKeyPressed(e.key);
-      if (e.key === "Escape") {
-        setModalOpen(false);
-      } else if (e.key === "ArrowDown") {
-        setActiveItem((prev) => (prev % 3) + 1);
-      } else if (e.key === "ArrowUp") {
-        setActiveItem((prev) => (prev === 1 ? 3 : prev - 1));
-      }
+      setLastKeyPress(e.key);
+      if (e.key === "Escape") setModalOpen(false);
     };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
+
+    //Cleanup function
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
   }, []);
 
   return (
@@ -461,7 +458,7 @@ export function KeyboardNavEscView() {
             Keyboard Listener State:
           </span>
           <span className="font-mono bg-card px-2 py-0.5 border border-line text-txt-main">
-            {lastKeyPressed}
+            {lastKeyPress}
           </span>
         </div>
         <span className="text-[11px] text-txt-muted font-mono">
@@ -544,19 +541,15 @@ export function KeyboardNavEscView() {
             {[1, 2, 3].map((num) => (
               <div
                 key={num}
-                onClick={() => setActiveItem(num)}
-                className={`p-2.5 border transition-all cursor-pointer flex items-center justify-between ${
-                  activeItem === num
-                    ? "border-cyan bg-sidebar font-semibold text-txt-main"
-                    : "border-line text-txt-secondary hover:border-dark-line"
-                }`}
+                // onClick={() => setActiveItem(num)}
+                className={`p-2.5 border transition-all cursor-pointer flex items-center justify-between `}
               >
                 <span>Option Item 0{num}</span>
-                {activeItem === num && (
-                  <span className="text-[10px] font-mono text-cyan">
-                    Active Focus
-                  </span>
-                )}
+                {/* {activeItem === num && ( */}
+                <span className="text-[10px] font-mono text-cyan">
+                  Active Focus
+                </span>
+                {/* )} */}
               </div>
             ))}
           </div>
