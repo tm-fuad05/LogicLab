@@ -18,10 +18,24 @@ export default function Footer() {
           </div>
           <span className="text-txt-muted">•</span>
           <Link
+            to="/roadmap"
+            className="hover:text-txt-main hover:underline transition-colors"
+          >
+            Roadmap
+          </Link>
+          <span className="text-txt-muted">•</span>
+          <Link
             to="/about"
             className="hover:text-txt-main hover:underline transition-colors"
           >
-            About LogicLab
+            About
+          </Link>
+          <span className="text-txt-muted">•</span>
+          <Link
+            to="/faq"
+            className="hover:text-txt-main hover:underline transition-colors"
+          >
+            FAQ
           </Link>
         </div>
 

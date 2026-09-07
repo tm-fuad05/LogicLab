@@ -114,9 +114,15 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
           ))}
         </nav>
 
-        {/* Footer Meta */}
-        <div className="p-4 border-t border-line bg-card text-[11px] text-txt-secondary">
-          <span>38 UI Logic Modules</span>
+        {/* Footer Meta & Quick Nav */}
+        <div className="p-3 px-4 border-t border-line bg-card flex items-center justify-between text-[11px] text-txt-secondary">
+          <span>{LOGIC_ITEMS.length} UI Logic Modules</span>
+          <NavLink
+            to="/about"
+            className="hover:text-txt-main hover:underline transition-colors font-medium text-cyan-600 dark:text-cyan"
+          >
+            About LogicLab →
+          </NavLink>
         </div>
       </aside>
     </>

@@ -18,7 +18,7 @@ export default function HomePage() {
       {/* Top Banner / Welcome Bar inside the Main Shell */}
       <div className="border border-line bg-card p-6 sm:p-8 space-y-4 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-32 h-32 bg-cyan/5 rounded-full blur-2xl pointer-events-none" />
-        
+
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-line pb-4">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
@@ -41,15 +41,19 @@ export default function HomePage() {
         </div>
 
         <p className="text-txt-secondary text-sm max-w-3xl leading-relaxed">
-          Welcome to the main interaction playground. Choose a category from the sidebar or grid below to inspect stateless UI scaffolds and empty logic notebook blocks.
+          Welcome to the main interaction playground. Choose a category from the
+          sidebar or grid below to inspect stateless UI scaffolds and empty
+          logic notebook blocks.
         </p>
 
         <div className="flex flex-wrap items-center gap-4 text-xs font-mono text-txt-secondary pt-2">
           <span className="px-2.5 py-1 bg-sidebar border border-line flex items-center gap-1.5">
-            <Layers className="w-3.5 h-3.5 text-txt-main" /> {categories.length} Categories
+            <Layers className="w-3.5 h-3.5 text-txt-main" /> {categories.length}{" "}
+            Categories
           </span>
           <span className="px-2.5 py-1 bg-sidebar border border-line flex items-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5 text-cyan" /> {items.length} Interactive Mechanics
+            <Sparkles className="w-3.5 h-3.5 text-cyan" /> {items.length}{" "}
+            Interactive Mechanics
           </span>
         </div>
       </div>

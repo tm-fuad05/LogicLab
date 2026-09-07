@@ -11,7 +11,6 @@ import {
   ChevronDown,
   X,
   Menu,
-  Command,
   Activity,
   Zap,
 } from "lucide-react";
@@ -171,7 +170,7 @@ export default function LandingPage() {
         </div>
 
         {/* Center: Command Palette Search Bar */}
-        <div className="hidden md:flex items-center justify-center flex-1 max-w-sm mx-4 absolute left-1/2 -translate-x-1/2">
+        {/* <div className="hidden md:flex items-center justify-center flex-1 max-w-sm mx-4 absolute left-1/2 -translate-x-1/2">
           <motion.button
             whileHover={{ scale: 1.01 }}
             whileTap={{ scale: 0.99 }}
@@ -187,12 +186,12 @@ export default function LandingPage() {
               <Command className="w-2.5 h-2.5" /> K
             </kbd>
           </motion.button>
-        </div>
+        </div> */}
 
         {/* Right: Mobile Search, Nav Links, Theme Switcher & Explore Action */}
         <div className="flex items-center gap-2 sm:gap-3">
           {/* Mobile Search Button */}
-          <motion.button
+          {/* <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setSearchOpen(true)}
@@ -200,8 +199,29 @@ export default function LandingPage() {
             title="Search"
           >
             <Search className="w-3.5 h-3.5" />
-          </motion.button>
+          </motion.button> */}
 
+          {/* Nav Links (Desktop) */}
+          <nav className="absolute left-1/2 -translate-x-1/2 hidden sm:flex gap-x-2">
+            <Link
+              to="/roadmap"
+              className="h-9 flex items-center px-3 text-xs font-medium text-txt-secondary hover:text-txt-main hover:bg-sidebar transition-colors"
+            >
+              Roadmap
+            </Link>
+            <Link
+              to="/about"
+              className="h-9 flex items-center px-3 text-xs font-medium text-txt-secondary hover:text-txt-main hover:bg-sidebar transition-colors"
+            >
+              About
+            </Link>
+            <Link
+              to="/faq"
+              className="h-9 flex items-center px-3 text-xs font-medium text-txt-secondary hover:text-txt-main hover:bg-sidebar transition-colors"
+            >
+              FAQ
+            </Link>
+          </nav>
           {/* Theme Switcher */}
           <motion.button
             whileHover={{ scale: 1.05 }}
@@ -217,14 +237,6 @@ export default function LandingPage() {
             )}
           </motion.button>
 
-          {/* Nav Links Beside Explore (Desktop) */}
-          <Link
-            to="/about"
-            className="hidden md:flex h-8 sm:h-9 items-center px-3 text-xs font-medium text-txt-secondary hover:text-txt-main hover:bg-sidebar border border-line bg-card hover:border-dark-line dark:hover:border-cyan transition-colors"
-          >
-            About
-          </Link>
-
           {/* Primary Explore Action Button */}
           <motion.div
             whileHover={{ scale: 1.02 }}
@@ -233,10 +245,10 @@ export default function LandingPage() {
           >
             <Link
               to="/home"
-              className="h-8 sm:h-9 px-3 sm:px-4 bg-txt-main text-main hover:opacity-90 font-semibold text-[11px] sm:text-xs flex items-center justify-center gap-1.5 border border-txt-main transition-all cursor-pointer shadow-xs whitespace-nowrap group"
+              className="h-9 px-4 bg-txt-main text-main hover:opacity-90 font-semibold text-xs flex items-center justify-center gap-1.5 border border-txt-main transition-all cursor-pointer shadow-xs whitespace-nowrap group"
             >
               <span>Explore</span>
-              <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 group-hover:translate-x-0.5 transition-transform" />
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
             </Link>
           </motion.div>
 
@@ -298,11 +310,25 @@ export default function LandingPage() {
                   Playground Workspace
                 </Link>
                 <Link
+                  to="/roadmap"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block px-3 py-2 text-xs font-medium text-txt-main hover:bg-sidebar transition-colors border border-transparent hover:border-line"
+                >
+                  Roadmap & Changelog
+                </Link>
+                <Link
                   to="/about"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block px-3 py-2 text-xs font-medium text-txt-main hover:bg-sidebar transition-colors border border-transparent hover:border-line text-cyan-600 dark:text-cyan"
+                  className="block px-3 py-2 text-xs font-medium text-txt-main hover:bg-sidebar transition-colors border border-transparent hover:border-line"
                 >
                   About LogicLab
+                </Link>
+                <Link
+                  to="/faq"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block px-3 py-2 text-xs font-medium text-txt-main hover:bg-sidebar transition-colors border border-transparent hover:border-line"
+                >
+                  FAQ
                 </Link>
                 <Link
                   to="/home"
