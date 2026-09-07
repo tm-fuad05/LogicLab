@@ -56,7 +56,7 @@ export function OtpTimerView() {
           <div className="text-xs text-txt-secondary">
             <p>
               Resend code in{" "}
-              <span className="font-semibold font-mono text-txt-main dark:text-cyan">
+              <span className="font-semibold font-mono text-cyan-600 dark:text-cyan">
                 00:{timer >= 10 ? timer : `0${timer}`}
               </span>
             </p>
@@ -65,16 +65,15 @@ export function OtpTimerView() {
         <button
           onClick={handleResend}
           disabled={!canResend}
-          className="px-5 py-2.5 border border-line text-xs font-medium bg-cyan text-main cursor-pointer hover:bg-cyan/80 duration-200 disabled:text-txt-muted disabled:cursor-not-allowed disabled:opacity-75
-          disabled:bg-sidebar"
+          className="px-5 py-2.5 border border-line text-xs font-medium bg-dark-line text-white dark:bg-cyan dark:text-main cursor-pointer hover:opacity-90 transition-opacity duration-200 disabled:text-txt-muted disabled:cursor-not-allowed disabled:opacity-75 disabled:bg-sidebar disabled:border-line"
         >
           Resend Code
         </button>
-        <div className="flex flex-col items-center justify-center gap-1.5 text-[11px] text-txt-muted space-y-2">
-          <p className="font-medium text-txt-secondary border border-line px-1.5 py-0.5 rounded bg-card/60">
+        <div className="flex flex-col items-center justify-center gap-1.5 text-[11px] text-txt-muted space-y-1">
+          <p className="font-medium text-txt-main dark:text-txt-secondary border border-line px-2 py-0.5 rounded bg-sidebar shadow-xs">
             {isFirstAttempt ? "1st attempt (15s)" : "Subsequent (30s)"}
           </p>
-          <p className="text-[11px] text-txt-muted/70 tracking-wide">
+          <p className="text-[11px] text-txt-muted tracking-wide">
             [ ⚡ Demo note: Timer is accelerated for quick preview. ]
           </p>
         </div>
