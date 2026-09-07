@@ -5,7 +5,7 @@ import { createPortal } from "react-dom";
 export function ModalView() {
   const [openModal, setOpenModal] = useState(false);
 
-  // Disable background scrolling when modal is active
+  // Stop page scroll when modal is open
   useEffect(() => {
     if (openModal) {
       document.body.style.overflow = "hidden";
@@ -15,6 +15,7 @@ export function ModalView() {
       document.body.removeAttribute("data-lenis-prevent");
     }
 
+    // Enable scroll again when closed or unmounted
     return () => {
       document.body.style.overflow = "unset";
       document.body.removeAttribute("data-lenis-prevent");
@@ -115,9 +116,10 @@ export function TabSwitchView() {
     },
   ];
 
+  // Active tab name
   const [activeTab, setActiveTab] = useState("overview");
 
-  // Find active tab content
+  // Get data for the active tab
   const activeTabContent = tabs?.find((tab) => tab?.tabName === activeTab);
   const activeTabClass =
     "border-b-2 border-dark-line dark:border-cyan text-txt-main bg-sidebar";
@@ -126,7 +128,7 @@ export function TabSwitchView() {
   return (
     <div className="w-full space-y-4 font-poppins">
       <div className="flex border-b border-line">
-        {/* Show all tabs using map */}
+        {/* Tab buttons */}
         {tabs?.map((tab) => (
           <button
             key={tab?.tabName}
@@ -138,7 +140,7 @@ export function TabSwitchView() {
         ))}
       </div>
       <div className="p-6 border border-line bg-card min-h-[120px]">
-        {/* Show the active tab content */}
+        {/* Tab content */}
         <p className="text-xs text-txt-secondary leading-relaxed">
           {activeTabContent?.description}
         </p>
@@ -175,8 +177,10 @@ export function AccordionView() {
     },
   ];
 
+  // Open item index (null means all closed)
   const [isOpen, setIsOpen] = useState<null | number>(null);
 
+  // Click to open or close an item
   const handleOpen = (index: number) => {
     setIsOpen((prev) => (prev === index ? null : index));
   };
@@ -229,9 +233,11 @@ export function AccordionView() {
 }
 
 export function DropdownView() {
+  // Box reference to check click outside
   const dropDownRef = useRef<HTMLDivElement | null>(null);
   const [isOpen, setIsOpen] = useState(false);
 
+  // Close menu when clicked outside
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
       if (
@@ -243,7 +249,7 @@ export function DropdownView() {
     };
 
     document.addEventListener("mousedown", handleClick);
-    //Cleanup function
+    // Remove click listener
     return () => {
       document.removeEventListener("mousedown", handleClick);
     };
@@ -287,10 +293,12 @@ export function DropdownView() {
 }
 
 export function SidebarDrawerView() {
+  // References for button and sidebar
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const sideBarRef = useRef<HTMLDivElement | null>(null);
   const [isOpen, setIsOpen] = useState(false);
 
+  // Close sidebar when clicked outside
   useEffect(() => {
     const handleOutsideClick = (e: MouseEvent) => {
       if (
@@ -309,10 +317,10 @@ export function SidebarDrawerView() {
       if (buttonRef.current && buttonRef.current.contains(e.target as Node))
          setIsOpen((prev) => !prev); // 👈 prev always gets the latest value, no dependency value needed.
       
-      */
+    */
 
     document.addEventListener("mousedown", handleOutsideClick);
-    // Cleanup function
+    // Remove click listener
     return () => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
@@ -401,6 +409,7 @@ export function TooltipView() {
     right: "left-full top-1/2 -translate-y-1/2 ml-2",
   };
 
+  // Currently hovered tooltip
   const [isHover, setIsHover] = useState<string | null>(null);
 
   return (
@@ -410,17 +419,17 @@ export function TooltipView() {
           key={item.id}
           className="relative inline-flex items-center justify-center"
         >
-          {/* Tooltip badge (Static layout) */}
+          {/* Tooltip badge */}
           <div
             className={`absolute ${positionClasses[item.position]} px-3 py-1 bg-dark-line dark:bg-cyan text-white dark:text-main text-[10px] whitespace-nowrap shadow-sm pointer-events-none transition-opacity duration-300 ${isHover === item.position ? "opacity-100" : "opacity-0"}`}
           >
             {item.tooltipText}
           </div>
 
-          {/* Trigger Button */}
+          {/* Trigger button */}
           <button
-            onMouseEnter={() => setIsHover(item.position)} // Shows tooltip for current hovered target
-            onMouseLeave={() => setIsHover(null)} // Dismisses tooltip when cursor leaves target
+            onMouseEnter={() => setIsHover(item.position)} // Show on hover
+            onMouseLeave={() => setIsHover(null)} // Hide when mouse leaves
             className="px-4 py-2 border border-line bg-card text-xs text-txt-main cursor-pointer hover:border-dark-line dark:hover:border-cyan transition-colors"
           >
             {item.label}
@@ -434,20 +443,23 @@ export function TooltipView() {
 export function KeyboardNavEscView() {
   const [modalOpen, setModalOpen] = useState(false);
   const [lastKeyPress, setLastKeyPress] = useState("None");
+  // Active selected item number (1, 2, or 3)
   const [activeArrowFocus, setActiveArrowFocus] = useState(1);
 
+  // Listen to keyboard keys
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       setLastKeyPress(e.key);
-      if (e.key === "Escape") setModalOpen(false);
+      if (e.key === "Escape")
+        setModalOpen(false); // Close modal on Escape
       else if (e.key === "ArrowDown")
-        setActiveArrowFocus((prev) => (prev === 3 ? 1 : prev + 1));
+        setActiveArrowFocus((prev) => (prev === 3 ? 1 : prev + 1)); // Move down
       else if (e.key === "ArrowUp")
-        setActiveArrowFocus((prev) => (prev === 1 ? 3 : prev - 1));
+        setActiveArrowFocus((prev) => (prev === 1 ? 3 : prev - 1)); // Move up
     };
     document.addEventListener("keydown", handleKeyDown);
 
-    //Cleanup function
+    // Remove key listener
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };

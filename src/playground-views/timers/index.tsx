@@ -1,8 +1,45 @@
+import { useEffect, useState } from "react";
+
 // Category 2: Timers
 export function OtpTimerView() {
+  const [timer, setTimer] = useState(0);
+  const [canResend, setCanResend] = useState(true);
+  const [isFirstAttempt, setIsFirstAttempt] = useState(true);
+
+  useEffect(() => {
+    let timerCount: any;
+
+    // While timer is active, decrement by 1 each interval
+    if (timer > 0) {
+      timerCount = setInterval(() => {
+        setTimer((prev) => prev - 1);
+      }, 300);
+    }
+
+    // When timer expires, re-enable resending
+    if (timer === 0) {
+      clearInterval(timerCount);
+      setCanResend(true);
+    }
+
+    // Cleanup function
+    return () => clearInterval(timerCount);
+  }, [timer]);
+
+  // Handle OTP resend click logic (15s first attempt, 30s subsequent)
+  const handleResend = () => {
+    setCanResend(false);
+    if (isFirstAttempt) {
+      setTimer(15); // Shorter cooldown for the first attempt
+      setIsFirstAttempt(false);
+    } else {
+      setTimer(30); // Longer cooldown for repeated attempts
+    }
+  };
+
   return (
-    <div className="w-full max-w-md mx-auto space-y-6 text-center">
-      <div className="flex justify-center gap-2">
+    <div className="w-full max-w-md mx-auto space-y-6 text-center font-poppins py-4">
+      <div className="flex justify-center gap-2.5">
         {[1, 2, 3, 4, 5, 6].map((i) => (
           <input
             key={i}
@@ -10,21 +47,37 @@ export function OtpTimerView() {
             maxLength={1}
             readOnly
             value={i === 1 ? "5" : i === 2 ? "2" : ""}
-            className="w-10 h-12 text-center text-sm  border border-[#e5e7eb] bg-white focus:outline-none"
+            className="w-10 h-12 text-center text-sm font-semibold border border-line bg-card text-txt-main focus:outline-none focus:border-dark-line dark:focus:border-cyan transition-colors"
           />
         ))}
       </div>
-      <div className="space-y-2">
-        <p className="text-xs  text-[#666666]">
-          Resend code in{" "}
-          <span className="font-semibold text-[#121212]">00:59</span>
-        </p>
+      <div className="space-y-3">
+        {!canResend && (
+          <div className="text-xs text-txt-secondary">
+            <p>
+              Resend code in{" "}
+              <span className="font-semibold font-mono text-txt-main dark:text-cyan">
+                00:{timer >= 10 ? timer : `0${timer}`}
+              </span>
+            </p>
+          </div>
+        )}
         <button
-          disabled
-          className="px-4 py-2 border border-[#e5e7eb] bg-[#fafafa] text-xs  text-[#999999] cursor-not-allowed"
+          onClick={handleResend}
+          disabled={!canResend}
+          className="px-5 py-2.5 border border-line text-xs font-medium bg-cyan text-main cursor-pointer hover:bg-cyan/80 duration-200 disabled:text-txt-muted disabled:cursor-not-allowed disabled:opacity-75
+          disabled:bg-sidebar"
         >
-          Resend Code (Inactive)
+          Resend Code
         </button>
+        <div className="flex flex-col items-center justify-center gap-1.5 text-[11px] text-txt-muted space-y-2">
+          <p className="font-medium text-txt-secondary border border-line px-1.5 py-0.5 rounded bg-card/60">
+            {isFirstAttempt ? "1st attempt (15s)" : "Subsequent (30s)"}
+          </p>
+          <p className="text-[11px] text-txt-muted/70 tracking-wide">
+            [ ⚡ Demo note: Timer is accelerated for quick preview. ]
+          </p>
+        </div>
       </div>
     </div>
   );

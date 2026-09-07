@@ -23,16 +23,20 @@ import { createPortal } from "react-dom";
 export function ModalView() {
   const [openModal, setOpenModal] = useState(false);
 
-  // Disable background scrolling when modal is active
+  // Stop page scroll when modal is open
   useEffect(() => {
     if (openModal) {
       document.body.style.overflow = "hidden";
+      document.body.setAttribute("data-lenis-prevent", "true");
     } else {
       document.body.style.overflow = "unset";
+      document.body.removeAttribute("data-lenis-prevent");
     }
 
+    // Enable scroll again when closed or unmounted
     return () => {
       document.body.style.overflow = "unset";
+      document.body.removeAttribute("data-lenis-prevent");
     };
   }, [openModal]);
 
@@ -118,16 +122,20 @@ import { createPortal } from "react-dom";
 export function ModalView() {
   const [openModal, setOpenModal] = useState<boolean>(false);
 
-  // Disable background scrolling when modal is active
+  // Stop page scroll when modal is open
   useEffect(() => {
     if (openModal) {
       document.body.style.overflow = "hidden";
+      document.body.setAttribute("data-lenis-prevent", "true");
     } else {
       document.body.style.overflow = "unset";
+      document.body.removeAttribute("data-lenis-prevent");
     }
 
+    // Enable scroll again when closed or unmounted
     return () => {
       document.body.style.overflow = "unset";
+      document.body.removeAttribute("data-lenis-prevent");
     };
   }, [openModal]);
 
@@ -233,9 +241,10 @@ export function TabSwitchView() {
     },
   ];
 
+  // Active tab name
   const [activeTab, setActiveTab] = useState("overview");
 
-  // Find active tab content
+  // Get data for the active tab
   const activeTabContent = tabs?.find((tab) => tab?.tabName === activeTab);
   const activeTabClass =
     "border-b-2 border-dark-line dark:border-cyan text-txt-main bg-sidebar";
@@ -244,7 +253,7 @@ export function TabSwitchView() {
   return (
     <div className="w-full space-y-4 font-poppins">
       <div className="flex border-b border-line">
-        {/* Show all tabs using map */}
+        {/* Tab buttons */}
         {tabs?.map((tab) => (
           <button
             key={tab?.tabName}
@@ -258,7 +267,7 @@ export function TabSwitchView() {
         ))}
       </div>
       <div className="p-6 border border-line bg-card min-h-[120px]">
-        {/* Show the active tab content */}
+        {/* Tab content */}
         <p className="text-xs text-txt-secondary leading-relaxed">
           {activeTabContent?.description}
         </p>
@@ -307,9 +316,10 @@ export function TabSwitchView() {
     },
   ];
 
+  // Active tab name
   const [activeTab, setActiveTab] = useState("overview");
 
-  // Find active tab content
+  // Get data for the active tab
   const activeTabContent = tabs?.find((tab) => tab?.tabName === activeTab);
   const activeTabClass =
     "border-b-2 border-dark-line dark:border-cyan text-txt-main bg-sidebar";
@@ -318,7 +328,7 @@ export function TabSwitchView() {
   return (
     <div className="w-full space-y-4 font-poppins">
       <div className="flex border-b border-line">
-        {/* Show all tabs using map */}
+        {/* Tab buttons */}
         {tabs?.map((tab) => (
           <button
             key={tab?.tabName}
@@ -332,7 +342,7 @@ export function TabSwitchView() {
         ))}
       </div>
       <div className="p-6 border border-line bg-card min-h-[120px]">
-        {/* Show the active tab content */}
+        {/* Tab content */}
         <p className="text-xs text-txt-secondary leading-relaxed">
           {activeTabContent?.description}
         </p>
@@ -376,8 +386,10 @@ const accordionItems = [
 ];
 
 export function AccordionView() {
+  // Open item index (null means all closed)
   const [isOpen, setIsOpen] = useState(null);
 
+  // Click to open or close an item
   const handleOpen = (index) => {
     setIsOpen((prev) => (prev === index ? null : index));
   };
@@ -468,8 +480,10 @@ const accordionItems: AccordionItem[] = [
 ];
 
 export function AccordionView() {
+  // Open item index (null means all closed)
   const [isOpen, setIsOpen] = useState<null | number>(null);
 
+  // Click to open or close an item
   const handleOpen = (index: number) => {
     setIsOpen((prev) => (prev === index ? null : index));
   };
@@ -536,9 +550,11 @@ export function AccordionView() {
  */
 
 export function DropdownView() {
+  // Box reference to check click outside
   const dropDownRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
 
+  // Close menu when clicked outside
   useEffect(() => {
     const handleClick = (e) => {
       if (
@@ -550,7 +566,7 @@ export function DropdownView() {
     };
 
     document.addEventListener("mousedown", handleClick);
-    // Cleanup function
+    // Remove click listener
     return () => {
       document.removeEventListener("mousedown", handleClick);
     };
@@ -610,9 +626,11 @@ export function DropdownView() {
  */
 
 export function DropdownView() {
+  // Box reference to check click outside
   const dropDownRef = useRef<HTMLDivElement | null>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
+  // Close menu when clicked outside
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
       if (
@@ -624,7 +642,7 @@ export function DropdownView() {
     };
 
     document.addEventListener("mousedown", handleClick);
-    // Cleanup function
+    // Remove click listener
     return () => {
       document.removeEventListener("mousedown", handleClick);
     };
@@ -686,10 +704,12 @@ export function DropdownView() {
  */
 
 export function SidebarDrawerView() {
+  // References for button and sidebar
   const buttonRef = useRef(null);
   const sideBarRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
 
+  // Close sidebar when clicked outside
   useEffect(() => {
     const handleOutsideClick = (e) => {
       if (
@@ -711,7 +731,7 @@ export function SidebarDrawerView() {
     */
 
     document.addEventListener("mousedown", handleOutsideClick);
-    // Cleanup function
+    // Remove click listener
     return () => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
@@ -772,10 +792,12 @@ export function SidebarDrawerView() {
  */
 
 export function SidebarDrawerView() {
+  // References for button and sidebar
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const sideBarRef = useRef<HTMLDivElement | null>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
+  // Close sidebar when clicked outside
   useEffect(() => {
     const handleOutsideClick = (e: MouseEvent) => {
       if (
@@ -797,7 +819,7 @@ export function SidebarDrawerView() {
     */
 
     document.addEventListener("mousedown", handleOutsideClick);
-    // Cleanup function
+    // Remove click listener
     return () => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
@@ -895,6 +917,7 @@ export function TooltipView() {
     right: "left-full top-1/2 -translate-y-1/2 ml-2",
   };
 
+  // Currently hovered tooltip
   const [isHover, setIsHover] = useState(null);
 
   return (
@@ -904,17 +927,17 @@ export function TooltipView() {
           key={item.id}
           className="relative inline-flex items-center justify-center"
         >
-          {/* Tooltip badge (Static layout) */}
+          {/* Tooltip badge */}
           <div
             className={\`absolute \${positionClasses[item.position]} px-3 py-1 bg-dark-line dark:bg-cyan text-white dark:text-main text-[10px] whitespace-nowrap shadow-sm pointer-events-none transition-opacity duration-300 \${isHover === item.position ? "opacity-100" : "opacity-0"}\`}
           >
             {item.tooltipText}
           </div>
 
-          {/* Trigger Button */}
+          {/* Trigger button */}
           <button
-            onMouseEnter={() => setIsHover(item.position)} // Shows tooltip for current hovered target
-            onMouseLeave={() => setIsHover(null)} // Dismisses tooltip when cursor leaves target
+            onMouseEnter={() => setIsHover(item.position)} // Show on hover
+            onMouseLeave={() => setIsHover(null)} // Hide when mouse leaves
             className="px-4 py-2 border border-line bg-card text-xs text-txt-main cursor-pointer hover:border-dark-line dark:hover:border-cyan transition-colors"
           >
             {item.label}
@@ -980,6 +1003,7 @@ export function TooltipView() {
     right: "left-full top-1/2 -translate-y-1/2 ml-2",
   };
 
+  // Currently hovered tooltip
   const [isHover, setIsHover] = useState<string | null>(null);
 
   return (
@@ -989,17 +1013,17 @@ export function TooltipView() {
           key={item.id}
           className="relative inline-flex items-center justify-center"
         >
-          {/* Tooltip badge (Static layout) */}
+          {/* Tooltip badge */}
           <div
             className={\`absolute \${positionClasses[item.position]} px-3 py-1 bg-dark-line dark:bg-cyan text-white dark:text-main text-[10px] whitespace-nowrap shadow-sm pointer-events-none transition-opacity duration-300 \${isHover === item.position ? "opacity-100" : "opacity-0"}\`}
           >
             {item.tooltipText}
           </div>
 
-          {/* Trigger Button */}
+          {/* Trigger button */}
           <button
-            onMouseEnter={() => setIsHover(item.position)} // Shows tooltip for current hovered target
-            onMouseLeave={() => setIsHover(null)} // Dismisses tooltip when cursor leaves target
+            onMouseEnter={() => setIsHover(item.position)} // Show on hover
+            onMouseLeave={() => setIsHover(null)} // Hide when mouse leaves
             className="px-4 py-2 border border-line bg-card text-xs text-txt-main cursor-pointer hover:border-dark-line dark:hover:border-cyan transition-colors"
           >
             {item.label}
@@ -1027,23 +1051,23 @@ export function TooltipView() {
 export function KeyboardNavEscView() {
   const [modalOpen, setModalOpen] = useState(false);
   const [lastKeyPress, setLastKeyPress] = useState("None");
+  // Active selected item number (1, 2, or 3)
   const [activeArrowFocus, setActiveArrowFocus] = useState(1);
 
+  // Listen to keyboard keys
   useEffect(() => {
     const handleKeyDown = (e) => {
       setLastKeyPress(e.key);
-      if (e.key === "Escape") {
-        setModalOpen(false);
-      } else if (e.key === "ArrowDown") {
-        setActiveArrowFocus((prev) => (prev === 3 ? 1 : prev + 1));
-      } else if (e.key === "ArrowUp") {
-        setActiveArrowFocus((prev) => (prev === 1 ? 3 : prev - 1));
-      }
+      if (e.key === "Escape") setModalOpen(false); // Close modal on Escape
+      else if (e.key === "ArrowDown")
+        setActiveArrowFocus((prev) => (prev === 3 ? 1 : prev + 1)); // Move down
+      else if (e.key === "ArrowUp")
+        setActiveArrowFocus((prev) => (prev === 1 ? 3 : prev - 1)); // Move up
     };
 
     document.addEventListener("keydown", handleKeyDown);
 
-    // Cleanup listener on unmount
+    // Remove key listener
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
@@ -1195,23 +1219,23 @@ export function KeyboardNavEscView() {
 export function KeyboardNavEscView() {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [lastKeyPress, setLastKeyPress] = useState<string>("None");
+  // Active selected item number (1, 2, or 3)
   const [activeArrowFocus, setActiveArrowFocus] = useState<number>(1);
 
+  // Listen to keyboard keys
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       setLastKeyPress(e.key);
-      if (e.key === "Escape") {
-        setModalOpen(false);
-      } else if (e.key === "ArrowDown") {
-        setActiveArrowFocus((prev) => (prev === 3 ? 1 : prev + 1));
-      } else if (e.key === "ArrowUp") {
-        setActiveArrowFocus((prev) => (prev === 1 ? 3 : prev - 1));
-      }
+      if (e.key === "Escape") setModalOpen(false); // Close modal on Escape
+      else if (e.key === "ArrowDown")
+        setActiveArrowFocus((prev) => (prev === 3 ? 1 : prev + 1)); // Move down
+      else if (e.key === "ArrowUp")
+        setActiveArrowFocus((prev) => (prev === 1 ? 3 : prev - 1)); // Move up
     };
 
     document.addEventListener("keydown", handleKeyDown);
 
-    // Cleanup listener on unmount
+    // Remove key listener
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
@@ -1350,7 +1374,206 @@ export function KeyboardNavEscView() {
   },
 
   // Category 2: Timers
-  "otp-timer": { js: ``, ts: `` },
+  "otp-timer": {
+    js: `import { useEffect, useState } from "react";
+
+/**
+ * ----------------------------------------------------
+ * OTP Resend Timer - Key Logics Used:
+ * 1. Interval Countdown: Uses setInterval to decrement the timer every tick.
+ * 2. Effect Cleanup: Clears the active interval on unmount or before the effect reruns to prevent memory leaks.
+ * 3. Rate-Limiting / Tiered Cooldown: First attempt has a shorter delay (15s), while repeated attempts increase to 30s.
+ * 4. Button State Locking: Disables resend interaction and prevents spamming until the countdown reaches 0.
+ * 5. Time Formatting: Formats raw seconds into two-digit padded strings (e.g. 00:09).
+ * ----------------------------------------------------
+ */
+export function OtpTimerView() {
+  const [timer, setTimer] = useState(0);
+  const [canResend, setCanResend] = useState(true);
+  const [isFirstAttempt, setIsFirstAttempt] = useState(true);
+
+  useEffect(() => {
+    let timerCount;
+
+    // While timer is active, decrement by 1 each interval
+    if (timer > 0) {
+      timerCount = setInterval(() => {
+        setTimer((prev) => prev - 1);
+      }, 300); // 300ms used for accelerated demo preview
+    }
+
+    // When timer expires, re-enable resending
+    if (timer === 0) {
+      clearInterval(timerCount);
+      setCanResend(true);
+    }
+
+    // Cleanup function
+    return () => clearInterval(timerCount);
+  }, [timer]);
+
+  // Handle OTP resend click logic (15s first attempt, 30s subsequent)
+  const handleResend = () => {
+    setCanResend(false);
+    if (isFirstAttempt) {
+      setTimer(15); // Shorter cooldown for the first attempt
+      setIsFirstAttempt(false);
+    } else {
+      setTimer(30); // Longer cooldown for repeated attempts
+    }
+  };
+
+  return (
+    <div className="w-full max-w-md mx-auto space-y-6 text-center font-poppins py-4">
+      {/* OTP Input Fields */}
+      <div className="flex justify-center gap-2.5">
+        {[1, 2, 3, 4, 5, 6].map((i) => (
+          <input
+            key={i}
+            type="text"
+            maxLength={1}
+            readOnly
+            value={i === 1 ? "5" : i === 2 ? "2" : ""}
+            className="w-10 h-12 text-center text-sm font-semibold border border-line bg-card text-txt-main focus:outline-none focus:border-dark-line dark:focus:border-cyan transition-colors"
+          />
+        ))}
+      </div>
+
+      <div className="space-y-3">
+        {/* Countdown Timer Display */}
+        {!canResend && (
+          <div className="text-xs text-txt-secondary">
+            <p>
+              Resend code in{" "}
+              <span className="font-semibold font-mono text-txt-main dark:text-cyan">
+                00:{timer >= 10 ? timer : \`0\${timer}\`}
+              </span>
+            </p>
+          </div>
+        )}
+
+        {/* Resend Action Button */}
+        <button
+          onClick={handleResend}
+          disabled={!canResend}
+          className="px-5 py-2.5 border border-line text-xs font-medium bg-cyan text-main cursor-pointer hover:bg-cyan/80 duration-200 disabled:text-txt-muted disabled:cursor-not-allowed disabled:opacity-75 disabled:bg-sidebar"
+        >
+          Resend Code
+        </button>
+
+        {/* Next Wait Time Badge & Demo Note */}
+        <div className="flex flex-col items-center justify-center gap-1.5 text-[11px] text-txt-muted space-y-2">
+          <p className="font-medium text-txt-secondary border border-line px-1.5 py-0.5 rounded bg-card/60">
+            {isFirstAttempt ? "1st attempt (15s)" : "Subsequent (30s)"}
+          </p>
+          <p className="text-[11px] text-txt-muted/70 tracking-wide">
+            [ ⚡ Demo note: Timer is accelerated for quick preview. ]
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}`,
+    ts: `import { useEffect, useState } from "react";
+
+/**
+ * ----------------------------------------------------
+ * OTP Resend Timer - Key Logics Used:
+ * 1. Interval Countdown: Uses setInterval to decrement the timer every tick.
+ * 2. Effect Cleanup: Clears the active interval on unmount or before the effect reruns to prevent memory leaks.
+ * 3. Rate-Limiting / Tiered Cooldown: First attempt has a shorter delay (15s), while repeated attempts increase to 30s.
+ * 4. Button State Locking: Disables resend interaction and prevents spamming until the countdown reaches 0.
+ * 5. Time Formatting: Formats raw seconds into two-digit padded strings (e.g. 00:09).
+ * ----------------------------------------------------
+ */
+export function OtpTimerView() {
+  const [timer, setTimer] = useState<number>(0);
+  const [canResend, setCanResend] = useState<boolean>(true);
+  const [isFirstAttempt, setIsFirstAttempt] = useState<boolean>(true);
+
+  useEffect(() => {
+    let timerCount: any;
+
+    // While timer is active, decrement by 1 each interval
+    if (timer > 0) {
+      timerCount = setInterval(() => {
+        setTimer((prev) => prev - 1);
+      }, 300); // 300ms used for accelerated demo preview
+    }
+
+    // When timer expires, re-enable resending
+    if (timer === 0) {
+      clearInterval(timerCount);
+      setCanResend(true);
+    }
+
+    // Cleanup function
+    return () => clearInterval(timerCount);
+  }, [timer]);
+
+  // Handle OTP resend click logic (15s first attempt, 30s subsequent)
+  const handleResend = () => {
+    setCanResend(false);
+    if (isFirstAttempt) {
+      setTimer(15); // Shorter cooldown for the first attempt
+      setIsFirstAttempt(false);
+    } else {
+      setTimer(30); // Longer cooldown for repeated attempts
+    }
+  };
+
+  return (
+    <div className="w-full max-w-md mx-auto space-y-6 text-center font-poppins py-4">
+      {/* OTP Input Fields */}
+      <div className="flex justify-center gap-2.5">
+        {[1, 2, 3, 4, 5, 6].map((i: number) => (
+          <input
+            key={i}
+            type="text"
+            maxLength={1}
+            readOnly
+            value={i === 1 ? "5" : i === 2 ? "2" : ""}
+            className="w-10 h-12 text-center text-sm font-semibold border border-line bg-card text-txt-main focus:outline-none focus:border-dark-line dark:focus:border-cyan transition-colors"
+          />
+        ))}
+      </div>
+
+      <div className="space-y-3">
+        {/* Countdown Timer Display */}
+        {!canResend && (
+          <div className="text-xs text-txt-secondary">
+            <p>
+              Resend code in{" "}
+              <span className="font-semibold font-mono text-txt-main dark:text-cyan">
+                00:{timer >= 10 ? timer : \`0\${timer}\`}
+              </span>
+            </p>
+          </div>
+        )}
+
+        {/* Resend Action Button */}
+        <button
+          onClick={handleResend}
+          disabled={!canResend}
+          className="px-5 py-2.5 border border-line text-xs font-medium bg-cyan text-main cursor-pointer hover:bg-cyan/80 duration-200 disabled:text-txt-muted disabled:cursor-not-allowed disabled:opacity-75 disabled:bg-sidebar"
+        >
+          Resend Code
+        </button>
+
+        {/* Next Wait Time Badge & Demo Note */}
+        <div className="flex flex-col items-center justify-center gap-1.5 text-[11px] text-txt-muted space-y-2">
+          <p className="font-medium text-txt-secondary border border-line px-1.5 py-0.5 rounded bg-card/60">
+            {isFirstAttempt ? "1st attempt (15s)" : "Subsequent (30s)"}
+          </p>
+          <p className="text-[11px] text-txt-muted/70 tracking-wide">
+            [ ⚡ Demo note: Timer is accelerated for quick preview. ]
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}`,
+  },
   "countdown-clock": { js: ``, ts: `` },
   "auto-carousel": { js: ``, ts: `` },
   "inactivity-warning": { js: ``, ts: `` },
