@@ -69,28 +69,15 @@ export default function FaqPage() {
           <span>FREQUENTLY ASKED QUESTIONS</span>
         </div>
 
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-          <div className="space-y-2">
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-txt-main">
-              Frequently Asked Questions
-            </h1>
-            <p className="text-xs sm:text-sm text-txt-secondary leading-relaxed max-w-2xl">
-              Common questions about LogicLab. Learn about the platform's
-              vision, included modules, architectural principles, and future
-              roadmap.
-            </p>
-          </div>
-
-          <div className="flex items-center gap-2 text-xs font-mono shrink-0">
-            {openId !== null && (
-              <button
-                onClick={() => setOpenId(null)}
-                className="px-2.5 py-1 border border-line bg-card hover:bg-sidebar text-txt-secondary hover:text-txt-main transition-colors cursor-pointer"
-              >
-                Collapse All
-              </button>
-            )}
-          </div>
+        <div className="space-y-2">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-txt-main">
+            Frequently Asked Questions
+          </h1>
+          <p className="text-xs sm:text-sm text-txt-secondary leading-relaxed max-w-2xl">
+            Common questions about LogicLab. Learn about the platform's
+            vision, included modules, architectural principles, and future
+            roadmap.
+          </p>
         </div>
       </section>
 
