@@ -1010,7 +1010,344 @@ export function TooltipView() {
   );
 }`,
   },
-  "keyboard-nav-esc": { js: ``, ts: `` },
+  "keyboard-nav-esc": {
+    js: `import { useState, useEffect } from "react";
+
+/**
+ * ----------------------------------------------------
+ * Keyboard Navigation & ESC Dismissal - Key Logics:
+ * 1. Global Window Listener: Binds 'keydown' listener on document mount.
+ * 2. ESC Key Dismiss: Closes modal window immediately upon pressing Escape.
+ * 3. Arrow Up/Down Cycler: Shifts focus index circularly between items 1 to 3.
+ * 4. Memory Leak Cleanup: Cleanly removes event listener inside useEffect cleanup.
+ * 5. Modern Active Focus Style: Smooth transition, glowing ring border & badge.
+ * ----------------------------------------------------
+ */
+
+export function KeyboardNavEscView() {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [lastKeyPress, setLastKeyPress] = useState("None");
+  const [activeArrowFocus, setActiveArrowFocus] = useState(1);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      setLastKeyPress(e.key);
+      if (e.key === "Escape") {
+        setModalOpen(false);
+      } else if (e.key === "ArrowDown") {
+        setActiveArrowFocus((prev) => (prev === 3 ? 1 : prev + 1));
+      } else if (e.key === "ArrowUp") {
+        setActiveArrowFocus((prev) => (prev === 1 ? 3 : prev - 1));
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    // Cleanup listener on unmount
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
+  return (
+    <div className="w-full space-y-6 font-poppins text-xs">
+      {/* Live Keypress Listener Banner */}
+      <div className="p-4 border border-line bg-sidebar flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-cyan animate-pulse" />
+          <span className="font-semibold text-txt-main">
+            Keyboard Listener State:
+          </span>
+          <span className="font-mono bg-card px-2 py-0.5 border border-line text-txt-main">
+            {lastKeyPress}
+          </span>
+        </div>
+        <span className="text-[11px] text-txt-muted font-mono">
+          Press ESC to dismiss • ↑ / ↓ to navigate
+        </span>
+      </div>
+
+      {/* Interactive Trigger & Keyboard Nav Scaffold */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Left Box: Modal with Esc Key Close */}
+        <div className="p-5 border border-line bg-card space-y-3">
+          <div className="flex items-center justify-between border-b border-line pb-2">
+            <span className="font-semibold text-txt-main">
+              1. Esc Key Dismiss Scaffold
+            </span>
+            <span className="text-[10px] font-mono text-cyan">
+              ESC LISTENER
+            </span>
+          </div>
+          <p className="text-txt-secondary text-[11px] leading-relaxed">
+            Click button to open modal overlay, then press{" "}
+            <kbd className="px-1 py-0.5 bg-sidebar border border-line font-mono text-txt-main">
+              ESC
+            </kbd>{" "}
+            anywhere to dismiss.
+          </p>
+          <button
+            onClick={() => setModalOpen(true)}
+            className="px-4 py-2 bg-dark-line dark:bg-cyan text-white dark:text-main text-xs font-semibold cursor-pointer"
+          >
+            Open Esc-Dismissible Modal
+          </button>
+
+          {modalOpen && (
+            <div className="p-4 border border-cyan bg-sidebar space-y-2 mt-2">
+              <div className="flex justify-between items-center border-b border-line pb-1">
+                <span className="font-bold text-txt-main">
+                  Active Dialog Window
+                </span>
+                <span className="text-[10px] font-mono text-cyan bg-cyan/10 px-1.5 py-0.5">
+                  PRESS ESC
+                </span>
+              </div>
+              <p className="text-txt-secondary text-[11px]">
+                Modal is active. Press the{" "}
+                <strong className="text-txt-main">ESC key</strong> on your
+                keyboard to test event dismissal.
+              </p>
+              <button
+                onClick={() => setModalOpen(false)}
+                className="px-3 py-1 bg-card border border-line text-[11px] hover:border-dark-line"
+              >
+                Manual Close
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Right Box: Arrow Key List Navigation */}
+        <div className="p-5 border border-line bg-card space-y-3">
+          <div className="flex items-center justify-between border-b border-line pb-2">
+            <span className="font-semibold text-txt-main">
+              2. Arrow Key Focus Navigation
+            </span>
+            <span className="text-[10px] font-mono text-cyan">↑ / ↓ KEYS</span>
+          </div>
+          <p className="text-txt-secondary text-[11px] leading-relaxed">
+            Use{" "}
+            <kbd className="px-1 py-0.5 bg-sidebar border border-line font-mono text-txt-main">
+              ↑
+            </kbd>{" "}
+            and{" "}
+            <kbd className="px-1 py-0.5 bg-sidebar border border-line font-mono text-txt-main">
+              ↓
+            </kbd>{" "}
+            arrow keys to shift focus highlight across list items.
+          </p>
+
+          <div className="space-y-2">
+            {[1, 2, 3].map((num) => {
+              const isActive = activeArrowFocus === num;
+              return (
+                <div
+                  key={num}
+                  onClick={() => setActiveArrowFocus(num)}
+                  tabIndex={0}
+                  onFocus={() => setActiveArrowFocus(num)}
+                  className={\`relative px-3.5 py-2.5 rounded-sm border transition-all duration-200 cursor-pointer flex items-center justify-between outline-none select-none \${
+                    isActive
+                      ? "border-cyan bg-cyan/10 text-txt-main shadow-xs ring-1 ring-cyan/30 translate-x-1"
+                      : "border-line bg-sidebar/50 text-txt-secondary hover:border-txt-muted hover:bg-sidebar"
+                  }\`}
+                >
+                  <div className="flex items-center gap-2.5">
+                    <span
+                      className={\`font-medium \${isActive ? "text-txt-main" : ""}\`}
+                    >
+                      Option Item 0{num}
+                    </span>
+                  </div>
+
+                  {isActive ? (
+                    <span className="flex items-center gap-1.5 text-[10px] font-mono font-medium text-cyan bg-cyan/15 px-2 py-0.5 rounded border border-cyan/30 shadow-xs">
+                      Active Focus
+                    </span>
+                  ) : (
+                    <span className="text-[10px] font-mono text-txt-muted opacity-0 group-hover:opacity-100">
+                      Item #{num}
+                    </span>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}`,
+    ts: `import { useState, useEffect } from "react";
+
+/**
+ * ----------------------------------------------------
+ * Keyboard Navigation & ESC Dismissal - Key Logics:
+ * 1. Global Window Listener: Binds 'keydown' listener with strongly-typed KeyboardEvent.
+ * 2. ESC Key Dismiss: Closes modal window immediately upon pressing Escape.
+ * 3. Arrow Up/Down Cycler: Shifts focus index circularly between items 1 to 3.
+ * 4. Memory Leak Cleanup: Cleanly removes event listener inside useEffect cleanup.
+ * 5. Modern Active Focus Style: Smooth transition, glowing ring border & badge.
+ * ----------------------------------------------------
+ */
+
+export function KeyboardNavEscView() {
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [lastKeyPress, setLastKeyPress] = useState<string>("None");
+  const [activeArrowFocus, setActiveArrowFocus] = useState<number>(1);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      setLastKeyPress(e.key);
+      if (e.key === "Escape") {
+        setModalOpen(false);
+      } else if (e.key === "ArrowDown") {
+        setActiveArrowFocus((prev) => (prev === 3 ? 1 : prev + 1));
+      } else if (e.key === "ArrowUp") {
+        setActiveArrowFocus((prev) => (prev === 1 ? 3 : prev - 1));
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    // Cleanup listener on unmount
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
+  return (
+    <div className="w-full space-y-6 font-poppins text-xs">
+      {/* Live Keypress Listener Banner */}
+      <div className="p-4 border border-line bg-sidebar flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-cyan animate-pulse" />
+          <span className="font-semibold text-txt-main">
+            Keyboard Listener State:
+          </span>
+          <span className="font-mono bg-card px-2 py-0.5 border border-line text-txt-main">
+            {lastKeyPress}
+          </span>
+        </div>
+        <span className="text-[11px] text-txt-muted font-mono">
+          Press ESC to dismiss • ↑ / ↓ to navigate
+        </span>
+      </div>
+
+      {/* Interactive Trigger & Keyboard Nav Scaffold */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Left Box: Modal with Esc Key Close */}
+        <div className="p-5 border border-line bg-card space-y-3">
+          <div className="flex items-center justify-between border-b border-line pb-2">
+            <span className="font-semibold text-txt-main">
+              1. Esc Key Dismiss Scaffold
+            </span>
+            <span className="text-[10px] font-mono text-cyan">
+              ESC LISTENER
+            </span>
+          </div>
+          <p className="text-txt-secondary text-[11px] leading-relaxed">
+            Click button to open modal overlay, then press{" "}
+            <kbd className="px-1 py-0.5 bg-sidebar border border-line font-mono text-txt-main">
+              ESC
+            </kbd>{" "}
+            anywhere to dismiss.
+          </p>
+          <button
+            onClick={() => setModalOpen(true)}
+            className="px-4 py-2 bg-dark-line dark:bg-cyan text-white dark:text-main text-xs font-semibold cursor-pointer"
+          >
+            Open Esc-Dismissible Modal
+          </button>
+
+          {modalOpen && (
+            <div className="p-4 border border-cyan bg-sidebar space-y-2 mt-2">
+              <div className="flex justify-between items-center border-b border-line pb-1">
+                <span className="font-bold text-txt-main">
+                  Active Dialog Window
+                </span>
+                <span className="text-[10px] font-mono text-cyan bg-cyan/10 px-1.5 py-0.5">
+                  PRESS ESC
+                </span>
+              </div>
+              <p className="text-txt-secondary text-[11px]">
+                Modal is active. Press the{" "}
+                <strong className="text-txt-main">ESC key</strong> on your
+                keyboard to test event dismissal.
+              </p>
+              <button
+                onClick={() => setModalOpen(false)}
+                className="px-3 py-1 bg-card border border-line text-[11px] hover:border-dark-line"
+              >
+                Manual Close
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Right Box: Arrow Key List Navigation */}
+        <div className="p-5 border border-line bg-card space-y-3">
+          <div className="flex items-center justify-between border-b border-line pb-2">
+            <span className="font-semibold text-txt-main">
+              2. Arrow Key Focus Navigation
+            </span>
+            <span className="text-[10px] font-mono text-cyan">↑ / ↓ KEYS</span>
+          </div>
+          <p className="text-txt-secondary text-[11px] leading-relaxed">
+            Use{" "}
+            <kbd className="px-1 py-0.5 bg-sidebar border border-line font-mono text-txt-main">
+              ↑
+            </kbd>{" "}
+            and{" "}
+            <kbd className="px-1 py-0.5 bg-sidebar border border-line font-mono text-txt-main">
+              ↓
+            </kbd>{" "}
+            arrow keys to shift focus highlight across list items.
+          </p>
+
+          <div className="space-y-2">
+            {[1, 2, 3].map((num) => {
+              const isActive = activeArrowFocus === num;
+              return (
+                <div
+                  key={num}
+                  onClick={() => setActiveArrowFocus(num)}
+                  tabIndex={0}
+                  onFocus={() => setActiveArrowFocus(num)}
+                  className={\`relative px-3.5 py-2.5 rounded-sm border transition-all duration-200 cursor-pointer flex items-center justify-between outline-none select-none \${
+                    isActive
+                      ? "border-cyan bg-cyan/10 text-txt-main shadow-xs ring-1 ring-cyan/30 translate-x-1"
+                      : "border-line bg-sidebar/50 text-txt-secondary hover:border-txt-muted hover:bg-sidebar"
+                  }\`}
+                >
+                  <div className="flex items-center gap-2.5">
+                    <span
+                      className={\`font-medium \${isActive ? "text-txt-main" : ""}\`}
+                    >
+                      Option Item 0{num}
+                    </span>
+                  </div>
+
+                  {isActive ? (
+                    <span className="flex items-center gap-1.5 text-[10px] font-mono font-medium text-cyan bg-cyan/15 px-2 py-0.5 rounded border border-cyan/30 shadow-xs">
+                      Active Focus
+                    </span>
+                  ) : (
+                    <span className="text-[10px] font-mono text-txt-muted opacity-0 group-hover:opacity-100">
+                      Item #{num}
+                    </span>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}`,
+  },
 
   // Category 2: Timers
   "otp-timer": { js: ``, ts: `` },

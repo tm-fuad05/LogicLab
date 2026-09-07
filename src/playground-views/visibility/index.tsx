@@ -434,11 +434,16 @@ export function TooltipView() {
 export function KeyboardNavEscView() {
   const [modalOpen, setModalOpen] = useState(false);
   const [lastKeyPress, setLastKeyPress] = useState("None");
+  const [activeArrowFocus, setActiveArrowFocus] = useState(1);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       setLastKeyPress(e.key);
       if (e.key === "Escape") setModalOpen(false);
+      else if (e.key === "ArrowDown")
+        setActiveArrowFocus((prev) => (prev === 3 ? 1 : prev + 1));
+      else if (e.key === "ArrowUp")
+        setActiveArrowFocus((prev) => (prev === 1 ? 3 : prev - 1));
     };
     document.addEventListener("keydown", handleKeyDown);
 
@@ -537,21 +542,41 @@ export function KeyboardNavEscView() {
             arrow keys to shift focus highlight across list items.
           </p>
 
-          <div className="space-y-1">
-            {[1, 2, 3].map((num) => (
-              <div
-                key={num}
-                // onClick={() => setActiveItem(num)}
-                className={`p-2.5 border transition-all cursor-pointer flex items-center justify-between `}
-              >
-                <span>Option Item 0{num}</span>
-                {/* {activeItem === num && ( */}
-                <span className="text-[10px] font-mono text-cyan">
-                  Active Focus
-                </span>
-                {/* )} */}
-              </div>
-            ))}
+          <div className="space-y-2">
+            {[1, 2, 3].map((num) => {
+              const isActive = activeArrowFocus === num;
+              return (
+                <div
+                  key={num}
+                  onClick={() => setActiveArrowFocus(num)}
+                  tabIndex={0}
+                  onFocus={() => setActiveArrowFocus(num)}
+                  className={`relative px-3.5 py-2.5 rounded-sm border transition-all duration-200 cursor-pointer flex items-center justify-between outline-none select-none ${
+                    isActive
+                      ? "border-cyan bg-cyan/10 text-txt-main shadow-xs ring-1 ring-cyan/30 translate-x-1"
+                      : "border-line bg-sidebar/50 text-txt-secondary hover:border-txt-muted hover:bg-sidebar"
+                  }`}
+                >
+                  <div className="flex items-center gap-2.5">
+                    <span
+                      className={`font-medium ${isActive ? "text-txt-main" : ""}`}
+                    >
+                      Option Item 0{num}
+                    </span>
+                  </div>
+
+                  {isActive ? (
+                    <span className="flex items-center gap-1.5 text-[10px] font-mono font-medium text-cyan bg-cyan/15 px-2 py-0.5 rounded border border-cyan/30 shadow-xs">
+                      Active Focus
+                    </span>
+                  ) : (
+                    <span className="text-[10px] font-mono text-txt-muted opacity-0 group-hover:opacity-100">
+                      Item #{num}
+                    </span>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
