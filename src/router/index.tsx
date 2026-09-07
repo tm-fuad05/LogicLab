@@ -4,6 +4,7 @@ import LandingPage from "../pages/LandingPage";
 import HomePage, { homeLoader } from "../pages/HomePage";
 import CategoryOverview, { categoryLoader } from "../pages/CategoryOverview";
 import PlaygroundPage, { playgroundLoader } from "../pages/PlaygroundPage";
+import AboutPage from "../pages/about/AboutPage";
 
 export const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ export const router = createBrowserRouter([
         path: "home",
         element: <HomePage />,
         loader: homeLoader,
+      },
+      {
+        path: "about",
+        element: <AboutPage />,
       },
       {
         path: "category/:categoryId",

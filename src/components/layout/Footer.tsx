@@ -1,17 +1,28 @@
+import { Link } from "react-router";
+
 export default function Footer() {
   return (
     <footer className="border-t border-line bg-main py-5 px-4 sm:px-8 mt-auto transition-colors font-poppins">
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-txt-secondary">
-        <div>
-          <span>Developed by </span>
-          <a
-            href="https://tanvirmahmud.online"
-            target="_blank"
-            rel="noreferrer"
-            className="font-medium text-txt-main hover:text-cyan transition-colors"
+        <div className="flex items-center gap-3">
+          <div>
+            <span>Developed by </span>
+            <a
+              href="https://tanvirmahmud.online"
+              target="_blank"
+              rel="noreferrer"
+              className="font-medium text-txt-main hover:text-cyan transition-colors"
+            >
+              Tanvir Mahmud Fuad
+            </a>
+          </div>
+          <span className="text-txt-muted">•</span>
+          <Link
+            to="/about"
+            className="hover:text-txt-main hover:underline transition-colors"
           >
-            Tanvir Mahmud Fuad
-          </a>
+            About LogicLab
+          </Link>
         </div>
 
         <div className="flex items-center gap-2 sm:gap-3">

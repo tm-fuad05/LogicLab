@@ -10,6 +10,7 @@ import {
   Code2,
   ChevronDown,
   X,
+  Menu,
   Command,
   Activity,
   Zap,
@@ -50,6 +51,7 @@ export default function LandingPage() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [mechanicsDropdownOpen, setMechanicsDropdownOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const catRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -95,10 +97,10 @@ export default function LandingPage() {
         initial={{ y: -16, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.4, ease: "easeOut" }}
-        className="h-16 border-b border-line bg-main/90 backdrop-blur-md sticky top-0 z-50 flex items-center justify-between px-3 sm:px-8"
+        className="relative h-16 border-b border-line bg-main/90 backdrop-blur-md sticky top-0 z-50 flex items-center justify-between px-3 sm:px-8"
       >
-        {/* Left: Brand Logo & Interactive Dropdown Menu */}
-        <div className="flex items-center gap-3 sm:gap-6">
+        {/* Left: Brand Logo & Categories Dropdown */}
+        <div className="flex items-center gap-3 sm:gap-4">
           <Link to="/" className="flex items-center gap-2">
             <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
               <Logo size="lg" />
@@ -168,21 +170,36 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* Center/Right: Quick Search Command Trigger & Status Badge */}
-        <div className="flex items-center gap-1.5 sm:gap-3">
-          {/* Command Palette Trigger (Ctrl + K) */}
+        {/* Center: Command Palette Search Bar */}
+        <div className="hidden md:flex items-center justify-center flex-1 max-w-sm mx-4 absolute left-1/2 -translate-x-1/2">
           <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+            whileHover={{ scale: 1.01 }}
+            whileTap={{ scale: 0.99 }}
             onClick={() => setSearchOpen(true)}
-            className="h-8 sm:h-9 flex items-center justify-center gap-2 sm:gap-3 px-2.5 sm:px-3 bg-sidebar border border-line text-xs font-mono text-txt-muted hover:border-dark-line dark:hover:border-cyan transition-colors cursor-pointer"
+            className="w-full h-8 sm:h-9 flex items-center justify-between px-3 bg-sidebar border border-line text-xs font-mono text-txt-muted hover:border-dark-line dark:hover:border-cyan transition-colors cursor-pointer"
             title="Press Ctrl + K to search all mechanics"
           >
-            <Search className="w-3.5 h-3.5 text-txt-main" />
-            <span className="hidden md:inline">Search mechanics...</span>
-            <kbd className="hidden sm:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] bg-card border border-line text-txt-secondary">
+            <div className="flex items-center gap-2">
+              <Search className="w-3.5 h-3.5 text-txt-main" />
+              <span>Search mechanics...</span>
+            </div>
+            <kbd className="inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] bg-card border border-line text-txt-secondary">
               <Command className="w-2.5 h-2.5" /> K
             </kbd>
+          </motion.button>
+        </div>
+
+        {/* Right: Mobile Search, Nav Links, Theme Switcher & Explore Action */}
+        <div className="flex items-center gap-2 sm:gap-3">
+          {/* Mobile Search Button */}
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => setSearchOpen(true)}
+            className="md:hidden h-8 w-8 flex items-center justify-center border border-line bg-sidebar text-txt-main hover:border-dark-line dark:hover:border-cyan transition-colors"
+            title="Search"
+          >
+            <Search className="w-3.5 h-3.5" />
           </motion.button>
 
           {/* Theme Switcher */}
@@ -200,18 +217,132 @@ export default function LandingPage() {
             )}
           </motion.button>
 
+          {/* Nav Links Beside Explore (Desktop) */}
+          <Link
+            to="/about"
+            className="hidden md:flex h-8 sm:h-9 items-center px-3 text-xs font-medium text-txt-secondary hover:text-txt-main hover:bg-sidebar border border-line bg-card hover:border-dark-line dark:hover:border-cyan transition-colors"
+          >
+            About
+          </Link>
+
           {/* Primary Explore Action Button */}
-          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+          <motion.div
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="hidden sm:block"
+          >
             <Link
               to="/home"
               className="h-8 sm:h-9 px-3 sm:px-4 bg-txt-main text-main hover:opacity-90 font-semibold text-[11px] sm:text-xs flex items-center justify-center gap-1.5 border border-txt-main transition-all cursor-pointer shadow-xs whitespace-nowrap group"
             >
-              <span className="hidden md:block">Explore</span>
+              <span>Explore</span>
               <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 group-hover:translate-x-0.5 transition-transform" />
             </Link>
           </motion.div>
+
+          {/* Mobile Menu Hamburger Trigger */}
+          <motion.button
+            whileTap={{ scale: 0.95 }}
+            onClick={() => setMobileMenuOpen((prev) => !prev)}
+            className="md:hidden h-8 w-8 flex items-center justify-center border border-line bg-card text-txt-main hover:border-dark-line dark:hover:border-cyan transition-colors cursor-pointer"
+            aria-label="Toggle mobile menu"
+          >
+            {mobileMenuOpen ? (
+              <X className="w-4 h-4 text-cyan" />
+            ) : (
+              <Menu className="w-4 h-4" />
+            )}
+          </motion.button>
         </div>
       </motion.header>
+
+      {/* MOBILE NAVIGATION DRAWER */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={() => setMobileMenuOpen(false)}
+              className="fixed inset-0 z-40 bg-black/50 backdrop-blur-xs md:hidden"
+            />
+
+            {/* Menu Panel */}
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.2 }}
+              className="fixed top-16 left-0 right-0 z-40 bg-card border-b border-line shadow-xl md:hidden p-4 space-y-4 max-h-[calc(100vh-4rem)] overflow-y-auto font-poppins"
+            >
+              {/* Quick Links Section */}
+              <div className="space-y-1">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-txt-muted px-2 block mb-1">
+                  Navigation
+                </span>
+                <Link
+                  to="/"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block px-3 py-2 text-xs font-medium text-txt-main hover:bg-sidebar transition-colors border border-transparent hover:border-line"
+                >
+                  Home
+                </Link>
+                <Link
+                  to="/home"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block px-3 py-2 text-xs font-medium text-txt-main hover:bg-sidebar transition-colors border border-transparent hover:border-line"
+                >
+                  Playground Workspace
+                </Link>
+                <Link
+                  to="/about"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block px-3 py-2 text-xs font-medium text-txt-main hover:bg-sidebar transition-colors border border-transparent hover:border-line text-cyan-600 dark:text-cyan"
+                >
+                  About LogicLab
+                </Link>
+                <Link
+                  to="/home"
+                  className="h-8 sm:h-9 px-3 sm:px-4 bg-txt-main text-main hover:opacity-90 font-semibold text-[11px] sm:text-xs flex items-center justify-center gap-1.5 border border-txt-main transition-all cursor-pointer shadow-xs whitespace-nowrap group"
+                >
+                  <span>Explore</span>
+                  <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                </Link>
+              </div>
+
+              {/* Categories Section on Mobile */}
+              <div className="space-y-1 pt-3 border-t border-line">
+                <div className="flex items-center justify-between px-2 mb-1">
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-txt-muted">
+                    Categories
+                  </span>
+                  <span className="text-[10px] font-mono text-txt-muted">
+                    {CATEGORIES.length} Modules
+                  </span>
+                </div>
+                <div className="grid grid-cols-2 gap-1">
+                  {CATEGORIES.map((cat) => (
+                    <Link
+                      key={cat.slug}
+                      to={`/category/${cat.slug}`}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="p-2 text-xs text-txt-secondary hover:text-txt-main hover:bg-sidebar border border-line bg-sidebar/50 transition-colors"
+                    >
+                      <div className="font-medium truncate">{cat.title}</div>
+                      <span className="text-[10px] text-txt-muted">
+                        {cat.itemCount} items
+                      </span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
 
       {/* QUICK COMMAND PALETTE MODAL (CTRL + K SEARCH OVERLAY) */}
       <AnimatePresence>
