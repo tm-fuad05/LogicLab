@@ -2,7 +2,7 @@ import { Outlet, useLoaderData } from "react-router";
 import Shell from "../components/layout/Shell";
 import ScrollToTop from "../components/common/ScrollToTop";
 
-export async function rootLoader() {
+export async function RootLoader() {
   return { timestamp: new Date().toISOString() };
 }
 

@@ -27,16 +27,13 @@ export function ModalView() {
   useEffect(() => {
     if (openModal) {
       document.body.style.overflow = "hidden";
-      document.body.setAttribute("data-lenis-prevent", "true");
     } else {
       document.body.style.overflow = "unset";
-      document.body.removeAttribute("data-lenis-prevent");
     }
 
     // Enable scroll again when closed or unmounted
     return () => {
       document.body.style.overflow = "unset";
-      document.body.removeAttribute("data-lenis-prevent");
     };
   }, [openModal]);
 
@@ -126,16 +123,13 @@ export function ModalView() {
   useEffect(() => {
     if (openModal) {
       document.body.style.overflow = "hidden";
-      document.body.setAttribute("data-lenis-prevent", "true");
     } else {
       document.body.style.overflow = "unset";
-      document.body.removeAttribute("data-lenis-prevent");
     }
 
     // Enable scroll again when closed or unmounted
     return () => {
       document.body.style.overflow = "unset";
-      document.body.removeAttribute("data-lenis-prevent");
     };
   }, [openModal]);
 
@@ -1388,8 +1382,11 @@ export function KeyboardNavEscView() {
  * ----------------------------------------------------
  */
 export function OtpTimerView() {
+  // State to track remaining countdown seconds before resend is allowed
   const [timer, setTimer] = useState(0);
+  // State to manage resend button availability and lock status
   const [canResend, setCanResend] = useState(true);
+  // State to apply tiered delay (15s on first try, 30s for subsequent tries)
   const [isFirstAttempt, setIsFirstAttempt] = useState(true);
 
   useEffect(() => {
@@ -1487,8 +1484,11 @@ export function OtpTimerView() {
  * ----------------------------------------------------
  */
 export function OtpTimerView() {
+  // State to track remaining countdown seconds before resend is allowed
   const [timer, setTimer] = useState<number>(0);
+  // State to manage resend button availability and lock status
   const [canResend, setCanResend] = useState<boolean>(true);
+  // State to apply tiered delay (15s on first try, 30s for subsequent tries)
   const [isFirstAttempt, setIsFirstAttempt] = useState<boolean>(true);
 
   useEffect(() => {
@@ -1574,8 +1574,479 @@ export function OtpTimerView() {
   );
 }`,
   },
-  "countdown-clock": { js: ``, ts: `` },
-  "auto-carousel": { js: ``, ts: `` },
+  "countdown-clock": {
+    js: `import { useEffect, useState } from "react";
+
+/**
+ * ----------------------------------------------------
+ * Countdown Clock - Key Logics Used:
+ * 1. Timer Tick Interval: Decrements seconds every 1000ms using setInterval.
+ * 2. Effect Cleanup: Clears the interval on unmount or pause state change.
+ * 3. Math Breakdown: Converts raw seconds into Days, Hours, Minutes, and Seconds.
+ * 4. Two-Digit Formatting: Uses padStart(2, "0") to keep digits aligned.
+ * 5. Controls: Supports Pause/Resume toggle, Reset, and additive quick increments (+1h, +1d).
+ * ----------------------------------------------------
+ */
+export function CountdownClockView() {
+  // State to hold remaining countdown time in seconds
+  const [timeLeft, setTimeLeft] = useState(0);
+  // State to control pause/resume state of the countdown
+  const [isPaused, setIsPaused] = useState(false);
+
+  // Interval timer effect: runs every second to decrement time left
+  useEffect(() => {
+    // Stop countdown if paused or if time has reached 0
+    if (isPaused || timeLeft <= 0) return;
+
+    // Start 1-second interval to tick down
+    const interval = setInterval(() => {
+      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+
+    // Cleanup active interval on re-render, pause, or component unmount
+    return () => clearInterval(interval);
+  }, [timeLeft, isPaused]);
+
+  // Helper function to format numbers into two-digit strings (e.g. 5 -> "05")
+  const format = (time) => String(time).padStart(2, "0");
+
+  // Math breakdown: convert total seconds into days, hours, minutes, and seconds
+  const days = format(Math.floor(timeLeft / (24 * 3600)));
+  const hours = format(Math.floor((timeLeft / 3600) % 24));
+  const min = format(Math.floor((timeLeft / 60) % 60));
+  const sec = format(Math.floor(timeLeft % 60));
+
+  // Structured metrics list for dynamic card rendering
+  const countDownTimer = [
+    { label: "Days", val: days },
+    { label: "Hours", val: hours },
+    { label: "Mins", val: min },
+    { label: "Secs", val: sec },
+  ];
+
+  // Increment countdown time by a specified duration in seconds (+1h, +1d)
+  const handleAddTime = (time) => {
+    setTimeLeft((prev) => prev + time);
+  };
+
+  // Reset timer to 0 and unpause
+  const handleReset = () => {
+    setTimeLeft(0);
+    setIsPaused(false);
+  };
+
+  return (
+    <div className="w-full max-w-xl mx-auto space-y-6 text-center font-poppins py-4">
+      {/* 4 Metric Cards */}
+      <div className="grid grid-cols-4 gap-3 md:gap-4">
+        {countDownTimer.map((item) => (
+          <div
+            key={item.label}
+            className="p-4 border border-line bg-card shadow-xs transition-colors"
+          >
+            <div className="text-2xl md:text-3xl font-mono font-semibold text-txt-main">
+              {item.val}
+            </div>
+            <div className="text-[10px] md:text-xs text-txt-muted uppercase font-medium tracking-wider mt-1">
+              {item.label}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Control Buttons */}
+      <div className="flex flex-wrap items-center justify-center gap-2.5">
+        <button
+          onClick={() => setIsPaused((prev) => !prev)}
+          className="px-4 py-2 border border-line text-xs font-medium bg-dark-line text-white dark:bg-cyan dark:text-main cursor-pointer hover:opacity-90 transition-opacity"
+        >
+          {isPaused ? "Resume" : "Pause"}
+        </button>
+
+        <button
+          onClick={handleReset}
+          className="px-4 py-2 border border-line text-xs font-medium bg-card text-txt-main hover:bg-sidebar transition-colors cursor-pointer"
+        >
+          Reset
+        </button>
+
+        <button
+          onClick={() => handleAddTime(60 * 60)}
+          className="px-3 py-2 border border-line text-xs text-txt-secondary hover:text-txt-main hover:bg-sidebar transition-colors cursor-pointer"
+        >
+          +1 Hour
+        </button>
+
+        <button
+          onClick={() => handleAddTime(24 * 60 * 60)}
+          className="px-3 py-2 border border-line text-xs text-txt-secondary hover:text-txt-main hover:bg-sidebar transition-colors cursor-pointer"
+        >
+          +1 Day
+        </button>
+      </div>
+
+      {/* Zero State / Event End Message */}
+      {timeLeft === 0 && (
+        <p className="text-xs font-medium text-amber-600 dark:text-amber-400">
+          🎉 Time is up! Event has ended.
+        </p>
+      )}
+    </div>
+  );
+}`,
+    ts: `import { useEffect, useState } from "react";
+
+/**
+ * ----------------------------------------------------
+ * Countdown Clock - Key Logics Used:
+ * 1. Timer Tick Interval: Decrements seconds every 1000ms using setInterval.
+ * 2. Effect Cleanup: Clears the interval on unmount or pause state change.
+ * 3. Math Breakdown: Converts raw seconds into Days, Hours, Minutes, and Seconds.
+ * 4. Two-Digit Formatting: Uses padStart(2, "0") to keep digits aligned.
+ * 5. Controls: Supports Pause/Resume toggle, Reset, and additive quick increments (+1h, +1d).
+ * ----------------------------------------------------
+ */
+interface Time {
+  label: string;
+  val: string;
+}
+
+export function CountdownClockView() {
+  // State to hold remaining countdown time in seconds
+  const [timeLeft, setTimeLeft] = useState<number>(0);
+  // State to control pause/resume state of the countdown
+  const [isPaused, setIsPaused] = useState<boolean>(false);
+
+  // Interval timer effect: runs every second to decrement time left
+  useEffect(() => {
+    // Stop countdown if paused or if time has reached 0
+    if (isPaused || timeLeft <= 0) return;
+
+    // Start 1-second interval to tick down
+    const interval = setInterval(() => {
+      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+
+    // Cleanup active interval on re-render, pause, or component unmount
+    return () => clearInterval(interval);
+  }, [timeLeft, isPaused]);
+
+  // Helper function to format numbers into two-digit strings (e.g. 5 -> "05")
+  const format = (time: number): string => String(time).padStart(2, "0");
+
+  // Math breakdown: convert total seconds into days, hours, minutes, and seconds
+  const days = format(Math.floor(timeLeft / (24 * 3600)));
+  const hours = format(Math.floor((timeLeft / 3600) % 24));
+  const min = format(Math.floor((timeLeft / 60) % 60));
+  const sec = format(Math.floor(timeLeft % 60));
+
+  // Structured metrics list for dynamic card rendering
+  const countDownTimer: Time[] = [
+    { label: "Days", val: days },
+    { label: "Hours", val: hours },
+    { label: "Mins", val: min },
+    { label: "Secs", val: sec },
+  ];
+
+  // Increment countdown time by a specified duration in seconds (+1h, +1d)
+  const handleAddTime = (time: number) => {
+    setTimeLeft((prev) => prev + time);
+  };
+
+  // Reset timer to 0 and unpause
+  const handleReset = () => {
+    setTimeLeft(0);
+    setIsPaused(false);
+  };
+
+  return (
+    <div className="w-full max-w-xl mx-auto space-y-6 text-center font-poppins py-4">
+      {/* 4 Metric Cards */}
+      <div className="grid grid-cols-4 gap-3 md:gap-4">
+        {countDownTimer.map((item) => (
+          <div
+            key={item.label}
+            className="p-4 border border-line bg-card shadow-xs transition-colors"
+          >
+            <div className="text-2xl md:text-3xl font-mono font-semibold text-txt-main">
+              {item.val}
+            </div>
+            <div className="text-[10px] md:text-xs text-txt-muted uppercase font-medium tracking-wider mt-1">
+              {item.label}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Control Buttons */}
+      <div className="flex flex-wrap items-center justify-center gap-2.5">
+        <button
+          onClick={() => setIsPaused((prev) => !prev)}
+          className="px-4 py-2 border border-line text-xs font-medium bg-dark-line text-white dark:bg-cyan dark:text-main cursor-pointer hover:opacity-90 transition-opacity"
+        >
+          {isPaused ? "Resume" : "Pause"}
+        </button>
+
+        <button
+          onClick={handleReset}
+          className="px-4 py-2 border border-line text-xs font-medium bg-card text-txt-main hover:bg-sidebar transition-colors cursor-pointer"
+        >
+          Reset
+        </button>
+
+        <button
+          onClick={() => handleAddTime(60 * 60)}
+          className="px-3 py-2 border border-line text-xs text-txt-secondary hover:text-txt-main hover:bg-sidebar transition-colors cursor-pointer"
+        >
+          +1 Hour
+        </button>
+
+        <button
+          onClick={() => handleAddTime(24 * 60 * 60)}
+          className="px-3 py-2 border border-line text-xs text-txt-secondary hover:text-txt-main hover:bg-sidebar transition-colors cursor-pointer"
+        >
+          +1 Day
+        </button>
+      </div>
+
+      {/* Zero State / Event End Message */}
+      {timeLeft === 0 && (
+        <p className="text-xs font-medium text-amber-600 dark:text-amber-400">
+          🎉 Time is up! Event has ended.
+        </p>
+      )}
+    </div>
+  );
+}`,
+  },
+  "auto-carousel": {
+    js: `import { useEffect, useState } from "react";
+
+/**
+ * ----------------------------------------------------
+ * Auto Carousel / Slider Engine - Key Logics Used:
+ * 1. Auto-Play Interval: Advances current slide automatically every 3 seconds.
+ * 2. Hover Pause: Listens to onMouseEnter & onMouseLeave to pause rotation when user hovers over carousel.
+ * 3. Cyclic Circular Navigation: Loops seamlessly to index 0 from last slide, and to last slide from index 0.
+ * 4. CSS Transform Sliding: Slides horizontally with style translateX(-currentSlide * 100%) and smooth transition.
+ * 5. Direct Dot Navigation: Allows instant slide jumping via interactive pagination dots.
+ * ----------------------------------------------------
+ */
+export function AutoCarouselView() {
+  const slides = ["Slide 1", "Slide 2", "Slide 3", "Slide 4"];
+
+  // State to track the currently active slide index (0-based)
+  const [currentSlide, setCurrentSlide] = useState(0);
+  // State to track if mouse is hovering over the carousel to pause auto-play
+  const [isHovered, setIsHovered] = useState(false);
+
+  // Auto-play interval effect: advances to next slide every 3s when not hovered
+  useEffect(() => {
+    if (isHovered) return;
+
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [isHovered, slides.length]);
+
+  // Navigate to next slide, loops back to first slide when reaching the end
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+  };
+
+  // Navigate to previous slide, loops to last slide when at the beginning
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
+  };
+
+  return (
+    <div className="w-full max-w-xl mx-auto space-y-4 font-poppins py-2">
+      {/* Carousel Viewport Container */}
+      <div
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        className="relative w-full overflow-hidden border border-line bg-card shadow-xs group"
+      >
+        {/* Slide Track */}
+        <div
+          className="flex transition-transform duration-500 ease-out"
+          // Translate horizontally based on active slide index (0%, -100%, -200%, etc.)
+          style={{ transform: \`translateX(-\${currentSlide * 100}%)\` }}
+        >
+          {slides.map((slide, idx) => (
+            <div
+              key={idx}
+              className="w-full flex-shrink-0 h-48 md:h-56 flex flex-col items-center justify-center bg-card select-none"
+            >
+              <span className="text-lg md:text-xl font-medium tracking-wide text-txt-main">
+                {slide}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        {/* Previous Navigation Button */}
+        <button
+          onClick={prevSlide}
+          aria-label="Previous Slide"
+          className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center border border-line bg-card/90 hover:bg-card text-txt-main text-xs cursor-pointer shadow-xs transition-colors"
+        >
+          {"<"}
+        </button>
+
+        {/* Next Navigation Button */}
+        <button
+          onClick={nextSlide}
+          aria-label="Next Slide"
+          className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center border border-line bg-card/90 hover:bg-card text-txt-main text-xs cursor-pointer shadow-xs transition-colors"
+        >
+          {">"}
+        </button>
+      </div>
+
+      {/* Controls & Pagination Dots */}
+      <div className="flex flex-col items-center justify-center gap-2 pt-1">
+        <div className="flex items-center justify-center gap-2">
+          {slides.map((_, index) => {
+            const isActive = currentSlide === index;
+            return (
+              <button
+                key={index}
+                onClick={() => setCurrentSlide(index)}
+                aria-label={\`Go to slide \${index + 1}\`}
+                className={\`transition-all duration-300 rounded-full cursor-pointer \${
+                  isActive
+                    ? "w-6 h-2 bg-dark-line dark:bg-cyan"
+                    : "w-2 h-2 bg-line hover:bg-txt-muted"
+                }\`}
+              />
+            );
+          })}
+        </div>
+
+        {/* Hover Hint Info */}
+        <span className="text-[11px] text-txt-muted">
+          Hover over carousel to pause
+        </span>
+      </div>
+    </div>
+  );
+}`,
+    ts: `import { useEffect, useState } from "react";
+
+/**
+ * ----------------------------------------------------
+ * Auto Carousel / Slider Engine - Key Logics Used:
+ * 1. Auto-Play Interval: Advances current slide automatically every 3 seconds.
+ * 2. Hover Pause: Listens to onMouseEnter & onMouseLeave to pause rotation when user hovers over carousel.
+ * 3. Cyclic Circular Navigation: Loops seamlessly to index 0 from last slide, and to last slide from index 0.
+ * 4. CSS Transform Sliding: Slides horizontally with style translateX(-currentSlide * 100%) and smooth transition.
+ * 5. Direct Dot Navigation: Allows instant slide jumping via interactive pagination dots.
+ * ----------------------------------------------------
+ */
+export function AutoCarouselView() {
+  const slides: string[] = ["Slide 1", "Slide 2", "Slide 3", "Slide 4"];
+
+  // State to track the currently active slide index (0-based)
+  const [currentSlide, setCurrentSlide] = useState<number>(0);
+  // State to track if mouse is hovering over the carousel to pause auto-play
+  const [isHovered, setIsHovered] = useState<boolean>(false);
+
+  // Auto-play interval effect: advances to next slide every 3s when not hovered
+  useEffect(() => {
+    if (isHovered) return;
+
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [isHovered, slides.length]);
+
+  // Navigate to next slide, loops back to first slide when reaching the end
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+  };
+
+  // Navigate to previous slide, loops to last slide when at the beginning
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
+  };
+
+  return (
+    <div className="w-full max-w-xl mx-auto space-y-4 font-poppins py-2">
+      {/* Carousel Viewport Container */}
+      <div
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        className="relative w-full overflow-hidden border border-line bg-card shadow-xs group"
+      >
+        {/* Slide Track */}
+        <div
+          className="flex transition-transform duration-500 ease-out"
+          // Translate horizontally based on active slide index (0%, -100%, -200%, etc.)
+          style={{ transform: \`translateX(-\${currentSlide * 100}%)\` }}
+        >
+          {slides.map((slide: string, idx: number) => (
+            <div
+              key={idx}
+              className="w-full flex-shrink-0 h-48 md:h-56 flex flex-col items-center justify-center bg-card select-none"
+            >
+              <span className="text-lg md:text-xl font-medium tracking-wide text-txt-main">
+                {slide}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        {/* Previous Navigation Button */}
+        <button
+          onClick={prevSlide}
+          aria-label="Previous Slide"
+          className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center border border-line bg-card/90 hover:bg-card text-txt-main text-xs cursor-pointer shadow-xs transition-colors"
+        >
+          {"<"}
+        </button>
+
+        {/* Next Navigation Button */}
+        <button
+          onClick={nextSlide}
+          aria-label="Next Slide"
+          className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center border border-line bg-card/90 hover:bg-card text-txt-main text-xs cursor-pointer shadow-xs transition-colors"
+        >
+          {">"}
+        </button>
+      </div>
+
+      {/* Controls & Pagination Dots */}
+      <div className="flex flex-col items-center justify-center gap-2 pt-1">
+        <div className="flex items-center justify-center gap-2">
+          {slides.map((_, index: number) => {
+            const isActive = currentSlide === index;
+            return (
+              <button
+                key={index}
+                onClick={() => setCurrentSlide(index)}
+                aria-label={\`Go to slide \${index + 1}\`}
+                className={\`transition-all duration-300 rounded-full cursor-pointer \${
+                  isActive
+                    ? "w-6 h-2 bg-dark-line dark:bg-cyan"
+                    : "w-2 h-2 bg-line hover:bg-txt-muted"
+                }\`}
+              />
+            );
+          })}
+        </div>
+
+        {/* Hover Hint Info */}
+        <span className="text-[11px] text-txt-muted">
+          Hover over carousel to pause
+        </span>
+      </div>
+    </div>
+  );
+}`,
+  },
   "inactivity-warning": { js: ``, ts: `` },
   "stopwatch-engine": { js: ``, ts: `` },
 

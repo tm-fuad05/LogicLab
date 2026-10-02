@@ -61,7 +61,7 @@ export default function FaqPage() {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto space-y-10 py-4 sm:py-8 font-poppins">
+    <div className="w-full max-w-5xl mx-auto space-y-12 py-4 sm:py-6 font-poppins">
       {/* 1. Header / Hero Section */}
       <section className="space-y-4 border-b border-line pb-8">
         <div className="inline-flex items-center gap-2 px-2.5 py-1 border border-line bg-sidebar text-[11px] font-mono text-cyan-600 dark:text-cyan">
@@ -74,9 +74,8 @@ export default function FaqPage() {
             Frequently Asked Questions
           </h1>
           <p className="text-xs sm:text-sm text-txt-secondary leading-relaxed max-w-2xl">
-            Common questions about LogicLab. Learn about the platform's
-            vision, included modules, architectural principles, and future
-            roadmap.
+            Common questions about LogicLab. Learn about the platform's vision,
+            included modules, architectural principles, and future roadmap.
           </p>
         </div>
       </section>

@@ -1,5 +1,5 @@
 import { createBrowserRouter, Navigate } from "react-router";
-import RootLayout, { rootLoader } from "../layouts/RootLayout";
+import RootLayout, { RootLoader } from "../layouts/RootLayout";
 import LandingPage from "../pages/LandingPage";
 import HomePage, { homeLoader } from "../pages/HomePage";
 import CategoryOverview, { categoryLoader } from "../pages/CategoryOverview";
@@ -15,7 +15,7 @@ export const router = createBrowserRouter([
   },
   {
     element: <RootLayout />,
-    loader: rootLoader,
+    loader: RootLoader,
     children: [
       {
         path: "home",
